@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.reedfrog.shop" version="1.2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Reedfrog</name>
+<widget id="com.bookworm.shop" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Reedfrog Books</name>
     <description>
-       Explore fashion from the world's leading fashion brands for women, men and kids. 
+       Explore books online from the world's leading book retailers. 
     </description>
     <author email="shutterman@iwanross.co.za" href="https://iwanross.co.za">
         Iwan Ross
@@ -19,7 +19,7 @@
  <feature name="Custom URL scheme">
     <param name="id" value="cordova-plugin-customurlscheme" />
     <param name="url" value="https://github.com/EddyVerbruggen/Custom-URL-scheme.git" />
-    <variable name="URL_SCHEME" value="reedfrog" />
+    <variable name="URL_SCHEME" value="bookworm" />
   </feature>
     //START UNIVERSAL LINKS SETUP
 <universal-links>
