@@ -1,0 +1,112 @@
+.banner {
+    
+    position: relative;
+    top:15px;
+    margin: 0px;
+    width: 90%;
+    padding: 0% 5%;
+    height: 72px;
+      
+}
+
+.searchbanner {
+    
+    position: relative;
+    top:15px;
+    margin: 0px;
+    width: 90%;
+    padding: 0% 5%;
+    height: 72px;
+    padding-top:45px;
+    
+}
+.heading {
+    display: inline-block;
+    position: absolute;
+    left: 100px;
+    line-height: 72px;
+    font-family: "Proxima Nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 35px;
+    color: #11999E;
+    font-weight: 700;
+}
+
+.slogan {
+    display: inline-block;
+    position: absolute;
+    left: 100px;
+    line-height: 130px;
+    font-family: "Proxima Nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    color: #11999E;
+    font-weight: 300;
+}
+
+.navibar {
+    
+    margin: auto;
+    text-align: center;
+      font-family: "Proxima Nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    color: #5990BF;
+    font-weight: 600;
+    padding: 15px 0px 45px 0px;
+    line-height: normal;
+}
+
+.fixed-content {
+  position: fixed !important;
+  left: 0px !important;
+  right: 0px !important;
+  bottom: -1px !important;
+  z-index: 999 !important;
+  padding-bottom:2px;
+
+}
+
+.fixed-header {
+  position: fixed !important;
+  left: 0px !important;
+  right: 0px !important;
+  top: -1px !important;
+  z-index: 999 !important;
+}
+
+.notifications{
+  position: fixed;
+  bottom: 18px;
+  right: 10px;
+  min-width: 40px;
+  max-width:80px;
+   background-color: #fff;
+  border: 2px solid #11999E;
+  border-radius: 100%;
+  overflow: none;
+  text-align: center;
+  padding:0;
+  font: 14px roboto, sans-serif;
+  color: #11999E;  
+    display: none;
+	
+}
+
+
+.notifications:before {
+  content:'';
+  display:inline-block;
+  vertical-align:middle;
+  padding-top:100%;
+    
+}
+    
+ .messageitemslist {
+        margin-bottom: 25px;
+        padding-bottom: 25px;
+        
+    }
+
+.fashionlistitems {
+        margin-bottom: 25px;
+        padding-bottom: 25px;
+    
+}

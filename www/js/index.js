@@ -1,0 +1,1204 @@
+    /*START HANDLE DEEP LINKING*/
+    
+    
+    
+    function handleOpenURL(url) {
+        
+          var strValue = url;
+      strValue = strValue.replace('reedfrog://','');
+       $.mobile.navigate('#'+strValue, { transition: 'slidedown' });
+        	
+  }
+        
+         /*END HANDLE DEEP LINKING*/
+
+
+
+document.addEventListener("deviceready",onDeviceReady,false);
+	  document.addEventListener("pause", onPause, false);
+    document.addEventListener("resume", onResume, false);
+
+function onDeviceReady() {
+        window.Segment.startWithConfiguration("dzaIQFW0fydxAaEgbiL1EXXQW4RTK7dG", {
+    trackApplicationLifecycleEvents: true,
+    trackAttributionInformation: true,
+	flushInterval: 60,
+    trackInAppPurchases: true
+});
+		
+window.Segment.track({
+    event: 'Application Started',
+    properties: {
+        'path': 'home'
+    }
+});
+    
+    
+    var configMapObject = {};
+configMapObject[KochavaTracker.PARAM_ANDROID_APP_GUID_STRING_KEY] = "kovalidator-android-alh6sx";
+KochavaTracker.configure(configMapObject);
+    
+ facebookConnectPlugin.logEvent('Show Screen', {'name': 'Start Screen'}, parseFloat(1.00), function (data) {}, function (error) {});
+        
+          /*START CHECK FOR NEW MESSAGES FUNCTION */
+    var deviceuuid = localStorage.getItem('deviceuuid');
+	if (deviceuuid) {
+		
+	var dataString="deviceuuid="+deviceuuid;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/checkalerts.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+               cordova.plugins.notification.badge.set(messageCount);  
+	            $('.notifications').show();
+               $('.notifications').text(messageCount); 
+                $('.gotonotifications').attr('href', '#messageitems')		             
+            } else {
+                
+                 var messageCount = "0";
+               cordova.plugins.notification.badge.set(messageCount);    
+	            $('.notifications').show();
+               $('.notifications').text(messageCount); 
+                 $('.gotonotifications').attr('href', '#')
+            }
+
+		
+                  }
+    });
+
+
+		
+	}    
+    /*END CHECK FOR NEW MESSAGES FUNCTION */ 
+document.addEventListener("backbutton", onBackKeyDown, false);
+
+
+    /*START OBTAIN DEVICE DETAILS AND STORE IN LOCALSTORAGE*/
+    var devicemodel = device.model;
+    localStorage.setItem('model', devicemodel);		
+    var devicecordova = device.cordova;
+    var deviceplatform = device.platform;
+    localStorage.setItem('platform', deviceplatform);		
+    var deviceuuid = device.uuid;
+    localStorage.setItem('deviceuuid', deviceuuid);		
+    var devicevirtual = device.isVirtual;
+    var deviceserial = device.serial;
+    localStorage.setItem('deviceserial', deviceserial);		
+    var deviceversion = device.version;
+    localStorage.setItem('deviceversion',deviceversion);
+    
+    		cordova.getAppVersion(function (version) {
+			   localStorage.setItem('appversion', version);				
+			});
+    /*END OBTAIN DEVICE DETAILS AND STORE IN LOCALSTORAGE*/
+    
+    /*START PUSH SERVICES FOR FIREBASE CLOUD MESSAGING*/
+    var push = PushNotification.init({
+
+
+android: {
+senderID: "138306200011",
+sound: true,
+vibrate: true,
+alert: true
+	
+},
+ios: {
+alert: "true",
+badge: "true",
+sound: "true"
+},
+windows: {}
+});
+
+
+  push.on('registration', function(data) {
+       var oldRegId = localStorage.getItem('registrationId');
+       if (oldRegId !== data.registrationId) {
+           // Save new registration ID
+           localStorage.setItem('registrationId', data.registrationId);
+               /*START INSERT DEVICE INFO IN THE DATABASE TABLE */
+    var devicestatus = localStorage.getItem('registrationId');
+if (devicestatus) {
+var deviceid = localStorage.getItem('deviceserial');
+var regid = localStorage.getItem('registrationId');
+var devicemodel = localStorage.getItem('model');
+var deviceplatform = localStorage.getItem('platform');
+var deviceuuid = localStorage.getItem('deviceuuid');	
+var deviceversion = localStorage.getItem('deviceversion');
+var appversion = localStorage.getItem('appversion');
+var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+"&deviceplatform="+deviceplatform+"&deviceuuid="+deviceuuid+"&deviceversion="+deviceversion+"&appversion="+appversion;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/insertregid.php',
+        data: dataString,
+		dataType:'text',		
+        success: function(data){
+
+		
+                  }
+    });
+	 /*END INSERT DEVICE INFO INTO THE DATABASE TABLE*/
+}
+       }
+   });
+push.on('notification', function(data) {
+      /*START CHECK FOR NEW MESSAGES FUNCTION */
+    var deviceuuid = localStorage.getItem('deviceuuid');
+	if (deviceuuid) {
+		
+	var dataString="deviceuuid="+deviceuuid;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/checkalerts.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+               cordova.plugins.notification.badge.set(messageCount);  
+	            $('.notifications').show();
+               $('.notifications').text(messageCount); 
+                $('.gotonotifications').attr('href', '#messageitems')		             
+            } else {
+                
+                 var messageCount = "0";
+               cordova.plugins.notification.badge.set(messageCount);    
+	            $('.notifications').show();
+               $('.notifications').text(messageCount); 
+                 $('.gotonotifications').attr('href', '#')
+            }
+
+		
+                  }
+    });
+
+
+		
+	}    
+    /*END CHECK FOR NEW MESSAGES FUNCTION */ 
+    
+});
+push.on('error', function(e) {
+});
+    
+/*END PUSH SERVICES FOR FIREBASE CLOUD MESSAGING*/
+    
+}    
+
+function onPause() {
+    
+    
+            window.Segment.startWithConfiguration("dzaIQFW0fydxAaEgbiL1EXXQW4RTK7dG", {
+    trackApplicationLifecycleEvents: true,
+    trackAttributionInformation: true,
+	flushInterval: 60,
+    trackInAppPurchases: true
+});
+		
+window.Segment.track({
+    event: 'Application Backgrounded',
+    properties: {
+        'path': 'home'
+    }
+});
+
+}
+
+function onResume() {
+    
+                window.Segment.startWithConfiguration("dzaIQFW0fydxAaEgbiL1EXXQW4RTK7dG", {
+    trackApplicationLifecycleEvents: true,
+    trackAttributionInformation: true,
+	flushInterval: 60,
+    trackInAppPurchases: true
+});
+		
+window.Segment.track({
+    event: 'Application Brought Forward',
+    properties: {
+        'path': 'home'
+    }
+});
+    
+      /*START CHECK FOR NEW MESSAGES FUNCTION */
+    var deviceuuid = localStorage.getItem('deviceuuid');
+	if (deviceuuid) {
+		
+	var dataString="deviceuuid="+deviceuuid;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/checkalerts.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+               cordova.plugins.notification.badge.set(messageCount);  
+	            $('.notifications').show();
+               $('.notifications').text(messageCount); 
+                $('.gotonotifications').attr('href', '#messageitems')		             
+            } else {
+                
+                 var messageCount = "0";
+               cordova.plugins.notification.badge.set(messageCount);    
+	            $('.notifications').show();
+               $('.notifications').text(messageCount); 
+                 $('.gotonotifications').attr('href', '#')
+            }
+
+		
+                  }
+    });
+
+
+		
+	}    
+    /*END CHECK FOR NEW MESSAGES FUNCTION */ 
+    
+/*START FIRST RUN EVENT IF THE DEVICE HAS RUN FOR THE FIRST TIME*/
+if(window.localStorage.getItem("firstRun") != 1) {
+ 
+window.localStorage.setItem("firstRun", 1);	
+}
+/*END FIRST RUN EVENT IF THE DEVICE HAS RUN FOR THE FIRST TIME*/
+}
+                  function onBackKeyDown(e) {
+                      e.preventDefault();
+                       window.localStorage.removeItem('queryString');
+        window.localStorage.removeItem('dataValue');
+          var currentPage = window.sessionStorage.getItem('currentPage');
+          
+          $.mobile.navigate(currentPage, { transition: 'pop' });
+          window.sessionStorage.removeItem('currentPage');
+                                  $.mobile.loading( "show", {
+  text: "Freeing up space",
+  textVisible: true,
+  theme: "b"
+  
+});
+          location.reload(true);
+}  
+
+$(document).ready(function(){  
+    
+    /*START INSERT DEVICE INFO IN THE DATABASE TABLE */
+    var devicestatus = localStorage.getItem('registrationId');
+if (devicestatus) {
+var deviceid = localStorage.getItem('deviceserial');
+var regid = localStorage.getItem('registrationId');
+var devicemodel = localStorage.getItem('model');
+var deviceplatform = localStorage.getItem('platform');
+var deviceuuid = localStorage.getItem('deviceuuid');	
+var deviceversion = localStorage.getItem('deviceversion');
+var appversion = localStorage.getItem('appversion');
+var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+"&deviceplatform="+deviceplatform+"&deviceuuid="+deviceuuid+"&deviceversion="+deviceversion+"&appversion="+appversion;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/insertregid.php',
+        data: dataString,
+		dataType:'text',		
+        success: function(data){
+
+		
+                  }
+    });
+	
+}
+    
+    /*END INSERT DEVICE INFO INTO THE DATABASE TABLE*/
+    
+    
+         
+    
+/*START LIST ITEM CLICK FUNCTION*/
+   $(".catselector li").on('click', function(){
+       $(this).addClass("ui-btn-active ui-state-persist");
+       var value = $(this).data("id");       
+       var dataValue = $(this).data("title");
+       var currentpos = $(this).data('href');
+        window.sessionStorage.setItem('currentPage', currentpos);
+       window.localStorage.setItem('queryString', value);
+       window.localStorage.setItem('dataValue', dataValue);
+                        $.mobile.loading( "show", {
+  text: "Fetching " +dataValue,
+  textVisible: true,
+  theme: "b"
+  
+});
+
+    var queryString = window.localStorage.getItem('queryString');
+     var dataTitle = window.localStorage.getItem('dataValue');
+    var itemString ="queryString="+queryString;   
+       
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/womens-fashion.php',
+        data: itemString,
+		dataType:'JSON',  
+         beforeSend: function(){ 
+             
+         },
+		success: function(data){
+            $(location).attr('href', '#fashionitems');   
+				   if(data.results.length > 1) {                    
+                    $(".heading").text(dataTitle);
+                    $(".mainheading").text(dataTitle);
+				    for (var i = 0; i < data.results.length; i++) {	                        
+                        
+                      var itemName = data.results[i].product_name;
+                        var originalprice = parseFloat(data.results[i].original_price).toFixed(2);
+                        var itemPrice = parseFloat(data.results[i].current_price).toFixed(2);
+                        
+                        if(originalprice<itemPrice) {
+                            var pricediv = "<p style='color: orangered; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        } else {
+                            pricediv = "<p style='display: none; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        }
+                        var imageUrl = data.results[i].image_url;
+                        var productUrl = data.results[i].product_url;
+                      $( "#listviewers" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2>"+pricediv+"<p style='color: black; font-size: 14px; font-weight: 500;'>"+itemPrice+"</p></a></li>"); 
+                        
+                       
+                      
+                                  
+                        
+                    }
+				 
+            }
+            
+             if(!data.results)
+            {
+				
+			  alert('no results returned');
+			
+               
+            }
+        }
+		
+    });
+      	
+
+        });
+    /*END LIST ITEM CLICK FUNCTION*/
+    
+    /*START MESSAGES LIST ITEM CLICK FUNCTION*/
+    $('#messagelistviewer').on('click', 'li', function(){
+       $(this).addClass("ui-btn-active ui-state-persist");
+         var value = $(this).data("id");       
+        var currentpos = $(this).data('href');
+      window.sessionStorage.setItem('currentPage', currentpos);
+      $.mobile.loading( "show", {
+  text: "Fetching Message",
+  textVisible: true,
+  theme: "b"
+  
+});
+    var messageString ="messageid="+value;   
+       
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/getmessage.php',
+        data: messageString,
+		dataType:'JSON',  
+         beforeSend: function(){ 
+             
+         },
+		success: function(data){
+            $(location).attr('href', '#messagereader');   
+				   if(data.results.length > 0) {                    
+                  for (var i = 0; i < data.results.length; i++) {	                        
+                        
+                      var messageTitle = data.results[i].title;
+                        var messageSubject = data.results[i].message;
+                        var messageBody = data.results[i].inappmessage;
+                       
+                      $( "#messagetitle" ).text(messageTitle); 
+                      $( "#messagesubtitle" ).text(messageSubject);   
+                      $( "#messagebody" ).html(messageBody);                     
+                    }
+				 
+            }
+            
+             if(!data.results)
+            {
+				
+			  			
+               
+            }
+        }
+		
+    });
+      	
+
+        });
+    /*END MESSAAGES LIST ITEM CLICK FUNCTION*/
+    
+    
+    
+    //START SEARCH BUTTON CLICK EVENT
+      $("#searchbtn").on('click', function(event){
+          event.preventDefault();
+          
+       $(this).addClass("ui-btn-active ui-state-persist");
+          var onlyDiscounts = "";
+          if ($('#showdiscounts').is(":checked"))
+{
+    
+onlyDiscounts = $('#showdiscounts').val();
+sessionStorage.setItem('showdiscounts', onlyDiscounts);
+}
+          
+          
+
+
+       var value = $('#searchitems').val();   
+          var currentpos = $(this).data('href');
+        window.sessionStorage.setItem('currentPage', currentpos);
+       window.sessionStorage.setItem('searchString', value);
+          
+          var eventMapObject = {};
+eventMapObject["Search String"] = "'" + value + "'";
+eventMapObject["Discounts"] = "'" + onlyDiscounts + "'";
+KochavaTracker.sendEventMapObject("User Search", eventMapObject);
+          
+          
+          $('.form-controls').hide();
+                        $.mobile.loading( "show", {
+  text: "Finding " +value,
+  textVisible: true,
+  theme: "b"
+  
+});
+
+      var searchString ="searchString="+value+"&discounts="+onlyDiscounts;   
+       
+    $.ajax({
+        type: "GET",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/search-function.php',
+        data: searchString,
+		dataType:'JSON',  
+         beforeSend: function(){ 
+             
+         },
+		success: function(data){
+            var newvalue = sessionStorage.getItem('searchString');
+             $(location).attr('href', '#searchlistitems');
+            $('.banner').addClass('searchbanner');
+             $(".heading").text(newvalue);
+            $(".mainheading").text(newvalue);
+              if(data.results.length > 1) {                    
+                   
+                      for (var i = 0; i < data.results.length; i++) {	                        
+                        
+                      var itemName = data.results[i].product_name;
+                        var originalprice = parseFloat(data.results[i].original_price).toFixed(2);
+                        var itemPrice = parseFloat(data.results[i].current_price).toFixed(2);
+                        
+                        if(originalprice<itemPrice) {
+                            var pricediv = "<p style='color: orangered; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        } else {
+                            pricediv = "<p style='display: none; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        }
+                        var imageUrl = data.results[i].image_url;
+                        var productUrl = data.results[i].product_url;
+                                               
+                      $( "#searchlistview" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2>"+pricediv+"<p style='color: black; font-size: 14px; font-weight: 500;'>"+itemPrice+"</p></a></li>");
+                        
+                          
+                    
+                                                        
+                        
+                    }
+                  
+                  if(data.navigation.totalItems > 59) {
+                    
+                     var nextlink = data.navigation.nextPageUri;
+                     var prevlink = data.navigation.prevPageUri; 
+                    window.sessionStorage.setItem('nextpageUri', nextlink);
+                    window.sessionStorage.setItem('prevpageUri', prevlink);
+                          $( "#backbutton" ).append('<a id="prevBtn" href="#" data-role="button"  data-icon="arrow-l" data-iconpos="left">Back</a>'); 
+                          $( "#nextbutton" ).append('<a id="nextBtn" class="ui-btn-active" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
+                          $('#prevBtn').prop('disabled', true);                 
+       
+                      }
+            
+            if(data.navigation.totalItems) {
+                
+                       var firstItem = data.navigation.firstItem;
+                        var lastItem = data.navigation.lastItem;
+                          var totalItems = data.navigation.totalItems;
+                       
+                   $( "#navibar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " " + value); 
+                    
+       
+                      }
+   
+				 
+            }   
+            
+             if(data.results == 0)
+            {
+            var value = $('#searchitems').val(); 
+                $(".heading").text(value);
+                    $(".mainheading").text(value);
+             $( "#searchlistview" ).append('<li id="no-results" style="margin:auto; text-align: center;">[No results found for '+value+']</li>');
+                                
+               
+            }
+            
+                
+            
+                }
+		
+    });
+      	
+ 
+        });
+    
+   //END SEARCH BUTTON CLICK EVENT
+    
+                        //START NEXT NAVIGATION FROM HERE ONWARDS  FUNCTION FOR EASY VISIBILITY
+          $('#nextbutton').on('click', '#nextBtn', function(event){ 
+                  $.mobile.loading( "show", {
+                  text: "Loading next set",
+                  textVisible: true,
+                  theme: "b"
+                  }); 
+                       event.preventDefault();
+                if ( sessionStorage.reloadAfterBackClick ) {
+                sessionStorage.removeItem('reloadAfterBackClick');
+                    
+                }
+                sessionStorage.reloadAfterNextClick = true;
+                window.location.reload();
+            
+    } 
+);
+    $( function () {
+        if ( sessionStorage.reloadAfterNextClick ) {            
+        var value =  window.sessionStorage.getItem('searchString'); 
+                      var onlyDiscounts = "";
+          if (sessionStorage.getItem('showdiscounts'))
+{
+    
+onlyDiscounts = sessionStorage.getItem('showdiscounts');
+
+}
+        var nextlink = window.sessionStorage.getItem('nextpageUri');        
+                    $('.banner').addClass('searchbanner');
+                    $(".heading").text(value);
+                    $(".mainheading").text(value);
+       var searchString ="searchString="+value+"&page="+nextlink+"&discounts="+onlyDiscounts;       
+    $.ajax({        
+        type: "GET",crossDomain: true, cache: false,
+                 beforeSend: function(){
+    $('.ajax-loader').css("visibility", "visible");
+  },
+        url: 'https://reedfrog.com/api/app/search-function.php',
+        data: searchString,
+		dataType:'JSON',  
+     		success: function(data){
+           
+             $('#searchlistview').empty();
+            $('#navcontrols').empty();
+             if(data.results.length > 1) {                          
+				    for (var i = 0; i < data.results.length; i++) {                                   
+                      var itemName = data.results[i].product_name;
+                        var originalprice = parseFloat(data.results[i].original_price).toFixed(2);
+                        var itemPrice = parseFloat(data.results[i].current_price).toFixed(2);
+                        
+                        if(originalprice<itemPrice) {
+                            var pricediv = "<p style='color: orangered; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        } else {
+                            pricediv = "<p style='display: none; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        }
+                        var imageUrl = data.results[i].image_url;
+                        var productUrl = data.results[i].product_url;
+                                               
+                      $( "#searchlistview" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2>"+pricediv+"<p style='color: black; font-size: 14px; font-weight: 500;'>"+itemPrice+"</p></a></li>"); 
+                        $('#searchlistview').listview('refresh').trigger('create');
+                  
+                    
+                                  
+                        
+                    }
+				 
+            }
+            
+                if(data.navigation.nextPageUri) {
+                    
+                   var nextlink = data.navigation.nextPageUri;
+                     var prevlink = data.navigation.prevPageUri; 
+                    var currentPage = data.navigation.catPage;
+                    var totalPages = data.navigation.totalPages;
+                    window.sessionStorage.setItem('nextpageUri', nextlink);
+                    window.sessionStorage.setItem('prevpageUri', prevlink);    
+                          $( "#backbutton" ).append('<a id="prevBtn" href="#" class="ui-btn-active" data-role="button" data-icon="arrow-l" data-iconpos="left">Back</a>'); 
+                          $( "#nextbutton" ).append('<a id="nextBtn" class="ui-btn-active" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
+                    $('#backbutton').trigger('create');
+                    $('#nextbutton').trigger('create');
+       if (currentPage === totalPages){$('#nextBtn').prop('disabled', true);$('#nextBtn').removeClass("ui-btn-active");}
+                      }
+            
+              if(data.navigation.totalItems) {
+                
+                       var firstItem = data.navigation.firstItem;
+                        var lastItem = data.navigation.lastItem;
+                          var totalItems = data.navigation.totalItems;
+                       
+                   $( "#navibar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " " + value); 
+                    
+       
+                      }
+            
+                       
+             if(!data.results)
+            {
+				
+			  alert('no results returned');
+			
+               
+            }
+        }
+		
+    });
+     sessionStorage.reloadAfterNextClick = false;
+      }
+    } 
+);
+  
+     
+                     //END NEXT NAVIGATION 
+    
+    //START BACK NAVIGATION FROM HERE ONWARDS  FUNCTION FOR EASY VISIBILITY
+            $('#backbutton').on('click', '#prevBtn', function(event){
+                    $.mobile.loading( "show", {
+  text: "Loading previous set",
+  textVisible: true,
+  theme: "b"
+  
+});    
+
+                       event.preventDefault();
+                if ( sessionStorage.reloadAfterNextClick ) {
+                sessionStorage.removeItem('reloadAfterNextClick');
+                }
+                        sessionStorage.reloadAfterBackClick = true;
+        window.location.reload();
+    });
+    $( function () {
+        if ( sessionStorage.reloadAfterBackClick ) {         
+        var value =  window.sessionStorage.getItem('searchString'); 
+                                  var onlyDiscounts = "";
+          if (sessionStorage.getItem('showdiscounts'))
+{
+    
+onlyDiscounts = sessionStorage.getItem('showdiscounts');
+
+}
+        var prevlink = (window.sessionStorage.getItem('prevpageUri')-1);
+            $('.banner').addClass('searchbanner');
+             $(".heading").text(value);
+        $(".mainheading").text(value);
+        
+var searchString ="searchString="+value+"&page="+prevlink+"&discounts="+onlyDiscounts;   
+       
+    $.ajax({
+        type: "GET",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/search-function.php',
+        data: searchString,
+		dataType:'JSON',  
+      success: function(data){           
+             $('#searchlistview').empty();
+            $('#navcontrols').empty();
+             if(data.results.length > 1) {             
+                  for (var i = 0; i < data.results.length; i++) {
+                                                
+                      var itemName = data.results[i].product_name;
+                        var originalprice = parseFloat(data.results[i].original_price).toFixed(2);
+                        var itemPrice = parseFloat(data.results[i].current_price).toFixed(2);
+                        
+                        if(originalprice<itemPrice) {
+                            var pricediv = "<p style='color: orangered; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        } else {
+                            pricediv = "<p style='display: none; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        }
+                        var imageUrl = data.results[i].image_url;
+                        var productUrl = data.results[i].product_url;
+                                               
+                      $( "#searchlistview" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2>"+pricediv+"<p style='color: black; font-size: 14px; font-weight: 500;'>"+itemPrice+"</p></a></li>"); 
+                        $('#searchlistview').listview('refresh').trigger('create');         
+                    }			 
+            }
+            
+                if(data.navigation.nextPageUri) {
+                    
+                    
+                   var nextlink = data.navigation.nextPageUri;
+                     var prevlink = data.navigation.prevPageUri; 
+                    var currentPage = data.navigation.catPage;
+                   
+                    window.sessionStorage.setItem('nextpageUri', nextlink);
+                    window.sessionStorage.setItem('prevpageUri', prevlink); 
+                    
+                                 $( "#backbutton" ).append('<a id="prevBtn" class="ui-btn-active" href="#" data-role="button" data-icon="arrow-l" data-iconpos="left">Back</a>'); 
+                          $( "#nextbutton" ).append('<a id="nextBtn" class="ui-btn-active" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
+                    $('#backbutton').trigger('create');
+                    $('#nextbutton').trigger('create');
+        if (currentPage === 0) { $('#prevBtn').prop('disabled', true);$('#prevBtn').removeClass("ui-btn-active");}
+                    
+                      }
+            
+            
+              if(data.navigation.totalItems) {
+                
+                       var firstItem = data.navigation.firstItem;
+                        var lastItem = data.navigation.lastItem;
+                          var totalItems = data.navigation.totalItems;
+                       
+                   $( "#navibar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " " + value); 
+                    
+       
+                      }
+            
+                       
+             if(!data.results)
+            {
+				
+			  alert('no results returned');
+			
+               
+            }
+        }
+		
+    });
+     sessionStorage.reloadAfterBackClick = false;
+      }
+    } 
+);
+  
+     
+                     //END NAVIGATION 
+    
+     
+     
+    
+    $("#scrollup").on('click', function() { 
+                  
+   $('html, body').stop().animate({ scrollTop : 0 }, 400);
+     });
+        $("#scrolldown").on('click', function() { 
+                  
+     $('html, body').animate({scrollTop: '+=360px'}, 800);
+        $(this).removeClass('ui-btn-active');
+     });
+    
+        $("#upscroll").on('click', function() { 
+                  
+   $('html, body').stop().animate({ scrollTop : 0 }, 400);
+     });
+        $("#downscroll").on('click', function() { 
+                  
+     $('html, body').animate({scrollTop: '+=360px'}, 800);
+        $(this).removeClass('ui-btn-active');
+     });
+    
+
+    
+ 
+    
+$("#mensclothing").bind("expand", function () {
+    var listHeight = $('#mensclothing li').length;
+    var scrollHeight = (listHeight * 40);
+        $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
+       });
+    
+ $("#kidsclothing").bind("expand", function () {
+    var listHeight = $('#kidsclothing li').length;
+    var scrollHeight = (listHeight * 40);
+      $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
+       });   
+   $("#menswedding").bind("expand", function () {
+    var listHeight = $('#menswedding li').length;
+    var scrollHeight = (listHeight * 40);
+      $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
+       });     
+      $("#womensfashion").bind("expand", function () {
+    var listHeight = $('#womensfashion li').length;
+    var scrollHeight = (listHeight * 40);
+      $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
+       });  
+    
+    
+ });
+       
+
+$(document).delegate('#fashionitems', 'pageshow', function (){
+    $('.banner').addClass('searchbanner');
+        var typingTimer;                //timer identifier
+var doneTypingInterval = 1000;  //time in ms, 5 second for example
+var $input = $(this).find('input[data-type="search"]');
+
+//on keyup, start the countdown
+$input.on('keyup', function () {
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(doneTyping, doneTypingInterval);
+});
+
+//on keydown, clear the countdown 
+$input.on('keydown', function () {
+  clearTimeout(typingTimer);
+});
+
+//user is "finished typing," do something
+function doneTyping () {
+ document.activeElement.blur();
+ }
+        var $listview = $(this).find('[data-role="listview"]');
+$listview.append('<li id="no-results" style="display:none; margin:auto; text-align: center;">[No results found]</li>');
+$listview.listview('refresh');
+$(this).delegate('input[data-type="search"]', 'keyup', function() {
+    if ($listview.children(':visible').not('#no-results').length === 0) {
+        $('#no-results').fadeIn(500);
+        
+    } else {
+        
+        $('#no-results').fadeOut(250);
+         
+        
+    }
+});
+      $(document).on('click', '.backbtn', function(){ 
+                window.localStorage.removeItem('queryString');
+        window.localStorage.removeItem('dataValue');
+          var currentPage = window.sessionStorage.getItem('currentPage');
+          
+          $.mobile.navigate(currentPage, { transition: 'pop' });
+          window.sessionStorage.removeItem('currentPage');
+                                  $.mobile.loading( "show", {
+  text: "Freeing up space",
+  textVisible: true,
+  theme: "b"
+  
+});
+          location.reload(true);
+          
+          
+});  
+}); 
+
+
+
+search
+
+$(document).delegate('#search', 'pageshow', function (){
+    
+    var typingTimer;                //timer identifier
+var doneTypingInterval = 1000;  //time in ms, 5 second for example
+var $input = $('#searchitems');
+
+//on keyup, start the countdown
+$input.on('keyup', function () {
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(doneTyping, doneTypingInterval);
+});
+
+//on keydown, clear the countdown 
+$input.on('keydown', function () {
+  clearTimeout(typingTimer);
+});
+
+//user is "finished typing," do something
+function doneTyping () {
+ document.activeElement.blur();
+ }
+    
+    }); 
+$(document).delegate('#searchlistitems', 'pageshow', function (){
+    
+    
+    var typingTimer;                //timer identifier
+var doneTypingInterval = 1000;  //time in ms, 5 second for example
+var $input = $(this).find('input[data-type="search"]');
+
+//on keyup, start the countdown
+$input.on('keyup', function () {
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(doneTyping, doneTypingInterval);
+});
+
+//on keydown, clear the countdown 
+$input.on('keydown', function () {
+  clearTimeout(typingTimer);
+});
+
+//user is "finished typing," do something
+function doneTyping () {
+ document.activeElement.blur();
+ }
+    var $listview = $(this).find('[data-role="listview"]');
+$listview.append('<li id="no-results" style="display:none; margin:auto; text-align: center;">[No results found]</li>');
+$listview.listview('refresh');
+$(this).delegate('input[data-type="search"]', 'keyup', function() {
+   
+    
+    if ($listview.children(':visible').not('#no-results').length === 0) {
+        $('#no-results').fadeIn(500);
+          $('#navibar').hide(250);
+         $('#navibuttons').hide(250);
+       
+    } else {
+        $('#no-results').fadeOut(250);
+        $('#navibar').show(250);
+         $('#navibuttons').show(250);
+        
+    }
+});
+
+      $(document).on('click', '.backbtn', function(){
+          
+                    window.sessionStorage.removeItem('searchString');
+               window.sessionStorage.removeItem('prevpageUri');
+               window.sessionStorage.removeItem('nextpageUri'); 
+          window.sessionStorage.removeItem('showdiscounts');
+                  if ( sessionStorage.reloadAfterNextClick ) {
+                sessionStorage.removeItem('reloadAfterNextClick');
+                }
+                  if ( sessionStorage.reloadAfterBackClick ) {
+                sessionStorage.removeItem('reloadAfterBackClick');
+                }
+              var currentPage = window.sessionStorage.getItem('currentPage');          
+          $.mobile.navigate(currentPage, { transition: 'slidedown' });
+          window.sessionStorage.removeItem('currentPage');
+                                  $.mobile.loading( "show", {
+  text: "Freeing up space",
+  textVisible: true,
+  theme: "b"
+  
+});
+          location.reload(true);
+          
+          
+});  
+          $(document).on('click', '.searchbtn', function(){ 
+                window.sessionStorage.removeItem('searchString');
+               window.sessionStorage.removeItem('prevpageUri');
+               window.sessionStorage.removeItem('nextpageUri'); 
+                  if ( sessionStorage.reloadAfterNextClick ) {
+                sessionStorage.removeItem('reloadAfterNextClick');
+                }
+                  if ( sessionStorage.reloadAfterBackClick ) {
+                sessionStorage.removeItem('reloadAfterBackClick');
+                }
+                 var currentPage = window.sessionStorage.getItem('currentPage');       
+          $.mobile.navigate(currentPage, { transition: 'slidedown' });
+          window.sessionStorage.removeItem('currentPage');
+                                  $.mobile.loading( "show", {
+  text: "Freeing up space",
+  textVisible: true,
+  theme: "b"
+  
+});
+          location.reload(true);
+          
+          
+});  
+}); 
+
+$(document).delegate('#messageitems', 'pageshow', function (){
+        var typingTimer;                //timer identifier
+var doneTypingInterval = 1000;  //time in ms, 5 second for example
+var $input = $(this).find('input[data-type="search"]');
+
+//on keyup, start the countdown
+$input.on('keyup', function () {
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(doneTyping, doneTypingInterval);
+});
+
+//on keydown, clear the countdown 
+$input.on('keydown', function () {
+  clearTimeout(typingTimer);
+});
+
+//user is "finished typing," do something
+function doneTyping () {
+ document.activeElement.blur();
+ }
+    window.sessionStorage.setItem('currentPage', 'index.html');
+$.mobile.loading( "show", {
+  text: "Loading messag list",
+  textVisible: true,
+  theme: "b"
+  
+});
+    
+       var deviceuuid = localStorage.getItem('deviceuuid');
+	if (deviceuuid) {
+		
+	var dataString="deviceuuid="+deviceuuid;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/getmessages.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){
+            $.mobile.loading( "hide");
+			     if(data.newmessages == 'yes')				
+            { 
+                for (var i = 0; i < data.results.length; i++) { 
+                                                
+                      var messageTitle = data.results[i].title;
+                        var messageSubject = data.results[i].message;
+                    var messageId = data.results[i].id;
+                                                                                             
+                      $( "#messagelistviewer" ).append('<li data-href="#messageitems" data-id="'+messageId+'"><a href="#"><img src="img/messages-icon.png"><h2>'+messageTitle+'</h2><p>'+messageSubject+'</p></a></li>'); 
+                                                                  
+                        $('#messagelistviewer').listview('refresh').trigger('create');
+                    }
+                 
+                
+            } if(data.newmessages == 'no') {
+                
+                  $( "#messagelistviewer" ).append('<li data-href="#" data-icon="false"><a href="#"><img src="img/messages-icon.png"><h2>No Messages</h2><p>You have no notifications at this time.</p></a></li>'); 
+                $('#messagelistviewer').listview('refresh').trigger('create');
+            }
+            
+            }
+    });
+
+
+		
+	}
+    
+                $("#messagehome").on('click', function(e) {
+                      e.preventDefault();
+                       window.localStorage.removeItem('queryString');
+        window.localStorage.removeItem('dataValue');
+          var currentPage = window.sessionStorage.getItem('currentPage');
+          
+          $.mobile.navigate(currentPage, { transition: 'pop' });
+          window.sessionStorage.removeItem('currentPage');
+                                  $.mobile.loading( "show", {
+  text: "Freeing up space",
+  textVisible: true,
+  theme: "b"
+  
+});
+          location.reload(true);
+});
+    
+          $("#messageup").on('click', function() { 
+                  
+   $('html, body').stop().animate({ scrollTop : 0 }, 400);
+     });
+        $("#messagedown").on('click', function() { 
+                  
+     $('html, body').animate({scrollTop: '+=360px'}, 800);
+        $(this).removeClass('ui-btn-active');
+     });
+
+}); 
+$(document).delegate('#messagereader', 'pageshow', function (){
+var typingTimer;                //timer identifier
+var doneTypingInterval = 1000;  //time in ms, 5 second for example
+var $input = $(this).find('input[data-type="search"]');
+
+//on keyup, start the countdown
+$input.on('keyup', function () {
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(doneTyping, doneTypingInterval);
+});
+
+//on keydown, clear the countdown 
+$input.on('keydown', function () {
+  clearTimeout(typingTimer);
+});
+
+//user is "finished typing," do something
+function doneTyping () {
+ document.activeElement.blur();
+ }
+    $("#messageread").on('click', function(e) {
+                      e.preventDefault();
+                       window.localStorage.removeItem('queryString');
+        window.localStorage.removeItem('dataValue');
+          var currentPage = 'index.html';          
+          $.mobile.navigate(currentPage, { transition: 'pop' });
+          window.sessionStorage.removeItem('currentPage');
+                                  $.mobile.loading( "show", {
+  text: "Freeing up space",
+  textVisible: true,
+  theme: "b"
+  
+});
+          location.reload(true);
+});
+    
+              $("#messagesup").on('click', function() { 
+                  
+   $('html, body').stop().animate({ scrollTop : 0 }, 400);
+     });
+        $("#messagesdown").on('click', function() { 
+                  
+     $('html, body').animate({scrollTop: '+=360px'}, 800);
+        $(this).removeClass('ui-btn-active');
+     });
+
+}); 
+
+$(document).delegate('#startscreen', 'pageshow', function (){
+         /*START CHECK FOR NEW MESSAGES FUNCTION */
+    var deviceuuid = localStorage.getItem('deviceuuid');
+	if (deviceuuid) {
+		
+	var dataString="deviceuuid="+deviceuuid;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/checkalerts.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+               cordova.plugins.notification.badge.set(messageCount);  
+	            $('.notifications').show();
+               $('.notifications').text(messageCount); 
+                $('.gotonotifications').attr('href', '#messageitems')		             
+            } else {
+                
+                 var messageCount = "0";
+               cordova.plugins.notification.badge.set(messageCount);    
+	            $('.notifications').show();
+               $('.notifications').text(messageCount); 
+                 $('.gotonotifications').attr('href', '#')
+            }
+
+		
+                  }
+    });
+
+
+		
+	}    
+    /*END CHECK FOR NEW MESSAGES FUNCTION */ 
+    
+    
+    }); 
+

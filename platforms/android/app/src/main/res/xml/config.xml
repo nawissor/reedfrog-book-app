@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.reedfrog.shop" version="1.2.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="AppVersion">
+        <param name="android-package" value="uk.co.whiteoctober.cordova.AppVersion" />
+    </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="PushNotification">
+        <param name="android-package" value="com.adobe.phonegap.push.PushPlugin" />
+    </feature>
+    <feature name="LaunchMyApp">
+        <param name="android-package" value="nl.xservices.plugins.LaunchMyApp" />
+    </feature>
+    <feature name="FacebookConnectPlugin">
+        <param name="android-package" value="org.apache.cordova.facebook.ConnectPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <access origin="https://m.facebook.com" />
+    <access origin="https://graph.facebook.com" />
+    <access origin="https://api.facebook.com" />
+    <access origin="https://*.fbcdn.net" />
+    <access origin="https://*.akamaihd.net" />
+    <feature name="KochavaTrackerPlugin">
+        <param name="android-package" value="com.kochava.sdk.KochavaTrackerPlugin" />
+    </feature>
+    <feature name="UniversalLinks">
+        <param name="android-package" value="com.nordnetab.cordova.ul.UniversalLinksPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="SegmentCordovaPlugin">
+        <param name="android-package" value="com.segment.cordova.plugin.SegmentCordovaPlugin" />
+    </feature>
+    <feature name="Badge">
+        <param name="android-package" value="de.appplant.cordova.plugin.badge.Badge" />
+    </feature>
+    <name>Reedfrog</name>
+    <description>
+       Explore fashion from the world's leading fashion brands for women, men and kids. 
+    </description>
+    <author email="shutterman@iwanross.co.za" href="https://iwanross.co.za">
+        Iwan Ross
+    </author>
+    <content src="index.html" />
+    <universal-links>
+        <host name="reedfrog.com" scheme="https">
+            <path event="openWomensFashionPage" url="/women/" />
+            <path event="openMensFashionPage" url="/men/" />
+            <path event="openWeddingFashionPage" url="/weddings/" />
+            <path event="openKidsFashionPage" url="/kids/" />
+            <path event="openMessageItemsPage" url="/messageitems/" />
+            <path event="openWomensBags" url="/women/womens-bags.php" />
+            <path event="openWomensGlasses" url="/women/womens-glasses.php" />
+            <path event="openWomensHats" url="/women/womens-accessories.php" />
+            <path event="openWomensJewelry" url="/women/womens-jewelry.php" />
+            <path event="openWomensShoes" url="/women/womens-shoes.php" />
+            <path event="openWomensHealth" url="/women/womens-health.php" />
+            <path event="openWomensSkinCare" url="/women/womens-skincare.php" />
+            <path event="openWomensHairCare" url="/women/womens-haircare.php" />
+            <path event="openWomensActiveWear" url="/women/womens-activewear.php" />
+            <path event="openWomensBlouses" url="/women/womens-blouses.php" />
+            <path event="openWomensClothing" url="/women/womens-clothing.php" />
+            <path event="opemWomensDresses" url="/women/womens-dresses.php" />
+            <path event="opemWomensLingerie" url="/women/womens-lingerie.php" />
+            <path event="opemWomensPlusSize" url="/women/womens-plus-size.php" />
+            <path event="opemWomensSkirts" url="/women/womens-skirts.php" />
+            <path event="opemWomensSwimWear" url="/women/womens-swimwear.php" />
+            <path event="opemWomensTops" url="/women/womens-tops.php" />
+            <path event="openMensBelts" url="/men/belts-golves.php" />
+            <path event="openMensAccessories" url="/men/mens-accessories.php" />
+            <path event="openMensHats" url="/men/mens-hats.php" />
+            <path event="openMensShoes" url="/men/mens-bags-shoes.php" />
+            <path event="openMensWatches" url="/men/mens-watches.php" />
+            <path event="openMensActiveWear" url="/men/mens-activewear.php" />
+            <path event="openMensCycling" url="/men/mens-cycling.php" />
+            <path event="openMensCyclingShoes" url="/men/mens-cycling-shoes.php" />
+            <path event="openMensFishing" url="/men/mens-fishing.php" />
+            <path event="openMensGolf" url="/men/mens-golf.php" />
+            <path event="openMensHikingJackets" url="/men/mens-hiking-jackets.php" />
+            <path event="openMensHikingPants" url="/men/mens-hiking-pants.php" />
+            <path event="openMensHikingTees" url="/men/mens-hiking-tees.php" />
+            <path event="openMensHuntingGear" url="/men/mens-hunting-gear.php" />
+            <path event="openMensSkiing" url="/men/mens-skiing.php" />
+            <path event="openMensWatersports" url="/men/mens-watersports.php" />
+            <path event="openMensHoodies" url="/men/mens-hoodies.php" />
+            <path event="openMensJackets" url="/men/mens-jackets.php" />
+            <path event="openMensPants" url="/men/mens-pants.php" />
+            <path event="openMensParkas" url="/men/mens-parkas.php" />
+            <path event="openMensPolos" url="/men/mens-polos.php" />
+            <path event="openMensRompers" url="/men/mens-rompers.php" />
+            <path event="openMensShirts" url="/men/mens-shirts.php" />
+            <path event="openMensSwimwear" url="/men/mens-swimwear.php" />
+            <path event="openMensUnderwear" url="/men/mens-underwear.php" />
+            <path event="openWeddingAccessories" url="/weddings/wedding-accessories.php" />
+            <path event="openWeddingDresses" url="/weddings/wedding-dresses.php" />
+            <path event="openWeddingMother" url="/weddings/wedding-mother-bride.php" />
+            <path event="openWeddingShoes" url="/weddings/wedding-shoes.php" />
+            <path event="openFlowerGirls" url="/weddings/flower-girls.php" />
+            <path event="openMenSuits" url="/weddings/mens-suits.php" />
+            <path event="openMenClothing" url="/weddings/mens-clothing.php" />
+            <path event="openMensJewelry" url="/weddings/mens-jewelry.php" />
+            <path event="openWeddingGroom" url="/weddings/wedding-groom.php" />
+            <path event="openKidsClothing" url="/kids/clothing-sets.php" />
+            <path event="openKidsHoodies" url="/kids/hoodies-sweaters.php" />
+            <path event="openBoysPants" url="/kids/boys-pants.php" />
+            <path event="openBoysRompers" url="/kids/boys-rompers.php" />
+            <path event="openBoysShoes" url="/kids/boys-shoes.php" />
+            <path event="openBoysSports" url="/kids/boys-sports.php" />
+            <path event="openBoysTops" url="/kids/boys-tops.php" />
+            <path event="openGirlsClothingSets" url="/girls/clothing-sets.php" />
+            <path event="openGirlsDresses" url="/girls/clothing-dresses.php" />
+            <path event="openGirlsJewelry" url="/girls/girls-jewelry.php" />
+            <path event="openGirlsOnePiece" url="/girls/girls-one-piece.php" />
+            <path event="openGirlsSwimWear" url="/girls/girls-swimwear.php" />
+            <path event="openGirlsBags" url="/girls/girls-bags-shoes.php" />
+            <path event="openGirlsSports" url="/girls/girls-sports.php" />
+            <path event="openGirlsTops" url="/girls/girls-tops.php" />
+            <path event="openGirlsWedding" url="/girls/girls-wedding.php" />
+            <path event="openMaternityBottoms" url="/kids/maternity-bottoms.php" />
+            <path event="openMaternityDresses" url="/kids/maternity-dresses.php" />
+            <path event="openMaternityTops" url="/kids/maternity-tops.php" />
+            <path event="launchedAppFromLink" url="*" />
+        </host>
+    </universal-links>
+    <access origin="https://reedfrog.com" subdomains="true" />
+    <access origin="https://gloimg.drlcdn.com" subdomains="true" />
+    <access origin="https://rightinthebox.com" subdomains="true" />
+    <access origin="https://li0.rightinthebox.com" subdomains="true" />
+    <access origin="https://gloimg.zafcdn.com" subdomains="true" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
+    <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
+    <icon density="hdpi" src="www/res/icon/android/drawable-hdpi-icon.png" />
+    <icon density="xhdpi" src="www/res/icon/android/drawable-xhdpi-icon.png" />
+    <icon density="xxhdpi" src="www/res/icon/android/drawable-xxhdpi-icon.png" />
+    <icon density="xxxhdpi" src="www/res/icon/android/drawable-xxxhdpi-icon.png" />
+    <allow-intent href="market:*" />
+    <preference name="loglevel" value="DEBUG" />
+    <preference name="android-minSdkVersion" value="22" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="android-targetSdkVersion" value="29" />
+    <preference name="Orientation" value="default" />
+    <preference name="AndroidLaunchMode" value="singleInstance" />
+</widget>

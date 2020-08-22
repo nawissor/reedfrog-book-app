@@ -1,0 +1,80 @@
+{
+  "_from": "cordova-plugin-universal-link",
+  "_id": "cordova-plugin-universal-link@1.2.4",
+  "_inBundle": false,
+  "_integrity": "sha512-9+Ij9h7GoBJw9XxNGpbJEEE1I/4IvjuBRvPJKaIvEliB8yy1oTHeIQ3SqEmi08rhfTHZt8GFD6nVj352NsH44Q==",
+  "_location": "/cordova-plugin-universal-link",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-universal-link",
+    "name": "cordova-plugin-universal-link",
+    "escapedName": "cordova-plugin-universal-link",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#DEV:/",
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-universal-link/-/cordova-plugin-universal-link-1.2.4.tgz",
+  "_shasum": "52754dd17157b09800a74e7bb2e48d6bc16cd164",
+  "_spec": "cordova-plugin-universal-link",
+  "_where": "c:\\xampp\\htdocs\\apps\\reedfrog",
+  "author": {
+    "name": "Nikolay Demyankov for Nordnet Bank AB"
+  },
+  "bugs": {
+    "url": "https://github.com/gojob-1337/cordova-plugin-universal-link/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-universal-link",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "dependencies": {
+    "mkpath": ">=1.0.0",
+    "node-version-compare": ">=1.0.1",
+    "plist": ">=1.2.0",
+    "rimraf": ">=2.4",
+    "xcode": ">=2.0.0",
+    "xml2js": ">=0.4"
+  },
+  "deprecated": false,
+  "description": "Cordova plugin to add in your application support for Universal Links (iOS 9) and Deep Links (Android). Basically, open application through the link in the browser.",
+  "engines": [
+    {
+      "name": "cordova-ios",
+      "version": ">=3.8"
+    },
+    {
+      "name": "cordova-android",
+      "version": ">=4"
+    }
+  ],
+  "homepage": "https://github.com/gojob-1337/cordova-plugin-universal-link#readme",
+  "keywords": [
+    "cordova",
+    "links",
+    "universal",
+    "deep links",
+    "universal links",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android",
+    "ios",
+    "android"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-universal-link",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/gojob-1337/cordova-plugin-universal-link.git"
+  },
+  "version": "1.2.4"
+}

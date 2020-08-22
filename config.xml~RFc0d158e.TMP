@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.reedfrog.shop" version="1.1.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Reedfrog</name>
+    <description>
+        A fashion app. From your pocket to your closet. 
+    </description>
+    <author email="shutterman@iwanross.co.za" href="https://iwanross.co.za">
+        Iwan Ross
+    </author>
+    <content src="index.html" />
+      <preference name="DisallowOverscroll" value="true" />
+    <preference name="android-minSdkVersion" value="22" />
+     <preference name="android-targetSdkVersion" value="29" />
+    <preference name="Orientation" value="default" /> 
+    <preference name="AndroidLaunchMode" value="singleInstance" />
+           <plugin name="phonegap-plugin-push" source="npm" spec="~2.3.0">
+        <variable name="SENDER_ID" value="138306200011" />
+    </plugin>
+ <feature name="Custom URL scheme">
+    <param name="id" value="cordova-plugin-customurlscheme" />
+    <param name="url" value="https://github.com/EddyVerbruggen/Custom-URL-scheme.git" />
+    <variable name="URL_SCHEME" value="reedfrog" />
+  </feature>
+    //START UNIVERSAL LINKS SETUP
+<universal-links>
+ <host name="reedfrog.com" scheme="https">
+   <path url="/women/" event="openWomensFashionPage" />
+     <path url="/men/" event="openMensFashionPage" />
+     <path url="/weddings/" event="openWeddingFashionPage" />
+   <path url="/women/womens-bags.php" event="openWomensBags" />
+     <path url="/women/womens-glasses.php" event="openWomensGlasses" />
+     <path url="/women/womens-accessories.php" event="openWomensHats" />
+      <path url="/women/womens-jewelry.php" event="openWomensJewelry" />
+     <path url="/women/womens-shoes.php" event="openWomensShoes" />
+      <path url="/women/womens-health.php" event="openWomensHealth" />
+     <path url="/women/womens-skincare.php" event="openWomensSkinCare" />
+     <path url="/women/womens-haircare.php" event="openWomensHairCare" />
+     <path url="/women/womens-activewear.php" event="openWomensActiveWear" />
+     <path url="/women/womens-blouses.php" event="openWomensBlouses" />
+      <path url="/women/womens-clothing.php" event="openWomensClothing" />
+      <path url="/women/womens-dresses.php" event="opemWomensDresses" />
+     <path url="/women/womens-lingerie.php" event="opemWomensLingerie" />
+     <path url="/women/womens-plus-size.php" event="opemWomensPlusSize" />
+     <path url="/women/womens-skirts.php" event="opemWomensSkirts" />
+     <path url="/women/womens-swimwear.php" event="opemWomensSwimWear" />
+     <path url="/women/womens-tops.php" event="opemWomensTops" />
+      <path url="/men/belts-golves.php" event="openMensBelts" />
+      <path url="/men/mens-accessories.php" event="openMensAccessories" />
+     <path url="/men/mens-hats.php" event="openMensHats" />
+     <path url="/men/mens-bags-shoes.php" event="openMensShoes" />
+     <path url="/men/mens-watches.php" event="openMensWatches" />
+     <path url="/men/mens-activewear.php" event="openMensActiveWear" />
+     <path url="/men/mens-cycling.php" event="openMensCycling" />
+     <path url="/men/mens-cycling-shoes.php" event="openMensCyclingShoes" />
+     <path url="/men/mens-fishing.php" event="openMensFishing" />
+     <path url="/men/mens-golf.php" event="openMensGolf" />
+     <path url="/men/mens-hiking-jackets.php" event="openMensHikingJackets" />
+      <path url="/men/mens-hiking-pants.php" event="openMensHikingPants" />
+     <path url="/men/mens-hiking-tees.php" event="openMensHikingTees" />
+     <path url="/men/mens-hunting-gear.php" event="openMensHuntingGear" />
+     <path url="/men/mens-skiing.php" event="openMensSkiing" />
+     <path url="/men/mens-watersports.php" event="openMensWatersports" />
+     <path url="/men/mens-hoodies.php" event="openMensHoodies" />
+     <path url="/men/mens-jackets.php" event="openMensJackets" />
+     <path url="/men/mens-pants.php" event="openMensPants" />
+     <path url="/men/mens-parkas.php" event="openMensParkas" />
+      <path url="/men/mens-polos.php" event="openMensPolos" />
+      <path url="/men/mens-rompers.php" event="openMensRompers" />
+     <path url="/men/mens-shirts.php" event="openMensShirts" />
+      <path url="/men/mens-swimwear.php" event="openMensSwimwear" />
+      <path url="/men/mens-underwear.php" event="openMensUnderwear" />
+     <path url="/wedding/wedding-accessories.php" event="openWeddingAccessories" />
+     <path url="/wedding/wedding-dresses.php" event="openWeddingDresses" />
+    <path url="/wedding/wedding-mother-bride.php" event="openWeddingMother" />
+      <path url="/wedding/wedding-shoes.php" event="openWeddingShoes" />
+      <path url="/wedding/flower-girls.php" event="openFlowerGirls" />                                               
+    <path url="*" event="launchedAppFromLink" />
+ </host>
+</universal-links>
+    //END UNIVERSAL LINKS SETUP
+            <platform name="android">
+        <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
+        <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
+        <icon density="hdpi" src="www/res/icon/android/drawable-hdpi-icon.png" />
+        <icon density="xhdpi" src="www/res/icon/android/drawable-xhdpi-icon.png" />
+        <icon density="xxhdpi" src="www/res/icon/android/drawable-xxhdpi-icon.png" />
+        <icon density="xxxhdpi" src="www/res/icon/android/drawable-xxxhdpi-icon.png" />
+      </platform>
+    <access origin="https://reedfrog.com" subdomains="true" />
+    <access origin="https://gloimg.drlcdn.com" subdomains="true" />
+    <access origin="https://rightinthebox.com" subdomains="true" />
+    <access origin="https://rightinthebox.com" subdomains="true" />
+     <access origin="https://li0.rightinthebox.com" subdomains="true" />  
+    <access origin="https://gloimg.zafcdn.com" subdomains="true" />  
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+    </platform>
+</widget>

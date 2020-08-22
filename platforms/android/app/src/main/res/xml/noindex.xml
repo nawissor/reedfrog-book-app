@@ -1,0 +1,5 @@
+<search-engine xmlns:android="http://schemas.android.com/apk/res/android">
+    <noindex android:value="notification"/>
+    <noindex uri="https://reedfrog.com/messageitems/"/>
+    <noindex uriPrefix="https://reedfrog.com/messageitems/"/>
+</search-engine>
