@@ -48,7 +48,7 @@ KochavaTracker.configure(configMapObject);
 
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/checkalerts.php',
+        url: 'https://reedfrog.com/api/app/bookworm/checkalerts.php',
 		data: dataString,
 		dataType:'JSON',		
         success: function(data){			
@@ -137,7 +137,7 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
 
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/insertregid.php',
+        url: 'https://reedfrog.com/api/app/bookworm/insertregid.php',
         data: dataString,
 		dataType:'text',		
         success: function(data){
@@ -158,7 +158,7 @@ push.on('notification', function(data) {
 
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/checkalerts.php',
+        url: 'https://reedfrog.com/api/app/bookworm/checkalerts.php',
 		data: dataString,
 		dataType:'JSON',		
         success: function(data){			
@@ -238,7 +238,7 @@ window.Segment.track({
 
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/checkalerts.php',
+        url: 'https://reedfrog.com/api/app/bookworm/checkalerts.php',
 		data: dataString,
 		dataType:'JSON',		
         success: function(data){			
@@ -307,7 +307,7 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
 
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/insertregid.php',
+        url: 'https://reedfrog.com/api/app/bookworm/insertregid.php',
         data: dataString,
 		dataType:'text',		
         success: function(data){
@@ -345,7 +345,7 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
        
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/womens-fashion.php',
+        url: 'https://reedfrog.com/api/app/bookworm/womens-fashion.php',
         data: itemString,
 		dataType:'JSON',  
          beforeSend: function(){ 
@@ -410,7 +410,7 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
        
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/getmessage.php',
+        url: 'https://reedfrog.com/api/app/bookworm/getmessage.php',
         data: messageString,
 		dataType:'JSON',  
          beforeSend: function(){ 
@@ -487,7 +487,7 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
        
     $.ajax({
         type: "GET",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/search-function.php',
+        url: 'https://reedfrog.com/api/app/bookworm/search-function.php',
         data: searchString,
 		dataType:'JSON',  
          beforeSend: function(){ 
@@ -607,7 +607,7 @@ onlyDiscounts = sessionStorage.getItem('showdiscounts');
                  beforeSend: function(){
     $('.ajax-loader').css("visibility", "visible");
   },
-        url: 'https://reedfrog.com/api/app/search-function.php',
+        url: 'https://reedfrog.com/api/app/bookworm/search-function.php',
         data: searchString,
 		dataType:'JSON',  
      		success: function(data){
@@ -718,7 +718,7 @@ var searchString ="searchString="+value+"&page="+prevlink+"&discounts="+onlyDisc
        
     $.ajax({
         type: "GET",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/search-function.php',
+        url: 'https://reedfrog.com/api/app/bookworm/search-function.php',
         data: searchString,
 		dataType:'JSON',  
       success: function(data){           
@@ -1053,7 +1053,7 @@ $.mobile.loading( "show", {
 
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/getmessages.php',
+        url: 'https://reedfrog.com/api/app/bookworm/getmessages.php',
 		data: dataString,
 		dataType:'JSON',		
         success: function(data){
@@ -1170,7 +1170,7 @@ $(document).delegate('#startscreen', 'pageshow', function (){
 
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/checkalerts.php',
+        url: 'https://reedfrog.com/api/app/bookworm/checkalerts.php',
 		data: dataString,
 		dataType:'JSON',		
         success: function(data){			
