@@ -103,7 +103,7 @@ document.addEventListener("backbutton", onBackKeyDown, false);
 
 
 android: {
-senderID: "138306200011",
+senderID: "1002324375738",
 sound: true,
 vibrate: true,
 alert: true
@@ -345,14 +345,14 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
        
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/bookworm/womens-fashion.php',
+        url: 'https://reedfrog.com/api/app/bookworm/book-selector.php',
         data: itemString,
 		dataType:'JSON',  
          beforeSend: function(){ 
              
          },
 		success: function(data){
-            $(location).attr('href', '#fashionitems');   
+            $(location).attr('href', '#bookitems');   
 				   if(data.results.length > 1) {                    
                     $(".heading").text(dataTitle);
                     $(".mainheading").text(dataTitle);
@@ -846,7 +846,7 @@ $("#mensclothing").bind("expand", function () {
  });
        
 
-$(document).delegate('#fashionitems', 'pageshow', function (){
+$(document).delegate('#bookitems', 'pageshow', function (){
     $('.banner').addClass('searchbanner');
         var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example

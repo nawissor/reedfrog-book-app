@@ -103,7 +103,7 @@ document.addEventListener("backbutton", onBackKeyDown, false);
 
 
 android: {
-senderID: "138306200011",
+senderID: "1002324375738",
 sound: true,
 vibrate: true,
 alert: true

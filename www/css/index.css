@@ -26,16 +26,17 @@
     left: 100px;
     line-height: 72px;
     font-family: "Proxima Nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 35px;
+    font-size: 30px;
     color: #11999E;
     font-weight: 700;
+    white-space: nowrap;
 }
 
 .slogan {
     display: inline-block;
     position: absolute;
     left: 100px;
-    line-height: 130px;
+    line-height: 120px;
     font-family: "Proxima Nova", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 15px;
     color: #11999E;

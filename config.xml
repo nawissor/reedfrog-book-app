@@ -14,7 +14,7 @@
     <preference name="Orientation" value="default" /> 
     <preference name="AndroidLaunchMode" value="singleInstance" />
            <plugin name="phonegap-plugin-push" source="npm" spec="~2.3.0">
-        <variable name="SENDER_ID" value="138306200011" />
+        <variable name="SENDER_ID" value="1002324375738" />
     </plugin>
  <feature name="Custom URL scheme">
     <param name="id" value="cordova-plugin-customurlscheme" />
