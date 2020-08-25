@@ -1,5 +1,18 @@
     /*START HANDLE DEEP LINKING*/
-    
+  $.fn.stars = function() {
+    return $(this).each(function() {
+        // Get the value
+        var val = parseFloat($(this).html());
+        // Make sure that the value is in 0 - 5 range, multiply to get width
+        var size = Math.max(0, (Math.min(5, val))) * 16;
+        // Create stars holder
+        var $span = $('<span />').width(size);
+        // Replace the numerical value with stars
+        $(this).html($span);
+    });
+}
+  
+
     
     
     function handleOpenURL(url) {
@@ -570,6 +583,192 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
     
    //END SEARCH BUTTON CLICK EVENT
     
+     //START SEARCH BOOK TITLE BUTTON CLICK EVENT
+      $(".searchBookTitles").on('click', function(event){
+          event.preventDefault();
+          
+       $(this).addClass("ui-btn-active ui-state-persist");
+   var value = $('#searchbooktitle').val();  
+          if ($('#searchbooktitle').val() == '') {
+              $('.searchbooktitle').empty();
+              $('.searchbooktitle').append('Type a title');
+              $('.searchbooktitle').addClass('searchvalidate');              
+              return false;
+    }
+          var currentpos = $(this).data('href');
+        window.sessionStorage.setItem('currentPage', currentpos);
+       window.sessionStorage.setItem('searchString', value);
+          
+          $('.form-controls').hide();
+                        $.mobile.loading( "show", {
+  text: "Finding " +value,
+  textVisible: true,
+  theme: "b"
+  
+});
+
+             
+    $.ajax({
+        type: "GET",crossDomain: true, cache: false,
+        url: 'https://www.googleapis.com/books/v1/volumes?q=intitle:'+value+'&maxResults=40&key=AIzaSyAMFZg-K5UDcU5IFrn1KTLQl2g7QRFl5UQ',
+        dataType:'JSON',  
+         beforeSend: function(){ 
+             
+         },
+		success: function(data){
+            var newvalue = sessionStorage.getItem('searchString');
+             $(location).attr('href', '#booklistitems');
+            $('.banner').addClass('searchbanner');
+             $(".heading").text(newvalue);
+            $(".mainheading").text(newvalue);
+              if(data.totalItems > 1) {                    
+                   
+                      for (var i = 0; i < data.items.length; i++) {	                        
+                        
+                var itemName = data.items[i].volumeInfo.title;
+                          
+                          var imageUrl = "img/no-image.png";
+                          if (data.items[i].volumeInfo.imageLinks !== undefined) {
+                var imageUrl = data.items[i].volumeInfo.imageLinks.thumbnail;
+                          }
+                  var productUrl = data.items[i].volumeInfo.infoLink;
+                          var averageRating = data.items[i].volumeInfo.averageRating;
+                          var publishedDate = data.items[i].volumeInfo.publishedDate;
+                          var auThor = data.items[i].volumeInfo.authors[0];                         
+                        var itemPrice = "NOT FOR SALE";
+                          var currencyCode = " ";
+                          if (data.items[i].saleInfo.listPrice !== undefined) {
+                   var itemPrice = parseFloat(data.items[i].saleInfo.listPrice.amount).toFixed(2);
+                              var currencyCode = data.items[i].saleInfo.listPrice.currencyCode;
+                          }
+                          
+                      $( "#booklistview" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2><p style='color: black; font-size: 14px; font-weight: 500;'>"+currencyCode + ""+ " " + "" + itemPrice + "</p><p>Publishded: "+publishedDate+" </p><p>Author: "+auThor+" </p><p><span class='stars'>"+averageRating+"</span></p></a></li>");
+                        
+                          
+
+                        
+                    }
+                  
+            
+            
+          
+				 
+            }   
+            
+             if(data.totalItems == 0)
+            {
+            var value = $('#searchbooktitle').val(); 
+                $(".heading").text(value);
+                    $(".mainheading").text(value);
+             $( "#booklistview" ).append('<li id="no-results" style="margin:auto; text-align: center;">[No results found for '+value+']</li>');
+                                
+               
+            }
+            
+                
+            
+                }
+		
+    });
+      	
+ 
+        });
+    
+   //END BOOK TITLE SEARCH BUTTON CLICK EVENT
+    
+     //START SEARCH BOOK AUTHOR BUTTON CLICK EVENT
+      $(".searchBookAuthors").on('click', function(event){
+          event.preventDefault();
+          
+       $(this).addClass("ui-btn-active ui-state-persist");
+   var value = $('#searchbookAuthor').val();  
+                    if ($('#searchbookAuthor').val() == '') {
+              $('.searchbookAuthor').empty();
+              $('.searchbookAuthor').append('Type an Author name');
+              $('.searchbookAuthor').addClass('searchvalidate');              
+              return false;
+    }
+          var currentpos = $(this).data('href');
+        window.sessionStorage.setItem('currentPage', currentpos);
+       window.sessionStorage.setItem('searchString', value);
+          
+          $('.form-controls').hide();
+                        $.mobile.loading( "show", {
+  text: "Finding " +value,
+  textVisible: true,
+  theme: "b"
+  
+});
+
+             
+    $.ajax({
+        type: "GET",crossDomain: true, cache: false,
+        url: 'https://www.googleapis.com/books/v1/volumes?q=inauthor:'+value+'&maxResults=40& key=AIzaSyAMFZg-K5UDcU5IFrn1KTLQl2g7QRFl5UQ',
+        dataType:'JSON',  
+         beforeSend: function(){ 
+             
+         },
+		success: function(data){
+            var newvalue = sessionStorage.getItem('searchString');
+             $(location).attr('href', '#booklistitems');
+            $('.banner').addClass('searchbanner');
+             $(".heading").text(newvalue);
+            $(".mainheading").text(newvalue);
+              if(data.totalItems > 1) {                    
+                   
+                      for (var i = 0; i < data.items.length; i++) {	                        
+                        
+                var itemName = data.items[i].volumeInfo.title;
+                      var imageUrl = "img/no-image.png";
+                          if (data.items[i].volumeInfo.imageLinks !== undefined) {
+                var imageUrl = data.items[i].volumeInfo.imageLinks.thumbnail;
+                          }
+                  var productUrl = data.items[i].volumeInfo.infoLink;
+                          var averageRating = data.items[i].volumeInfo.averageRating;
+                          var publishedDate = data.items[i].volumeInfo.publishedDate;
+                          var auThor = data.items[i].volumeInfo.authors[0];                         
+                        var itemPrice = "NOT FOR SALE";
+                           var currencyCode = " ";
+                          if (data.items[i].saleInfo.listPrice !== undefined) {
+                   var itemPrice = parseFloat(data.items[i].saleInfo.listPrice.amount).toFixed(2);
+                var currencyCode = data.items[i].saleInfo.listPrice.currencyCode;
+                          }
+                          
+                      $( "#booklistview" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2><p style='color: black; font-size: 14px; font-weight: 500;'>"+currencyCode + ""+ " " + "" + itemPrice + "</p><p>Publishded: "+publishedDate+" </p><p>Author: "+auThor+" </p><p><span class='stars'>"+averageRating+"</span></p></a></li>");
+                        
+                          
+
+                        
+                    }
+                  
+            
+            
+          
+				 
+            }   
+            
+             if(data.totalItems == 0)
+            {
+            var value = $('#searchbookAuthor').val(); 
+                $(".heading").text(value);
+                    $(".mainheading").text(value);
+             $( "#booklistview" ).append('<li id="no-results" style="margin:auto; text-align: center;">[No results found for '+value+']</li>');
+                                
+               
+            }
+            
+                
+            
+                }
+		
+    });
+      	
+ 
+        });
+    
+   //END BOOK AUTHOR SEARCH BUTTON CLICK EVENT
+    
+    
                         //START NEXT NAVIGATION FROM HERE ONWARDS  FUNCTION FOR EASY VISIBILITY
           $('#nextbutton').on('click', '#nextBtn', function(event){ 
                   $.mobile.loading( "show", {
@@ -806,6 +1005,19 @@ var searchString ="searchString="+value+"&page="+prevlink+"&discounts="+onlyDisc
         $(this).removeClass('ui-btn-active');
      });
     
+      $("#booksup").on('click', function() { 
+                  
+   $('html, body').stop().animate({ scrollTop : 0 }, 400);
+     });
+        $("#booksdown").on('click', function() { 
+                  
+     $('html, body').animate({scrollTop: '+=360px'}, 800);
+        $(this).removeClass('ui-btn-active');
+     });
+    
+    
+    
+    
         $("#upscroll").on('click', function() { 
                   
    $('html, body').stop().animate({ scrollTop : 0 }, 400);
@@ -821,6 +1033,12 @@ var searchString ="searchString="+value+"&page="+prevlink+"&discounts="+onlyDisc
  
     
 $("#mensclothing").bind("expand", function () {
+    var listHeight = $('#mensclothing li').length;
+    var scrollHeight = (listHeight * 40);
+        $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
+       });
+    
+    $("#bookscollapse").bind("expand", function () {
     var listHeight = $('#mensclothing li').length;
     var scrollHeight = (listHeight * 40);
         $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
@@ -902,7 +1120,7 @@ $(this).delegate('input[data-type="search"]', 'keyup', function() {
 
 
 
-search
+
 
 $(document).delegate('#search', 'pageshow', function (){
     
@@ -1160,6 +1378,31 @@ function doneTyping () {
      });
 
 }); 
+
+  $(document).delegate('#booklistitems', 'pageshow', function (){
+        $(function() {
+    $('span.stars').stars();
+});
+  $('#booklistview').listview('refresh').trigger('create'); 
+            $(document).on('click', '.backbtn', function(){ 
+                window.localStorage.removeItem('queryString');
+        window.localStorage.removeItem('dataValue');
+          var currentPage = window.sessionStorage.getItem('currentPage');
+          
+          $.mobile.navigate(currentPage, { transition: 'pop' });
+          window.sessionStorage.removeItem('currentPage');
+                                  $.mobile.loading( "show", {
+  text: "Freeing up space",
+  textVisible: true,
+  theme: "b"
+  
+});
+          location.reload(true);
+          
+          
+}); 
+      
+});
 
 $(document).delegate('#startscreen', 'pageshow', function (){
          /*START CHECK FOR NEW MESSAGES FUNCTION */

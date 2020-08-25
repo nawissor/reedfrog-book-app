@@ -111,17 +111,26 @@
            </ul>
         
 </div>
-            <div data-role="collapsible" data-theme="a" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u" data-iconpos="right">
+            <div id="bookscollapse" data-role="collapsible" data-theme="a" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u" data-iconpos="right">
 <h2><img style="vertical-align: middle; padding-right:10px; " src="img/books-info.png" />Find Book Info</h2>
 <form class="form-controls">
     <ul data-inset="true" data-role="listview">
         <li class="ui-field-contain">
-            <label for="name2">Search for a title</label>
-            <input type="text" name="search" id="searchitems" value="" placeholder="Show me..." data-clear-btn="true">
+            <label class="searchbooktitle" for="searchbooktitle">Find books by title</label>
+            <input required type="text" name="search" id="searchbooktitle" value="" placeholder="Show me..." data-clear-btn="true">
         </li>
             <li class="ui-field-contain">
               <div class="ui-grid-solo">
-	<div class="ui-block-a"><button id="searchbtn" data-href="#search" type="v" data-theme="b">Search</button></div>
+	<div class="ui-block-a"><button class="searchBookTitles" data-href="#romance" type="v" data-theme="b">Search</button></div>
+</div>           
+        </li>
+                <li class="ui-field-contain">
+            <label class="searchbookAuthor" for="searchbookAuthor">Find books by Author</label>
+            <input type="text" name="search" id="searchbookAuthor" value="" placeholder="Show me..." data-clear-btn="true">
+        </li>
+            <li class="ui-field-contain">
+              <div class="ui-grid-solo">
+	<div class="ui-block-a"><button class="searchBookAuthors" data-href="#romance" type="v" data-theme="b">Search</button></div>
 </div>           
         </li>
   
@@ -324,6 +333,7 @@
 </div>
   <div data-position="fixed" data-role="footer" data-id="myfooter" data-theme="b" >
       <div data-role="navbar" data-iconpos="left">
+          
 	<ul>
 		<li><a href="#weddings" data-transition="flip" data-icon="star" data-corners="false" data-shadow="false" data-iconshadow="true"  data-inline="true" class="ui-btn ui-btn-up-a ui-btn-inline">Wedding</a></li>
 		<li><a href="#women" data-transition="flip" data-icon="star" data-corners="false" data-shadow="false" data-iconshadow="true"  data-inline="true" class="ui-btn ui-btn-up-a ui-btn-inline">Women</a></li>
@@ -427,6 +437,41 @@
         </div>
         
         <!--END DYNAMIC SEARCH PAGE-->
+        
+          <!--START DYNAMIC BOOK RESULTS PAGE -->
+        <div data-role="page" id="booklistitems" data-theme="d">    
+  <div data-role="header" class="fixed-header" data-theme="b" data-add-back-btn="true">
+    <button data-icon="back" class="backbtn">Back</button><h1 class="mainheading"></h1>
+    <a class="searchbtn" data-transition="slidedown" href="#search" data-icon="search">Search</a>
+</div>
+    <div class="banner">
+        <img src="img/fscreen-logo.png" width="72" height="72"/>
+        <div class="heading"></div>
+        <div class="slogan">From your pocket to your bookshelf</div>
+    </div>
+  
+    <div class="searchlistitems" data-role="content">
+        <p></p>
+              
+   <ul id="booklistview" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Filter results..."  data-filter-theme="b"></ul>    
+      
+                     
+            
+             
+    </div>
+  
+  <div class="fixed-content" data-role="footer"  data-id="myfooter" data-theme="b" >
+      <div data-role="navbar" data-iconpos="left">
+	<ul>
+		        <li><a id="booksdown" href="#" data-transition="flip" data-icon="arrow-d" data-corners="false" data-shadow="false" data-iconshadow="true"  data-inline="true" class="ui-btn ui-btn-up-a ui-btn-inline">Scroll down</a></li>
+        		<li><a id="booksup" href="#" data-transition="flip" data-icon="arrow-u" data-corners="false" data-shadow="false" data-iconshadow="true"  data-inline="true" class="ui-btn ui-btn-up-a ui-btn-inline">Back to Top</a></li>
+      	</ul>
+</div>
+  </div>
+        </div>
+        
+        <!--END DYNAMIC BOOK SEARCH PAGE-->
+
 
          <!--START DYNAMIC ITEMS PAGE-->
                 <div data-role="page" id="bookitems" data-theme="d">    
