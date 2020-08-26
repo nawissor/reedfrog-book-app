@@ -1038,11 +1038,13 @@ $("#mensclothing").bind("expand", function () {
         $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
        });
     
-    $("#bookscollapse").bind("expand", function () {
+    $(".bookscollapse").bind("expand", function () {
     var listHeight = $('#mensclothing li').length;
     var scrollHeight = (listHeight * 40);
         $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
        });
+    
+    
     
  $("#kidsclothing").bind("expand", function () {
     var listHeight = $('#kidsclothing li').length;

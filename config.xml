@@ -111,12 +111,8 @@
         <icon density="xxxhdpi" src="www/res/icon/android/drawable-xxxhdpi-icon.png" />
       </platform>
     <access origin="https://reedfrog.com" subdomains="true" />
-    <access origin="https://gloimg.drlcdn.com" subdomains="true" />
-    <access origin="https://rightinthebox.com" subdomains="true" />
-    <access origin="https://rightinthebox.com" subdomains="true" />
-     <access origin="https://li0.rightinthebox.com" subdomains="true" />  
-    <access origin="https://gloimg.zafcdn.com" subdomains="true" />  
-    <allow-intent href="http://*/*" />
+    <access origin="https://covers.booktopia.com.au" subdomains="true" />
+      <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
     <allow-intent href="sms:*" />
