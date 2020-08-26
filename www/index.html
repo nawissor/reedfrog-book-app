@@ -68,6 +68,58 @@
     </div><!-- /navbar -->
 </div><!-- /footer -->
 </div>
+                <!--START CHILDREN BOOKS PAGE-->
+        <div data-role="page" id="children" data-rel="back" data-theme="d"> 
+      <div data-role="header" data-theme="b">
+    <a href="index.html" data-direction="up" data-transition="fade" data-icon="home">Home</a>
+    <h1>Crime & Mystery</h1>
+     <a data-transition="slidedown" href="#search" data-icon="search">Search</a>
+</div>
+    <div  class="banner">
+        <img src="img/fscreen-logo.png" width="72" height="72"/>
+        <div class="heading">Crime & Mystery</div>
+        <div class="slogan">From your pocket to your bookshelf</div>
+    </div>
+  
+<div data-role="content">
+<div data-role="collapsible" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u" data-theme="b" data-content-theme="a" data-iconpos="right">
+<h2><img style="vertical-align: middle; padding-right:10px; " src="img/books-icon.png" />Crime Books</h2>
+<ul class="catselector" data-role="listview" data-filter="false">
+    <li class="acc-selector" data-title="Caper & Cozy" data-ajax="false" data-href="#mystery" data-id="rfds_books_caper"><a href="">Caper & Cozy</a></li>
+    <li class="acc-selector" data-title="Detective" data-ajax="false" data-href="#mystery" data-id="rfds_books_crime_detective"><a href="">Detective</a></li>
+     <li class="acc-selector" data-title="Legal" data-ajax="false" data-href="#mystery" data-id="rfds_books_mystery_legal"><a href="">Legal</a></li>
+    <li class="acc-selector" data-title="Police" data-ajax="false" data-href="#mystery" data-id="rfds_books_mystery_police"><a href="">Police Prcedural</a></li>
+      <li class="acc-selector" data-title="PI" data-ajax="false" data-href="#mystery" data-id="rfds_books_private_detective"><a href="">Private Detective</a></li>
+      <li class="acc-selector" data-title="Suspense" data-ajax="false" data-href="#mystery" data-id="rfds_books_mystery_suspense"><a href="">Suspense</a></li> 
+   
+    </ul>
+</div>
+    <div data-role="collapsible" data-theme="b" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u" data-content-theme="a" data-iconpos="right">
+<h2><img style="vertical-align: middle; padding-right:10px; " src="img/books-icon.png" />Thriller</h2>
+<ul class="catselector" data-role="listview" data-filter="false">
+     <li class="acc-selector" data-title="Crime Thriller" data-ajax="false" data-href="#mystery"  data-id="rfds_books_crime_thriller"><a href="">Crime Thriller</a></li>
+    <li class="acc-selector" data-title="Political Thriller" data-ajax="false" data-href="#mystery" data-id="rfds_books_political_thriller"><a href="">Political Thriller</a></li>
+        <li class="acc-selector" data-title="Psychological" data-ajax="false" data-href="#mystery" data-id="rfds_books_thriller_psychological"><a href="">Psychological Thriller</a></li>        
+    <li class="acc-selector" data-title="Spy & Action" data-ajax="false" data-href="#mystery" data-id="rfds_books_spy_action_thriller"><a href="">Spy & Action Thriller</a></li>
+    </ul>        
+</div>
+        <div data-role="collapsible" data-theme="b" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u" data-content-theme="a" data-iconpos="right">
+<h2><img style="vertical-align: middle; padding-right:10px; " src="img/books-icon.png" />Popular Mystery</h2>
+<ul class="catselector" data-role="listview" data-filter="false">
+        <li class="acc-selector" data-title="Most Popular" data-ajax="false" data-href="#mystery" data-id="rfds_books_popular_mystery"><a href="">All Popular Mystery</a></li>
+    <li class="acc-selector" data-title="Popular Sale" data-ajax="false" data-href="#mystery" data-id="rfds_books_popular_discounted"><a href="">Popular Discounted</a></li>
+           </ul>
+        
+</div>
+</div>
+<div data-role="footer" data-position="fixed" data-theme="b" data-type="footer">
+    <div class="footerbar" data-role="navbar"><ul>
+            <li><a class="advsearch" data-href="#children" href="#advsearch" data-icon="arrow-u"  data-iconpos="top" data-iconshadow="false" data-transition="slideup" >Advanced Search</a></li>
+          </ul>
+    </div><!-- /navbar -->
+</div><!-- /footer -->            
+</div><!--END CHILDREN BOOKS PAGE-->
+        
         <!--START ROMANCE BOOKS PAGE-->
         <div data-role="page" id="romance" data-rel="back" data-theme="d"> 
       <div data-role="header" data-theme="b">
@@ -110,40 +162,12 @@
     <li class="acc-selector" data-title="Popular Discounted" data-ajax="false" data-href="#romance" data-id="rfds_books_popular_romance_discounted"><a href="">Popular Discounted</a></li>
            </ul>
         
-</div>
-            <div id="bookscollapse" data-role="collapsible" data-theme="a" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u" data-iconpos="right">
-<h2><img style="vertical-align: middle; padding-right:10px; " src="img/books-info.png" />Find Book Info</h2>
-<form class="form-controls">
-    <ul data-inset="true" data-role="listview">
-        <li class="ui-field-contain">
-            <label class="searchbooktitle" for="searchbooktitle">Find books by title</label>
-            <input required type="text" name="search" id="searchbooktitle" value="" placeholder="Show me..." data-clear-btn="true">
-        </li>
-            <li class="ui-field-contain">
-              <div class="ui-grid-solo">
-	<div class="ui-block-a"><button class="searchBookTitles" data-href="#romance" type="v" data-theme="b">Search</button></div>
-</div>           
-        </li>
-                <li class="ui-field-contain">
-            <label class="searchbookAuthor" for="searchbookAuthor">Find books by Author</label>
-            <input type="text" name="search" id="searchbookAuthor" value="" placeholder="Show me..." data-clear-btn="true">
-        </li>
-            <li class="ui-field-contain">
-              <div class="ui-grid-solo">
-	<div class="ui-block-a"><button class="searchBookAuthors" data-href="#romance" type="v" data-theme="b">Search</button></div>
-</div>           
-        </li>
-  
-    </ul>
-</form>     
-</div>
+</div> 
 </div>
 <div data-role="footer" data-position="fixed" data-theme="b" data-type="footer">
-    <div class="footerbar" data-role="navbar" data-iconpos="left" >
-        <ul>
-            <li><a href="https://iwanross.co.za/app-feedback/" target="_blank" data-icon="info">Powered By IR</a></li>
-            <li><a class="gotonotifications" data-icon="bars" href="#" data-transition="slideup">Messages<span class="notifications">10</span></a></li>
-        </ul>
+    <div class="footerbar" data-role="navbar"><ul>
+            <li><a class="advsearch" href="#advsearch" data-href="#romance" data-icon="arrow-u"  data-iconpos="top" data-iconshadow="false" data-transition="slideup" >Advanced Search</a></li>
+          </ul>
     </div><!-- /navbar -->
 </div><!-- /footer -->
 </div><!--END ROMANCE BOOKS PAGE-->
@@ -191,13 +215,34 @@
            </ul>
         
 </div>
-            <div id="crimecollapsed" data-role="collapsible" data-theme="a" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u" data-iconpos="right">
-<h2><img style="vertical-align: middle; padding-right:10px; " src="img/books-info.png" />Find Book Info</h2>
-<form class="form-controls">
+</div>
+<div data-role="footer" data-position="fixed" data-theme="b" data-type="footer">
+    <div class="footerbar" data-role="navbar"><ul>
+            <li><a class="advsearch" data-href="#mystery" href="#advsearch" data-icon="arrow-u"  data-iconpos="top" data-iconshadow="false" data-transition="slideup" >Advanced Search</a></li>
+          </ul>
+    </div><!-- /navbar -->
+</div><!-- /footer -->
+</div><!--END MYSTERY BOOKS PAGE-->
+
+          <!--START ADVANCED SEARCH PAGE-->
+        <div data-role="page" id="advsearch" data-rel="back" data-theme="d"> 
+      <div data-role="header" data-theme="b">
+      <button data-icon="back" class="backbtn">Back</button>
+    <h1>Search</h1>
+     <a data-transition="slidedown" href="#search" data-icon="search">Search</a>
+</div>
+    <div  class="banner">
+        <img src="img/fscreen-logo.png" width="72" height="72"/>
+        <div class="heading">Find books</div>
+        <div class="slogan">Find book titles or authors fast</div>
+    </div>
+  
+<div data-role="content">
+  <form class="form-controls">
     <ul data-inset="true" data-role="listview">
         <li class="ui-field-contain">
             <label class="searchbooktitle" for="searchbooktitle">Find books by title</label>
-            <input required type="text" name="search" id="searchbooktitle" value="" placeholder="Show me..." data-clear-btn="true">
+            <input type="text" name="search" id="searchbooktitle" value="" placeholder="Show me..." data-clear-btn="true">
         </li>
             <li class="ui-field-contain">
               <div class="ui-grid-solo">
@@ -217,7 +262,6 @@
     </ul>
 </form>     
 </div>
-</div>
 <div data-role="footer" data-position="fixed" data-theme="b" data-type="footer">
     <div class="footerbar" data-role="navbar" data-iconpos="left" >
         <ul>
@@ -226,9 +270,9 @@
         </ul>
     </div><!-- /navbar -->
 </div><!-- /footer -->
-</div><!--END MYSTERY BOOKS PAGE-->
-
-                
+</div>
+        
+        <!--END ADVANCED SEARCH PAGE-->             
         
         <!--START SEARCH PAGE-->
         <div data-role="page" id="search" data-rel="back" data-theme="d"> 
@@ -292,8 +336,7 @@
     </div>
   
     <div class="searchlistitems" data-role="content">
-        <p></p>
-              
+        <p></p>              
    <ul id="searchlistview" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Filter results..."  data-filter-theme="b"></ul>    
       
                      
@@ -324,7 +367,7 @@
           <!--START DYNAMIC BOOK RESULTS PAGE -->
         <div data-role="page" id="booklistitems" data-theme="d">    
   <div data-role="header" class="fixed-header" data-theme="b" data-add-back-btn="true">
-    <button data-icon="back" class="backbtn">Back</button><h1 class="mainheading"></h1>
+    <a class="backbutton" data-transition="slidedown" data-href="#advsearch" href="#advsearch" data-icon="back">Back</a><h1 class="mainheading"></h1>
     <a class="searchbtn" data-transition="slidedown" href="#search" data-icon="search">Search</a>
 </div>
     <div class="banner">

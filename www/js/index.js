@@ -583,6 +583,8 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
     
    //END SEARCH BUTTON CLICK EVENT
     
+    
+    
      //START SEARCH BOOK TITLE BUTTON CLICK EVENT
       $(".searchBookTitles").on('click', function(event){
           event.preventDefault();
@@ -592,7 +594,7 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
           if ($('#searchbooktitle').val() == '') {
               $('.searchbooktitle').empty();
               $('.searchbooktitle').append('Type a title');
-              $('.searchbooktitle').addClass('searchvalidate');              
+              $('.secrimearchbooktitle').addClass('searchvalidate');              
               return false;
     }
           var currentpos = $(this).data('href');
@@ -682,7 +684,7 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
           
        $(this).addClass("ui-btn-active ui-state-persist");
    var value = $('#searchbookAuthor').val();  
-                    if ($('#searchbookAuthor').val() == '') {
+        if ($('#searchbookAuthor').val() == '') {
               $('.searchbookAuthor').empty();
               $('.searchbookAuthor').append('Type an Author name');
               $('.searchbookAuthor').addClass('searchvalidate');              
@@ -1038,11 +1040,11 @@ $("#bookscollapse").bind("expand", function () {
         $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
        });   
     
-    $("#crimecollapsed").bind("expand", function () {
-    var listHeight = $('#crimecollapsed li').length;
-    var scrollHeight = (listHeight * 80);
-        $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
+    $(".advsearch").bind("click", function () {
+ var currentPage = $(this).data('href');
+        sessionStorage.setItem('currentPage', currentPage);
        });  
+ 
  });
        
 
@@ -1125,6 +1127,48 @@ $input.on('keydown', function () {
 function doneTyping () {
  document.activeElement.blur();
  }
+    
+    }); 
+
+
+$(document).delegate('#advsearch', 'pageshow', function (){
+    
+    var typingTimer;                //timer identifier
+var doneTypingInterval = 1000;  //time in ms, 5 second for example
+var $input = $('#searchitems');
+
+//on keyup, start the countdown
+$input.on('keyup', function () {
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(doneTyping, doneTypingInterval);
+});
+
+//on keydown, clear the countdown 
+$input.on('keydown', function () {
+  clearTimeout(typingTimer);
+});
+
+//user is "finished typing," do something
+function doneTyping () {
+ document.activeElement.blur();
+ }
+    
+          $(document).on('click', '.backbtn', function(){
+          
+                    window.sessionStorage.removeItem('searchString');
+                       var currentPage = window.sessionStorage.getItem('currentPage');          
+          $.mobile.navigate(currentPage, { transition: 'slidedown' });
+          window.sessionStorage.removeItem('currentPage');
+                                  $.mobile.loading( "show", {
+  text: "Freeing up space",
+  textVisible: true,
+  theme: "b"
+  
+});
+          location.reload(true);
+          
+          
+});  
     
     }); 
 $(document).delegate('#searchlistitems', 'pageshow', function (){
@@ -1366,14 +1410,12 @@ function doneTyping () {
     $('span.stars').stars();
 });
   $('#booklistview').listview('refresh').trigger('create'); 
-            $(document).on('click', '.backbtn', function(){ 
-                window.localStorage.removeItem('queryString');
-        window.localStorage.removeItem('dataValue');
-          var currentPage = window.sessionStorage.getItem('currentPage');
-          
-          $.mobile.navigate(currentPage, { transition: 'pop' });
-          window.sessionStorage.removeItem('currentPage');
-                                  $.mobile.loading( "show", {
+            $(document).on('click', '.backbutton', function(){ 
+                window.localStorage.clear();
+        window.sessionStorage.clear('dataValue');
+          var currentPage = $(this).data('href');          
+          $(location).attr('href', currentPage);
+         $.mobile.loading( "show", {
   text: "Freeing up space",
   textVisible: true,
   theme: "b"
