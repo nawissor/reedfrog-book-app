@@ -1032,37 +1032,17 @@ var searchString ="searchString="+value+"&page="+prevlink+"&discounts="+onlyDisc
     
  
     
-$("#mensclothing").bind("expand", function () {
-    var listHeight = $('#mensclothing li').length;
-    var scrollHeight = (listHeight * 40);
+$("#bookscollapse").bind("expand", function () {
+    var listHeight = $('#bookscollapse li').length;
+    var scrollHeight = (listHeight * 80);
         $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
-       });
-    
-    $(".bookscollapse").bind("expand", function () {
-    var listHeight = $('#mensclothing li').length;
-    var scrollHeight = (listHeight * 40);
-        $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
-       });
-    
-    
-    
- $("#kidsclothing").bind("expand", function () {
-    var listHeight = $('#kidsclothing li').length;
-    var scrollHeight = (listHeight * 40);
-      $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
        });   
-   $("#menswedding").bind("expand", function () {
-    var listHeight = $('#menswedding li').length;
-    var scrollHeight = (listHeight * 40);
-      $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
-       });     
-      $("#womensfashion").bind("expand", function () {
-    var listHeight = $('#womensfashion li').length;
-    var scrollHeight = (listHeight * 40);
-      $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
+    
+    $("#crimecollapsed").bind("expand", function () {
+    var listHeight = $('#crimecollapsed li').length;
+    var scrollHeight = (listHeight * 80);
+        $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
        });  
-    
-    
  });
        
 
