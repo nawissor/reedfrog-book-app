@@ -112,6 +112,7 @@
       </platform>
     <access origin="https://reedfrog.com" subdomains="true" />
     <access origin="https://covers.booktopia.com.au" subdomains="true" />
+    <access origin="https://booktopia.kh4ffx.net" subdomains="true" />    
       <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
