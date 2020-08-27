@@ -1040,6 +1040,12 @@ $("#bookscollapse").bind("expand", function () {
         $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
        });   
     
+    $("#youngadultcollection").bind("expand", function () {
+    var listHeight = $('#youngadultcollection li').length;
+    var scrollHeight = (listHeight * 80);
+        $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
+       });  
+    
     $(".advsearch").bind("click", function () {
  var currentPage = $(this).data('href');
         sessionStorage.setItem('currentPage', currentPage);
