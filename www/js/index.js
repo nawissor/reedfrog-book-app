@@ -298,7 +298,7 @@ window.localStorage.setItem("firstRun", 1);
                                   $.mobile.loading( "show", {
   text: "Freeing up space",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
           location.reload(true);
@@ -348,7 +348,7 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
                         $.mobile.loading( "show", {
   text: "Fetching " +dataValue,
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
 
@@ -416,7 +416,7 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
       $.mobile.loading( "show", {
   text: "Fetching Message",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
     var messageString ="messageid="+value;   
@@ -492,7 +492,7 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
                         $.mobile.loading( "show", {
   text: "Finding " +value,
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
 
@@ -605,7 +605,7 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
                         $.mobile.loading( "show", {
   text: "Finding " +value,
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
 
@@ -636,7 +636,10 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
                   var productUrl = data.items[i].volumeInfo.infoLink;
                           var averageRating = data.items[i].volumeInfo.averageRating;
                           var publishedDate = data.items[i].volumeInfo.publishedDate;
-                          var auThor = data.items[i].volumeInfo.authors[0];                         
+                          var auThor = "Unknown Ahthor";
+                          if (data.items[i].volumeInfo.authors !== undefined) {
+                          var auThor = data.items[i].volumeInfo.authors[0];     
+                          }
                         var itemPrice = "NOT FOR SALE";
                           var currencyCode = " ";
                           if (data.items[i].saleInfo.listPrice !== undefined) {
@@ -698,7 +701,7 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
                         $.mobile.loading( "show", {
   text: "Finding " +value,
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
 
@@ -776,7 +779,7 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
                   $.mobile.loading( "show", {
                   text: "Loading next set",
                   textVisible: true,
-                  theme: "b"
+                  theme: "a"
                   }); 
                        event.preventDefault();
                 if ( sessionStorage.reloadAfterBackClick ) {
@@ -889,7 +892,7 @@ onlyDiscounts = sessionStorage.getItem('showdiscounts');
                     $.mobile.loading( "show", {
   text: "Loading previous set",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });    
 
@@ -1099,7 +1102,7 @@ $(this).delegate('input[data-type="search"]', 'keyup', function() {
                                   $.mobile.loading( "show", {
   text: "Freeing up space",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
           location.reload(true);
@@ -1168,7 +1171,7 @@ function doneTyping () {
                                   $.mobile.loading( "show", {
   text: "Freeing up space",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
           location.reload(true);
@@ -1236,7 +1239,7 @@ $(this).delegate('input[data-type="search"]', 'keyup', function() {
                                   $.mobile.loading( "show", {
   text: "Freeing up space",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
           location.reload(true);
@@ -1259,7 +1262,7 @@ $(this).delegate('input[data-type="search"]', 'keyup', function() {
                                   $.mobile.loading( "show", {
   text: "Freeing up space",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
           location.reload(true);
@@ -1292,7 +1295,7 @@ function doneTyping () {
 $.mobile.loading( "show", {
   text: "Loading messag list",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
     
@@ -1346,7 +1349,7 @@ $.mobile.loading( "show", {
                                   $.mobile.loading( "show", {
   text: "Freeing up space",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
           location.reload(true);
@@ -1390,10 +1393,10 @@ function doneTyping () {
           var currentPage = 'index.html';          
           $.mobile.navigate(currentPage, { transition: 'pop' });
           window.sessionStorage.removeItem('currentPage');
-                                  $.mobile.loading( "show", {
+$.mobile.loading( "show", {
   text: "Freeing up space",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
           location.reload(true);
@@ -1418,13 +1421,12 @@ function doneTyping () {
   $('#booklistview').listview('refresh').trigger('create'); 
             $(document).on('click', '.backbutton', function(){ 
                 window.localStorage.clear();
-        window.sessionStorage.clear('dataValue');
-          var currentPage = $(this).data('href');          
+                  var currentPage = $(this).data('href');          
           $(location).attr('href', currentPage);
          $.mobile.loading( "show", {
   text: "Freeing up space",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
           location.reload(true);
