@@ -393,7 +393,7 @@
   
 <div data-role="content">
 <form class="form-controls">
-    <ul data-inset="true" data-role="listview" data-theme="c">
+    <ul data-inset="true" data-role="listview">
         <li class="ui-field-contain">
             <label for="name2">Search</label>
             <input type="text" name="search" id="searchitems" value="" placeholder="Show me..." data-clear-btn="true">
@@ -405,16 +405,15 @@
         </li>
                  <li class="ui-field-contain">
               <label>
-        <input id="showdiscounts" type="checkbox" value="yes" name="checkbox-0">Show me only discounted items
+        <input data-theme="b" id="showdiscounts" type="checkbox" value="yes" name="checkbox-0">Show me only discounted items
     </label>          
-        </li>
-       
+        </li>       
     </ul>
 </form>
 
 
 </div>
-  <div data-position="fixed" data-role="footer" data-id="myfooter" data-theme="a" >
+  <div data-position="fixed" data-role="footer" data-id="myfooter" data-theme="c" >
       <div data-role="navbar" data-iconpos="left">
 	<ul>
 		<li><a href="#weddings" data-transition="flip" data-icon="star" data-corners="false" data-shadow="false" data-iconshadow="true"  data-inline="true" class="ui-btn ui-btn-up-a ui-btn-inline">Wedding</a></li>
@@ -519,6 +518,15 @@
         <p></p>
    <ul id="listviewers" data-role="listview" data-theme="d" data-inset="true" data-filter="true" data-filter-placeholder="Filter results..." data-filter-theme="a">       
 </ul>
+    
+    <div id="booksnavibuttons" class="ui-grid-a">
+                                <div id="booksbackbutton" class="ui-block-a"></div>
+                                <div id="booksnextbutton" class="ui-block-b"></div>
+                        </div>
+                    
+        
+     
+                       <div id="booksnavbar" class="navibar"></div>
  </div>
   
   <div class="fixed-content" data-role="footer" data-id="myfooter" data-theme="c" >

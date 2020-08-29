@@ -389,6 +389,29 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
                                   
                         
                     }
+                       
+                                 if(data.navigation.totalItems > 59) {
+                    
+                     var nextlink = data.navigation.nextPageUri;
+                     var prevlink = data.navigation.prevPageUri; 
+                    window.sessionStorage.setItem('nextpageUri', nextlink);
+                    window.sessionStorage.setItem('prevpageUri', prevlink);
+                          $( "#booksbackbutton" ).append('<a id="prevbooksBtn" class="ui-disabled" href="#" data-role="button"  data-icon="arrow-l" data-iconpos="left">Back</a>'); 
+                          $( "#booksnextbutton" ).append('<a id="nextbooksBtn"  href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
+                                         
+       
+                      }
+            
+            if(data.navigation.totalItems) {
+                
+                       var firstItem = data.navigation.firstItem;
+                        var lastItem = data.navigation.lastItem;
+                          var totalItems = data.navigation.totalItems;
+                       
+                   $( "#booksnavbar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " " + dataTitle); 
+                    
+       
+                      }
 				 
             }
             
@@ -406,6 +429,114 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
 
         });
     /*END LIST ITEM CLICK FUNCTION*/
+    
+       //START BOOKS LIST NEXT NAVIGATION FROM HERE ONWARDS  FUNCTION FOR EASY VISIBILITY
+          $('#booksnextbutton').on('click', '#nextbooksBtn', function(event){ 
+                  $.mobile.loading( "show", {
+                  text: "Loading next set",
+                  textVisible: true,
+                  theme: "a"
+                  }); 
+                       event.preventDefault();
+                if ( sessionStorage.reloadAfterBackClick ) {
+                sessionStorage.removeItem('reloadAfterBackClick');
+                    
+                }
+                sessionStorage.reloadAfterBooksNextClick = true;
+                window.location.reload();
+            
+    } 
+);
+    $( function () {
+        if ( sessionStorage.reloadAfterBooksNextClick ) {            
+        var value =  window.localStorage.getItem('dataValue');             
+        var queryString = window.localStorage.getItem('queryString');                        
+        var nextlink = window.sessionStorage.getItem('nextpageUri');        
+                    $('.banner').addClass('searchbanner');
+                    $(".heading").text(value);
+                    $(".mainheading").text(value);
+       var searchString ="queryString="+queryString+"&page="+nextlink;       
+    $.ajax({        
+        type: "POST",crossDomain: true, cache: false,
+                 beforeSend: function(){
+    $('.ajax-loader').css("visibility", "visible");
+  },
+        url: 'https://reedfrog.com/api/app/bookworm/book-selector.php',
+        data: searchString,
+		dataType:'JSON',  
+     		success: function(data){
+           
+             $('#searchlistview').empty();
+            $('#navcontrols').empty();
+             if(data.results.length > 1) {                          
+				    for (var i = 0; i < data.results.length; i++) {                                   
+                      var itemName = data.results[i].product_name;
+                        var originalprice = parseFloat(data.results[i].original_price).toFixed(2);
+                        var itemPrice = parseFloat(data.results[i].current_price).toFixed(2);
+                        
+                        if(originalprice<itemPrice) {
+                            var pricediv = "<p style='color: orangered; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        } else {
+                            pricediv = "<p style='display: none; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        }
+                        var imageUrl = data.results[i].image_url;
+                        var productUrl = data.results[i].product_url;
+                                               
+                      $( "#listviewers" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2>"+pricediv+"<p style='color: black; font-size: 14px; font-weight: 500;'>"+itemPrice+"</p></a></li>"); 
+                        $('#listviewers').listview('refresh').trigger('create');
+                  
+                    
+                                  
+                        
+                    }
+				 
+            }
+            
+                if(data.navigation.nextPageUri) {
+                    
+                   var nextlink = data.navigation.nextPageUri;
+                     var prevlink = data.navigation.prevPageUri; 
+                    var currentPage = data.navigation.catPage;
+                    var totalPages = data.navigation.totalPages;
+                    window.sessionStorage.setItem('nextpageUri', nextlink);
+                    window.sessionStorage.setItem('prevpageUri', prevlink);    
+                          $( "#booksbackbutton" ).append('<a id="prevbooksBtn" href="#"  data-role="button" data-icon="arrow-l" data-iconpos="left">Back</a>'); 
+                          $( "#booksnextbutton" ).append('<a id="nextbooksBtn" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
+                    
+                                         $('#booksbackbutton').trigger('create');
+                    $('#booksnextbutton').trigger('create');
+       if (currentPage === totalPages){$('#nextbooksBtn').prop('disabled', true);$('#nextbooksBtn').addClass("ui-disabled");}
+                      }
+            
+              if(data.navigation.totalItems) {
+                
+                       var firstItem = data.navigation.firstItem;
+                        var lastItem = data.navigation.lastItem;
+                          var totalItems = data.navigation.totalItems;
+                       
+                   $( "#booksnavbar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " " + value); 
+                    
+       
+                      }
+            
+                       
+             if(!data.results)
+            {
+				
+			  alert('no results returned');
+			
+               
+            }
+        }
+		
+    });
+     sessionStorage.reloadAfterBooksNextClick = false;
+      }
+    } 
+);
+  
+     
+                     //END BOOKS NEXT NAVIGATION FUNCTION
     
     /*START MESSAGES LIST ITEM CLICK FUNCTION*/
     $('#messagelistviewer').on('click', 'li', function(){
@@ -1098,8 +1229,9 @@ $(this).delegate('input[data-type="search"]', 'keyup', function() {
           var currentPage = window.sessionStorage.getItem('currentPage');
           
           $.mobile.navigate(currentPage, { transition: 'pop' });
-          window.sessionStorage.removeItem('currentPage');
-                                  $.mobile.loading( "show", {
+          window.localStorage.clear();
+          window.sessionStorage.clear();
+       $.mobile.loading( "show", {
   text: "Freeing up space",
   textVisible: true,
   theme: "a"
