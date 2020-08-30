@@ -428,7 +428,108 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
       	
 
         });
-    /*END LIST ITEM CLICK FUNCTION*/
+    /*END BOOKS LIST ITEM CLICK FUNCTION*/
+    
+    //START BOOKS BACK NAVIGATION FROM HERE ONWARDS FUNCTION FOR EASY VISIBILITY
+            $('#booksbackbutton').on('click', '#prevbooksBtn', function(event){
+                    $.mobile.loading( "show", {
+  text: "Loading previous set",
+  textVisible: true,
+  theme: "a"
+  
+});    
+
+                       event.preventDefault();
+                if ( sessionStorage.reloadAfterBooksNextClick ) {
+                sessionStorage.removeItem('reloadAfterBooksNextClick');
+                }
+        sessionStorage.reloadAfterBooksBackClick = true;
+        window.location.reload();
+    });
+    $( function () {
+        if ( sessionStorage.reloadAfterBooksBackClick ) {         
+          var value =  window.localStorage.getItem('dataValue');             
+        var queryString = window.localStorage.getItem('queryString'); 
+        var prevlink = (window.sessionStorage.getItem('prevpageUri')-1);
+            $('.banner').addClass('searchbanner');
+            $(".heading").text(value);
+            $(".mainheading").text(value);
+        
+     var searchString ="queryString="+queryString+"&page="+prevlink;    
+       
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/bookworm/book-selector.php',
+       data: searchString,
+		dataType:'JSON',  
+      success: function(data){           
+             $('#searchlistview').empty();
+            $('#navcontrols').empty();
+             if(data.results.length > 1) {             
+                  for (var i = 0; i < data.results.length; i++) {
+                                                
+                      var itemName = data.results[i].product_name;
+                        var originalprice = parseFloat(data.results[i].original_price).toFixed(2);
+                        var itemPrice = parseFloat(data.results[i].current_price).toFixed(2);
+                        
+                        if(originalprice<itemPrice) {
+                            var pricediv = "<p style='color: orangered; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        } else {
+                            pricediv = "<p style='display: none; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        }
+                        var imageUrl = data.results[i].image_url;
+                        var productUrl = data.results[i].product_url;
+                                               
+                      $( "#listviewers" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2>"+pricediv+"<p style='color: black; font-size: 14px; font-weight: 500;'>"+itemPrice+"</p></a></li>"); 
+                        $('#listviewers').listview('refresh').trigger('create');           
+                    }			 
+            }
+            
+                if(data.navigation.nextPageUri) {
+                    
+                    
+                   var nextlink = data.navigation.nextPageUri;
+                     var prevlink = data.navigation.prevPageUri; 
+                    var currentPage = data.navigation.catPage;
+                   
+                    window.sessionStorage.setItem('nextpageUri', nextlink);
+                    window.sessionStorage.setItem('prevpageUri', prevlink); 
+                    
+        $( "#booksbackbutton" ).append('<a id="prevbooksBtn" href="#"  data-role="button" data-icon="arrow-l" data-iconpos="left">Back</a>'); 
+        $( "#booksnextbutton" ).append('<a id="nextbooksBtn" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>');                 
+        $('#booksbackbutton').trigger('create');
+        $('#booksnextbutton').trigger('create');
+        if (currentPage === 0) { $('#prevbooksBtn').prop('disabled', true);$('#prevbooksBtn').addClass("ui-disabled");}                    
+                      }            
+            
+              if(data.navigation.totalItems) {                
+                       var firstItem = data.navigation.firstItem;
+                        var lastItem = data.navigation.lastItem;
+                          var totalItems = data.navigation.totalItems;
+                       
+                   $( "#booksnavbar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " " + value); 
+                    
+       
+                      }
+            
+                       
+             if(!data.results)
+            {
+				
+			  alert('no results returned');
+			
+               
+            }
+        }
+		
+    });
+     sessionStorage.reloadAfterBooksBackClick = false;
+      }
+    } 
+);
+  
+     
+                     //END BOOKS BACK NAVIGATION 
     
        //START BOOKS LIST NEXT NAVIGATION FROM HERE ONWARDS  FUNCTION FOR EASY VISIBILITY
           $('#booksnextbutton').on('click', '#nextbooksBtn', function(event){ 
@@ -438,8 +539,8 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
                   theme: "a"
                   }); 
                        event.preventDefault();
-                if ( sessionStorage.reloadAfterBackClick ) {
-                sessionStorage.removeItem('reloadAfterBackClick');
+                if ( sessionStorage.reloadAfterBooksBackClick ) {
+                sessionStorage.removeItem('reloadAfterBooksBackClick');
                     
                 }
                 sessionStorage.reloadAfterBooksNextClick = true;
@@ -464,8 +565,7 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
         url: 'https://reedfrog.com/api/app/bookworm/book-selector.php',
         data: searchString,
 		dataType:'JSON',  
-     		success: function(data){
-           
+     		success: function(data){           
              $('#searchlistview').empty();
             $('#navcontrols').empty();
              if(data.results.length > 1) {                          
@@ -483,10 +583,7 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
                         var productUrl = data.results[i].product_url;
                                                
                       $( "#listviewers" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2>"+pricediv+"<p style='color: black; font-size: 14px; font-weight: 500;'>"+itemPrice+"</p></a></li>"); 
-                        $('#listviewers').listview('refresh').trigger('create');
-                  
-                    
-                                  
+                        $('#listviewers').listview('refresh').trigger('create');                             
                         
                     }
 				 
@@ -500,10 +597,9 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
                     var totalPages = data.navigation.totalPages;
                     window.sessionStorage.setItem('nextpageUri', nextlink);
                     window.sessionStorage.setItem('prevpageUri', prevlink);    
-                          $( "#booksbackbutton" ).append('<a id="prevbooksBtn" href="#"  data-role="button" data-icon="arrow-l" data-iconpos="left">Back</a>'); 
-                          $( "#booksnextbutton" ).append('<a id="nextbooksBtn" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
-                    
-                                         $('#booksbackbutton').trigger('create');
+                  $( "#booksbackbutton" ).append('<a id="prevbooksBtn" href="#"  data-role="button" data-icon="arrow-l" data-iconpos="left">Back</a>'); 
+                  $( "#booksnextbutton" ).append('<a id="nextbooksBtn" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>');                 
+                    $('#booksbackbutton').trigger('create');
                     $('#booksnextbutton').trigger('create');
        if (currentPage === totalPages){$('#nextbooksBtn').prop('disabled', true);$('#nextbooksBtn').addClass("ui-disabled");}
                       }
@@ -537,6 +633,9 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
   
      
                      //END BOOKS NEXT NAVIGATION FUNCTION
+    
+    
+    
     
     /*START MESSAGES LIST ITEM CLICK FUNCTION*/
     $('#messagelistviewer').on('click', 'li', function(){
