@@ -10,10 +10,7 @@
         // Replace the numerical value with stars
         $(this).html($span);
     });
-}
-  
-
-    
+}    
     
     function handleOpenURL(url) {
         
@@ -1272,6 +1269,8 @@ $("#bookscollapse").bind("expand", function () {
     var scrollHeight = (listHeight * 80);
         $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
        });   
+       
+    
     
     $("#youngadultcollection").bind("expand", function () {
     var listHeight = $('#youngadultcollection li').length;
@@ -1706,5 +1705,201 @@ $(document).delegate('#startscreen', 'pageshow', function (){
     /*END CHECK FOR NEW MESSAGES FUNCTION */ 
     
     
+    });
+
+/*START DYNAMICALLY LOAD COUNT BUBBLES */
+
+$(document).delegate('#inspiration', 'pageshow', function (){
+       
+   var dataSource = $("ul").find('[data-source]');
+  
+   
+    dataSource.each(function(idx, li) {
+    var qs = $(li).data('source');
+   	var dataString="dataSource="+qs;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/bookworm/countbubbles.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+                $(li).text(messageCount);
+           		             
+            } else {
+                
+                 var messageCount = "0";
+                $(li).text(messageCount);
+            
+            }
+
+		
+                  }
+    });
+        
+});
+                
+
+
+    
     }); 
+
+$(document).delegate('#fiction', 'pageshow', function (){
+       
+   var dataSource = $("ul").find('[data-source]');
+  
+   
+    dataSource.each(function(idx, li) {
+    var qs = $(li).data('source');
+    var dataString="dataSource="+qs;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/bookworm/countbubbles.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+                $(li).text(messageCount);
+           		             
+            } else {
+                
+                 var messageCount = "0";
+                $(li).text(messageCount);
+            
+            }
+
+		
+                  }
+    });
+        
+});
+                
+
+
+    
+    }); 
+
+$(document).delegate('#children', 'pageshow', function (){
+       
+   var dataSource = $("ul").find('[data-source]');
+  
+   
+    dataSource.each(function(idx, li) {
+    var qs = $(li).data('source');
+   	var dataString="dataSource="+qs;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/bookworm/countbubbles.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+                $(li).text(messageCount);
+           		             
+            } else {
+                
+                 var messageCount = "0";
+                $(li).text(messageCount);
+            
+            }
+
+		
+                  }
+    });
+        
+});
+                
+
+
+    
+    }); 
+
+$(document).delegate('#romance', 'pageshow', function (){
+       
+   var dataSource = $("ul").find('[data-source]');
+  
+   
+    dataSource.each(function(idx, li) {
+    var qs = $(li).data('source');
+   	var dataString="dataSource="+qs;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/bookworm/countbubbles.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+                $(li).text(messageCount);
+           		             
+            } else {
+                
+                 var messageCount = "0";
+                $(li).text(messageCount);
+            
+            }
+
+		
+                  }
+    });
+        
+});
+                
+
+
+    
+    }); 
+
+$(document).delegate('#mystery', 'pageshow', function (){
+       
+   var dataSource = $("ul").find('[data-source]');
+  
+   
+    dataSource.each(function(idx, li) {
+    var qs = $(li).data('source');
+   	var dataString="dataSource="+qs;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/bookworm/countbubbles.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+                $(li).text(messageCount);
+           		             
+            } else {
+                
+                 var messageCount = "0";
+                $(li).text(messageCount);
+            
+            }
+
+		
+                  }
+    });
+        
+});
+                
+
+
+    
+    }); 
+
+
+/*END DYNAMICALLY LOAD COUNT BUBBLES */
+
 
