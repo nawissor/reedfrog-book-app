@@ -1937,6 +1937,46 @@ $(document).delegate('#horror', 'pageshow', function (){
     
     }); 
 
+$(document).delegate('#cookbooks', 'pageshow', function (){
+       
+   var dataSource = $("ul").find('[data-source]');
+  
+   
+    dataSource.each(function(idx, li) {
+    var qs = $(li).data('source');
+   	var dataString="dataSource="+qs;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/bookworm/countbubbles.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+                $(li).text(messageCount);
+           		             
+            } else {
+                
+                 var messageCount = "0";
+                $(li).text(messageCount);
+            
+            }
+
+		
+                  }
+    });
+        
+});
+                
+
+
+    
+    }); 
+
+
+
 
 
 /*END DYNAMICALLY LOAD COUNT BUBBLES */
