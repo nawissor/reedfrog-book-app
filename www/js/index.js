@@ -372,7 +372,7 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
                         var originalprice = parseFloat(data.results[i].original_price).toFixed(2);
                         var itemPrice = parseFloat(data.results[i].current_price).toFixed(2);
                         
-                        if(originalprice<itemPrice) {
+                        if(itemPrice<originalprice) {
                             var pricediv = "<p style='color: orangered; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
                         } else {
                             pricediv = "<p style='display: none; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
@@ -705,16 +705,17 @@ sessionStorage.setItem('showdiscounts', onlyDiscounts);
 
 
        var value = $('#searchitems').val();   
+                 if ($('#searchitems').val() == '') {
+              $('.seatchbooksbytitle').empty();
+              $('.seatchbooksbytitle').append('Provide a search string');
+              $('.seatchbooksbytitle').addClass('searchvalidate');              
+              return false;
+    }
           var currentpos = $(this).data('href');
         window.sessionStorage.setItem('currentPage', currentpos);
        window.sessionStorage.setItem('searchString', value);
           
-          var eventMapObject = {};
-eventMapObject["Search String"] = "'" + value + "'";
-eventMapObject["Discounts"] = "'" + onlyDiscounts + "'";
-KochavaTracker.sendEventMapObject("User Search", eventMapObject);
-          
-          
+
           $('.form-controls').hide();
                         $.mobile.loading( "show", {
   text: "Finding " +value,
@@ -739,7 +740,7 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
             $('.banner').addClass('searchbanner');
              $(".heading").text(newvalue);
             $(".mainheading").text(newvalue);
-              if(data.results.length > 1) {                    
+              if(data.results.length > 0) {                    
                    
                       for (var i = 0; i < data.results.length; i++) {	                        
                         
@@ -747,7 +748,7 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
                         var originalprice = parseFloat(data.results[i].original_price).toFixed(2);
                         var itemPrice = parseFloat(data.results[i].current_price).toFixed(2);
                         
-                        if(originalprice<itemPrice) {
+                        if(itemPrice<originalprice) {
                             var pricediv = "<p style='color: orangered; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
                         } else {
                             pricediv = "<p style='display: none; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
@@ -769,8 +770,8 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
                      var prevlink = data.navigation.prevPageUri; 
                     window.sessionStorage.setItem('nextpageUri', nextlink);
                     window.sessionStorage.setItem('prevpageUri', prevlink);
-                          $( "#backbutton" ).append('<a id="prevBtn" href="#" data-role="button"  data-icon="arrow-l" data-iconpos="left">Back</a>'); 
-                          $( "#nextbutton" ).append('<a id="nextBtn" class="ui-btn-active" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
+                          $( "#backbutton" ).append('<a id="prevBtn" href="#" class="ui-disabled" data-role="button"  data-icon="arrow-l" data-iconpos="left">Back</a>'); 
+                          $( "#nextbutton" ).append('<a id="nextBtn" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
                           $('#prevBtn').prop('disabled', true);                 
        
                       }
@@ -781,7 +782,7 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
                         var lastItem = data.navigation.lastItem;
                           var totalItems = data.navigation.totalItems;
                        
-                   $( "#navibar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " " + value); 
+                   $( "#navibar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " for " + newvalue); 
                     
        
                       }
@@ -809,6 +810,231 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
         });
     
    //END SEARCH BUTTON CLICK EVENT
+    
+     //START NEXT NAVIGATION FROM HERE ONWARDS  FUNCTION FOR EASY VISIBILITY
+          $('#nextbutton').on('click', '#nextBtn', function(event){ 
+                  $.mobile.loading( "show", {
+                  text: "Loading next set",
+                  textVisible: true,
+                  theme: "a"
+                  }); 
+                       event.preventDefault();
+                if ( sessionStorage.reloadAfterBackClick ) {
+                sessionStorage.removeItem('reloadAfterBackClick');
+                    
+                }
+                sessionStorage.reloadAfterNextClick = true;
+                window.location.reload();
+            
+    } 
+);
+    $( function () {
+        if ( sessionStorage.reloadAfterNextClick ) {            
+        var value =  window.sessionStorage.getItem('searchString'); 
+                      var onlyDiscounts = "";
+          if (sessionStorage.getItem('showdiscounts'))
+{
+    
+onlyDiscounts = sessionStorage.getItem('showdiscounts');
+
+}
+        var nextlink = window.sessionStorage.getItem('nextpageUri');        
+                    $('.banner').addClass('searchbanner');
+                    $(".heading").text(value);
+                    $(".mainheading").text(value);
+       var searchString ="searchString="+value+"&page="+nextlink+"&discounts="+onlyDiscounts;       
+    $.ajax({        
+        type: "GET",crossDomain: true, cache: false,
+                 beforeSend: function(){
+    $('.ajax-loader').css("visibility", "visible");
+  },
+        url: 'https://reedfrog.com/api/app/bookworm/search-function.php',
+        data: searchString,
+		dataType:'JSON',  
+     		success: function(data){
+           
+             $('#searchlistview').empty();
+            $('#navcontrols').empty();
+             if(data.results.length > 1) {                          
+				    for (var i = 0; i < data.results.length; i++) {                                   
+                      var itemName = data.results[i].product_name;
+                        var originalprice = parseFloat(data.results[i].original_price).toFixed(2);
+                        var itemPrice = parseFloat(data.results[i].current_price).toFixed(2);
+                        
+                        if(originalprice<itemPrice) {
+                            var pricediv = "<p style='color: orangered; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        } else {
+                            pricediv = "<p style='display: none; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        }
+                        var imageUrl = data.results[i].image_url;
+                        var productUrl = data.results[i].product_url;
+                                               
+                      $( "#searchlistview" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2>"+pricediv+"<p style='color: black; font-size: 14px; font-weight: 500;'>"+itemPrice+"</p></a></li>"); 
+                        $('#searchlistview').listview('refresh').trigger('create');
+                  
+                    
+                                  
+                        
+                    }
+				 
+            }
+            
+                if(data.navigation.nextPageUri) {
+                    
+                   var nextlink = data.navigation.nextPageUri;
+                     var prevlink = data.navigation.prevPageUri; 
+                    var currentPage = data.navigation.catPage;
+                    var totalPages = data.navigation.totalPages;
+                    window.sessionStorage.setItem('nextpageUri', nextlink);
+                    window.sessionStorage.setItem('prevpageUri', prevlink);    
+                          $( "#backbutton" ).append('<a id="prevBtn" href="#" data-role="button" data-icon="arrow-l" data-iconpos="left">Back</a>'); 
+                          $( "#nextbutton" ).append('<a id="nextBtn" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
+                    $('#backbutton').trigger('create');
+                    $('#nextbutton').trigger('create');
+       if (currentPage === totalPages){$('#nextBtn').prop('disabled', true);$('#nextBtn').addClass("ui-disabled");}
+                      }
+            
+              if(data.navigation.totalItems) {
+                
+                       var firstItem = data.navigation.firstItem;
+                        var lastItem = data.navigation.lastItem;
+                          var totalItems = data.navigation.totalItems;
+                       
+                   $( "#navibar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " for " + value); 
+                    
+       
+                      }
+            
+                       
+             if(!data.results)
+            {
+				
+			  alert('no results returned');
+			
+               
+            }
+        }
+		
+    });
+     sessionStorage.reloadAfterNextClick = false;
+      }
+    } 
+);
+  
+     
+                     //END NEXT NAVIGATION 
+    
+    //START BACK NAVIGATION FROM HERE ONWARDS  FUNCTION FOR EASY VISIBILITY
+            $('#backbutton').on('click', '#prevBtn', function(event){
+                    $.mobile.loading( "show", {
+  text: "Loading previous set",
+  textVisible: true,
+  theme: "a"
+  
+});    
+
+                       event.preventDefault();
+                if ( sessionStorage.reloadAfterNextClick ) {
+                sessionStorage.removeItem('reloadAfterNextClick');
+                }
+                        sessionStorage.reloadAfterBackClick = true;
+        window.location.reload();
+    });
+    $( function () {
+        if ( sessionStorage.reloadAfterBackClick ) {         
+        var value =  window.sessionStorage.getItem('searchString'); 
+                                  var onlyDiscounts = "";
+          if (sessionStorage.getItem('showdiscounts'))
+{
+    
+onlyDiscounts = sessionStorage.getItem('showdiscounts');
+
+}
+        var prevlink = (window.sessionStorage.getItem('prevpageUri')-1);
+            $('.banner').addClass('searchbanner');
+             $(".heading").text(value);
+        $(".mainheading").text(value);
+        
+var searchString ="searchString="+value+"&page="+prevlink+"&discounts="+onlyDiscounts;   
+       
+    $.ajax({
+        type: "GET",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/bookworm/search-function.php',
+        data: searchString,
+		dataType:'JSON',  
+      success: function(data){           
+             $('#searchlistview').empty();
+            $('#navcontrols').empty();
+             if(data.results.length > 1) {             
+                  for (var i = 0; i < data.results.length; i++) {
+                                                
+                      var itemName = data.results[i].product_name;
+                        var originalprice = parseFloat(data.results[i].original_price).toFixed(2);
+                        var itemPrice = parseFloat(data.results[i].current_price).toFixed(2);
+                        
+                        if(originalprice<itemPrice) {
+                            var pricediv = "<p style='color: orangered; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        } else {
+                            pricediv = "<p style='display: none; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        }
+                        var imageUrl = data.results[i].image_url;
+                        var productUrl = data.results[i].product_url;
+                                               
+                      $( "#searchlistview" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2>"+pricediv+"<p style='color: black; font-size: 14px; font-weight: 500;'>"+itemPrice+"</p></a></li>"); 
+                        $('#searchlistview').listview('refresh').trigger('create');         
+                    }			 
+            }
+            
+                if(data.navigation.nextPageUri) {
+                    
+                    
+                   var nextlink = data.navigation.nextPageUri;
+                     var prevlink = data.navigation.prevPageUri; 
+                    var currentPage = data.navigation.catPage;
+                   
+                    window.sessionStorage.setItem('nextpageUri', nextlink);
+                    window.sessionStorage.setItem('prevpageUri', prevlink); 
+                    
+                                 $( "#backbutton" ).append('<a id="prevBtn" href="#" data-role="button" data-icon="arrow-l" data-iconpos="left">Back</a>'); 
+                          $( "#nextbutton" ).append('<a id="nextBtn" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
+                    $('#backbutton').trigger('create');
+                    $('#nextbutton').trigger('create');
+        if (currentPage === 0) { $('#prevBtn').prop('disabled', true);$('#prevBtn').addClass("ui-disabled");}
+                    
+                      }
+            
+            
+              if(data.navigation.totalItems) {
+                
+                       var firstItem = data.navigation.firstItem;
+                        var lastItem = data.navigation.lastItem;
+                          var totalItems = data.navigation.totalItems;
+                       
+                   $( "#navibar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " for " + value); 
+                    
+       
+                      }
+            
+                       
+             if(!data.results)
+            {
+				
+			  alert('no results returned');
+			
+               
+            }
+        }
+		
+    });
+     sessionStorage.reloadAfterBackClick = false;
+      }
+    } 
+);
+  
+     
+                     //END NAVIGATION 
+    
+     
     
     
     
@@ -958,7 +1184,10 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
                   var productUrl = data.items[i].volumeInfo.infoLink;
                           var averageRating = data.items[i].volumeInfo.averageRating;
                           var publishedDate = data.items[i].volumeInfo.publishedDate;
-                          var auThor = data.items[i].volumeInfo.authors[0];                         
+                           var auThor = "Unknown Ahthor";
+                          if (data.items[i].volumeInfo.authors !== undefined) {
+                          var auThor = data.items[i].volumeInfo.authors[0];     
+                          }                   
                         var itemPrice = "NOT FOR SALE";
                            var currencyCode = " ";
                           if (data.items[i].saleInfo.listPrice !== undefined) {
@@ -1001,230 +1230,7 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
    //END BOOK AUTHOR SEARCH BUTTON CLICK EVENT
     
     
-                        //START NEXT NAVIGATION FROM HERE ONWARDS  FUNCTION FOR EASY VISIBILITY
-          $('#nextbutton').on('click', '#nextBtn', function(event){ 
-                  $.mobile.loading( "show", {
-                  text: "Loading next set",
-                  textVisible: true,
-                  theme: "a"
-                  }); 
-                       event.preventDefault();
-                if ( sessionStorage.reloadAfterBackClick ) {
-                sessionStorage.removeItem('reloadAfterBackClick');
-                    
-                }
-                sessionStorage.reloadAfterNextClick = true;
-                window.location.reload();
-            
-    } 
-);
-    $( function () {
-        if ( sessionStorage.reloadAfterNextClick ) {            
-        var value =  window.sessionStorage.getItem('searchString'); 
-                      var onlyDiscounts = "";
-          if (sessionStorage.getItem('showdiscounts'))
-{
-    
-onlyDiscounts = sessionStorage.getItem('showdiscounts');
-
-}
-        var nextlink = window.sessionStorage.getItem('nextpageUri');        
-                    $('.banner').addClass('searchbanner');
-                    $(".heading").text(value);
-                    $(".mainheading").text(value);
-       var searchString ="searchString="+value+"&page="+nextlink+"&discounts="+onlyDiscounts;       
-    $.ajax({        
-        type: "GET",crossDomain: true, cache: false,
-                 beforeSend: function(){
-    $('.ajax-loader').css("visibility", "visible");
-  },
-        url: 'https://reedfrog.com/api/app/bookworm/search-function.php',
-        data: searchString,
-		dataType:'JSON',  
-     		success: function(data){
-           
-             $('#searchlistview').empty();
-            $('#navcontrols').empty();
-             if(data.results.length > 1) {                          
-				    for (var i = 0; i < data.results.length; i++) {                                   
-                      var itemName = data.results[i].product_name;
-                        var originalprice = parseFloat(data.results[i].original_price).toFixed(2);
-                        var itemPrice = parseFloat(data.results[i].current_price).toFixed(2);
-                        
-                        if(originalprice<itemPrice) {
-                            var pricediv = "<p style='color: orangered; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
-                        } else {
-                            pricediv = "<p style='display: none; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
-                        }
-                        var imageUrl = data.results[i].image_url;
-                        var productUrl = data.results[i].product_url;
-                                               
-                      $( "#searchlistview" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2>"+pricediv+"<p style='color: black; font-size: 14px; font-weight: 500;'>"+itemPrice+"</p></a></li>"); 
-                        $('#searchlistview').listview('refresh').trigger('create');
-                  
-                    
-                                  
-                        
-                    }
-				 
-            }
-            
-                if(data.navigation.nextPageUri) {
-                    
-                   var nextlink = data.navigation.nextPageUri;
-                     var prevlink = data.navigation.prevPageUri; 
-                    var currentPage = data.navigation.catPage;
-                    var totalPages = data.navigation.totalPages;
-                    window.sessionStorage.setItem('nextpageUri', nextlink);
-                    window.sessionStorage.setItem('prevpageUri', prevlink);    
-                          $( "#backbutton" ).append('<a id="prevBtn" href="#" class="ui-btn-active" data-role="button" data-icon="arrow-l" data-iconpos="left">Back</a>'); 
-                          $( "#nextbutton" ).append('<a id="nextBtn" class="ui-btn-active" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
-                    $('#backbutton').trigger('create');
-                    $('#nextbutton').trigger('create');
-       if (currentPage === totalPages){$('#nextBtn').prop('disabled', true);$('#nextBtn').removeClass("ui-btn-active");}
-                      }
-            
-              if(data.navigation.totalItems) {
-                
-                       var firstItem = data.navigation.firstItem;
-                        var lastItem = data.navigation.lastItem;
-                          var totalItems = data.navigation.totalItems;
                        
-                   $( "#navibar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " " + value); 
-                    
-       
-                      }
-            
-                       
-             if(!data.results)
-            {
-				
-			  alert('no results returned');
-			
-               
-            }
-        }
-		
-    });
-     sessionStorage.reloadAfterNextClick = false;
-      }
-    } 
-);
-  
-     
-                     //END NEXT NAVIGATION 
-    
-    //START BACK NAVIGATION FROM HERE ONWARDS  FUNCTION FOR EASY VISIBILITY
-            $('#backbutton').on('click', '#prevBtn', function(event){
-                    $.mobile.loading( "show", {
-  text: "Loading previous set",
-  textVisible: true,
-  theme: "a"
-  
-});    
-
-                       event.preventDefault();
-                if ( sessionStorage.reloadAfterNextClick ) {
-                sessionStorage.removeItem('reloadAfterNextClick');
-                }
-                        sessionStorage.reloadAfterBackClick = true;
-        window.location.reload();
-    });
-    $( function () {
-        if ( sessionStorage.reloadAfterBackClick ) {         
-        var value =  window.sessionStorage.getItem('searchString'); 
-                                  var onlyDiscounts = "";
-          if (sessionStorage.getItem('showdiscounts'))
-{
-    
-onlyDiscounts = sessionStorage.getItem('showdiscounts');
-
-}
-        var prevlink = (window.sessionStorage.getItem('prevpageUri')-1);
-            $('.banner').addClass('searchbanner');
-             $(".heading").text(value);
-        $(".mainheading").text(value);
-        
-var searchString ="searchString="+value+"&page="+prevlink+"&discounts="+onlyDiscounts;   
-       
-    $.ajax({
-        type: "GET",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/bookworm/search-function.php',
-        data: searchString,
-		dataType:'JSON',  
-      success: function(data){           
-             $('#searchlistview').empty();
-            $('#navcontrols').empty();
-             if(data.results.length > 1) {             
-                  for (var i = 0; i < data.results.length; i++) {
-                                                
-                      var itemName = data.results[i].product_name;
-                        var originalprice = parseFloat(data.results[i].original_price).toFixed(2);
-                        var itemPrice = parseFloat(data.results[i].current_price).toFixed(2);
-                        
-                        if(originalprice<itemPrice) {
-                            var pricediv = "<p style='color: orangered; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
-                        } else {
-                            pricediv = "<p style='display: none; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
-                        }
-                        var imageUrl = data.results[i].image_url;
-                        var productUrl = data.results[i].product_url;
-                                               
-                      $( "#searchlistview" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2>"+pricediv+"<p style='color: black; font-size: 14px; font-weight: 500;'>"+itemPrice+"</p></a></li>"); 
-                        $('#searchlistview').listview('refresh').trigger('create');         
-                    }			 
-            }
-            
-                if(data.navigation.nextPageUri) {
-                    
-                    
-                   var nextlink = data.navigation.nextPageUri;
-                     var prevlink = data.navigation.prevPageUri; 
-                    var currentPage = data.navigation.catPage;
-                   
-                    window.sessionStorage.setItem('nextpageUri', nextlink);
-                    window.sessionStorage.setItem('prevpageUri', prevlink); 
-                    
-                                 $( "#backbutton" ).append('<a id="prevBtn" class="ui-btn-active" href="#" data-role="button" data-icon="arrow-l" data-iconpos="left">Back</a>'); 
-                          $( "#nextbutton" ).append('<a id="nextBtn" class="ui-btn-active" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
-                    $('#backbutton').trigger('create');
-                    $('#nextbutton').trigger('create');
-        if (currentPage === 0) { $('#prevBtn').prop('disabled', true);$('#prevBtn').removeClass("ui-btn-active");}
-                    
-                      }
-            
-            
-              if(data.navigation.totalItems) {
-                
-                       var firstItem = data.navigation.firstItem;
-                        var lastItem = data.navigation.lastItem;
-                          var totalItems = data.navigation.totalItems;
-                       
-                   $( "#navibar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " " + value); 
-                    
-       
-                      }
-            
-                       
-             if(!data.results)
-            {
-				
-			  alert('no results returned');
-			
-               
-            }
-        }
-		
-    });
-     sessionStorage.reloadAfterBackClick = false;
-      }
-    } 
-);
-  
-     
-                     //END NAVIGATION 
-    
-     
      
     
     $("#scrollup").on('click', function() { 
