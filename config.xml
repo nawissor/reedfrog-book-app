@@ -24,11 +24,8 @@
     //START UNIVERSAL LINKS SETUP
 <universal-links>
  <host name="reedfrog.com" scheme="https">
-   <path url="/women/" event="openWomensFashionPage" />
-     <path url="/men/" event="openMensFashionPage" />
-     <path url="/weddings/" event="openWeddingFashionPage" />
-     <path url="/kids/" event="openKidsFashionPage" />
-       <path url="/messageitems/" event="openMessageItemsPage" />
+   <path url="/books/romance/" event="openRomanceBooksPage" />
+  <path url="/messageitems/" event="openMessageItemsPage" />
    <path url="/women/womens-bags.php" event="openWomensBags" />
      <path url="/women/womens-glasses.php" event="openWomensGlasses" />
      <path url="/women/womens-accessories.php" event="openWomensHats" />
@@ -39,65 +36,6 @@
      <path url="/women/womens-haircare.php" event="openWomensHairCare" />
      <path url="/women/womens-activewear.php" event="openWomensActiveWear" />
      <path url="/women/womens-blouses.php" event="openWomensBlouses" />
-      <path url="/women/womens-clothing.php" event="openWomensClothing" />
-      <path url="/women/womens-dresses.php" event="opemWomensDresses" />
-     <path url="/women/womens-lingerie.php" event="opemWomensLingerie" />
-     <path url="/women/womens-plus-size.php" event="opemWomensPlusSize" />
-     <path url="/women/womens-skirts.php" event="opemWomensSkirts" />
-     <path url="/women/womens-swimwear.php" event="opemWomensSwimWear" />
-     <path url="/women/womens-tops.php" event="opemWomensTops" />
-      <path url="/men/belts-golves.php" event="openMensBelts" />
-      <path url="/men/mens-accessories.php" event="openMensAccessories" />
-     <path url="/men/mens-hats.php" event="openMensHats" />
-     <path url="/men/mens-bags-shoes.php" event="openMensShoes" />
-     <path url="/men/mens-watches.php" event="openMensWatches" />
-     <path url="/men/mens-activewear.php" event="openMensActiveWear" />
-     <path url="/men/mens-cycling.php" event="openMensCycling" />
-     <path url="/men/mens-cycling-shoes.php" event="openMensCyclingShoes" />
-     <path url="/men/mens-fishing.php" event="openMensFishing" />
-     <path url="/men/mens-golf.php" event="openMensGolf" />
-     <path url="/men/mens-hiking-jackets.php" event="openMensHikingJackets" />
-      <path url="/men/mens-hiking-pants.php" event="openMensHikingPants" />
-     <path url="/men/mens-hiking-tees.php" event="openMensHikingTees" />
-     <path url="/men/mens-hunting-gear.php" event="openMensHuntingGear" />
-     <path url="/men/mens-skiing.php" event="openMensSkiing" />
-     <path url="/men/mens-watersports.php" event="openMensWatersports" />
-     <path url="/men/mens-hoodies.php" event="openMensHoodies" />
-     <path url="/men/mens-jackets.php" event="openMensJackets" />
-     <path url="/men/mens-pants.php" event="openMensPants" />
-     <path url="/men/mens-parkas.php" event="openMensParkas" />
-      <path url="/men/mens-polos.php" event="openMensPolos" />
-      <path url="/men/mens-rompers.php" event="openMensRompers" />
-     <path url="/men/mens-shirts.php" event="openMensShirts" />
-      <path url="/men/mens-swimwear.php" event="openMensSwimwear" />
-      <path url="/men/mens-underwear.php" event="openMensUnderwear" />
-     <path url="/weddings/wedding-accessories.php" event="openWeddingAccessories" />
-     <path url="/weddings/wedding-dresses.php" event="openWeddingDresses" />
-    <path url="/weddings/wedding-mother-bride.php" event="openWeddingMother" />
-      <path url="/weddings/wedding-shoes.php" event="openWeddingShoes" />
-      <path url="/weddings/flower-girls.php" event="openFlowerGirls" />                                 <path url="/weddings/mens-suits.php" event="openMenSuits" />       
-       <path url="/weddings/mens-clothing.php" event="openMenClothing" />  
-     <path url="/weddings/mens-jewelry.php" event="openMensJewelry" /> 
-     <path url="/weddings/wedding-groom.php" event="openWeddingGroom" /> 
-     <path url="/kids/clothing-sets.php" event="openKidsClothing" /> 
-     <path url="/kids/hoodies-sweaters.php" event="openKidsHoodies" /> 
-      <path url="/kids/boys-pants.php" event="openBoysPants" /> 
-       <path url="/kids/boys-rompers.php" event="openBoysRompers" /> 
-      <path url="/kids/boys-shoes.php" event="openBoysShoes" /> 
-      <path url="/kids/boys-sports.php" event="openBoysSports" /> 
-     <path url="/kids/boys-tops.php" event="openBoysTops" /> 
-      <path url="/girls/clothing-sets.php" event="openGirlsClothingSets" /> 
-     <path url="/girls/clothing-dresses.php" event="openGirlsDresses" /> 
-      <path url="/girls/girls-jewelry.php" event="openGirlsJewelry" /> 
-      <path url="/girls/girls-one-piece.php" event="openGirlsOnePiece" />
-      <path url="/girls/girls-swimwear.php" event="openGirlsSwimWear" /> 
-     <path url="/girls/girls-bags-shoes.php" event="openGirlsBags" /> 
-     <path url="/girls/girls-sports.php" event="openGirlsSports" /> 
-      <path url="/girls/girls-tops.php" event="openGirlsTops" /> 
-      <path url="/girls/girls-wedding.php" event="openGirlsWedding" /> 
-      <path url="/kids/maternity-bottoms.php" event="openMaternityBottoms" />
-     <path url="/kids/maternity-dresses.php" event="openMaternityDresses" />
-     <path url="/kids/maternity-tops.php" event="openMaternityTops" />
     <path url="*" event="launchedAppFromLink" />
  </host>
 </universal-links>

@@ -12,7 +12,7 @@ var app = {
   // deviceready Event Handler
   onDeviceReady: function() {
 
-        universalLinks.subscribe('openWomensFashionPage', app.openWomensFashionPageRequest);
+        universalLinks.subscribe('openRomanceBooksPage', app.openRomanceBooksPageRequest);
         universalLinks.subscribe('openMensFashionPage', app.openMensFashionPageRequest);
         universalLinks.subscribe('openWeddingFashionPage', app.openWeddingFashionPageRequest);
       universalLinks.subscribe('openKidsFashionPage', app.openKidsFashionPageRequest);
@@ -90,8 +90,8 @@ var app = {
        universalLinks.subscribe('openMaternityTops', app.openMaternityTopsRequest);
         universalLinks.subscribe('launchedAppFromLink', app.onApplicationDidLaunchFromLink);
   }, 
-    openWomensFashionPageRequest: function(eventData) {
-      $(location).attr('href', '#women');  
+    openRomanceBooksPageRequest: function(eventData) {
+      $(location).attr('href', '#romance');  
      $('div[class^="ui-loader"]').hide();
   },
     
@@ -4944,8 +4944,7 @@ var app = {
     
       // launchedAppFromLink Event Handler
   onApplicationDidLaunchFromLink: function(eventData) {
-    console.log('Did launch app from the link: ' + eventData.url);
-      
+         
   }
 
 };

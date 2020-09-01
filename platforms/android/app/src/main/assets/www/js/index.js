@@ -15,7 +15,7 @@
     function handleOpenURL(url) {
         
           var strValue = url;
-      strValue = strValue.replace('reedfrog://','');
+      strValue = strValue.replace('bookworm://','');
        $.mobile.navigate('#'+strValue, { transition: 'slidedown' });
         	
   }
@@ -1382,16 +1382,24 @@ $(document).delegate('#advsearch', 'pageshow', function (){
     
     var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
-var $input = $('#searchitems');
+var $input = $('#searchbooktitle');
+var $secondinput = $('#searchbookAuthor');
 
 //on keyup, start the countdown
 $input.on('keyup', function () {
   clearTimeout(typingTimer);
   typingTimer = setTimeout(doneTyping, doneTypingInterval);
 });
+    $secondinput.on('keyup', function () {
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(doneTyping, doneTypingInterval);
+});
 
 //on keydown, clear the countdown 
 $input.on('keydown', function () {
+  clearTimeout(typingTimer);
+});
+    $secondinput.on('keydown', function () {
   clearTimeout(typingTimer);
 });
 
@@ -1509,8 +1517,10 @@ $(this).delegate('input[data-type="search"]', 'keyup', function() {
 });  
 }); 
 
+
+
 $(document).delegate('#messageitems', 'pageshow', function (){
-        var typingTimer;                //timer identifier
+var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
 var $input = $(this).find('input[data-type="search"]');
 
@@ -1628,7 +1638,7 @@ function doneTyping () {
                       e.preventDefault();
                        window.localStorage.removeItem('queryString');
         window.localStorage.removeItem('dataValue');
-          var currentPage = 'index.html';          
+          var currentPage = sessionStorage.getItem('currentPage');      
           $.mobile.navigate(currentPage, { transition: 'pop' });
           window.sessionStorage.removeItem('currentPage');
 $.mobile.loading( "show", {
