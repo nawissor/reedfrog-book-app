@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "846519894843",
-    "firebase_url": "https://tactical-factor-194509.firebaseio.com",
-    "project_id": "tactical-factor-194509",
-    "storage_bucket": "tactical-factor-194509.appspot.com"
+    "project_number": "325002767977",
+    "firebase_url": "https://bookworm-fcm.firebaseio.com",
+    "project_id": "bookworm-fcm",
+    "storage_bucket": "bookworm-fcm.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:846519894843:android:da1099813dc9cfc7ecad1e",
+        "mobilesdk_app_id": "1:325002767977:android:c2d6fd3af598b7e5dc3cf8",
         "android_client_info": {
-          "package_name": "com.reedfrog.shop"
+          "package_name": "com.bookworm.shop"
         }
       },
       "oauth_client": [
         {
-          "client_id": "846519894843-uvs3t6chcvbjvroa0ltiu985gbhjmldp.apps.googleusercontent.com",
+          "client_id": "325002767977-ogoijf18u47a2he598lr0lce99n8n9vk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBE2ZDYskVIFfwgdQca0o0d4HZp14GZAYE"
+          "current_key": "AIzaSyBJGMS1XCOFL755PUEt_yV4jv1ETU2Slg0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "846519894843-uvs3t6chcvbjvroa0ltiu985gbhjmldp.apps.googleusercontent.com",
+              "client_id": "325002767977-ogoijf18u47a2he598lr0lce99n8n9vk.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

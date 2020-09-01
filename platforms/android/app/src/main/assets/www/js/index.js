@@ -1,6 +1,16 @@
     /*START HANDLE DEEP LINKING*/
-    
-    
+  $.fn.stars = function() {
+    return $(this).each(function() {
+        // Get the value
+        var val = parseFloat($(this).html());
+        // Make sure that the value is in 0 - 5 range, multiply to get width
+        var size = Math.max(0, (Math.min(5, val))) * 16;
+        // Create stars holder
+        var $span = $('<span />').width(size);
+        // Replace the numerical value with stars
+        $(this).html($span);
+    });
+}    
     
     function handleOpenURL(url) {
         
@@ -19,7 +29,9 @@ document.addEventListener("deviceready",onDeviceReady,false);
     document.addEventListener("resume", onResume, false);
 
 function onDeviceReady() {
-        window.Segment.startWithConfiguration("dzaIQFW0fydxAaEgbiL1EXXQW4RTK7dG", {
+    
+    StatusBar.backgroundColorByHexString("#008080");
+    window.Segment.startWithConfiguration("dzaIQFW0fydxAaEgbiL1EXXQW4RTK7dG", {
     trackApplicationLifecycleEvents: true,
     trackAttributionInformation: true,
 	flushInterval: 60,
@@ -48,7 +60,7 @@ KochavaTracker.configure(configMapObject);
 
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/checkalerts.php',
+        url: 'https://reedfrog.com/api/app/bookworm/checkalerts.php',
 		data: dataString,
 		dataType:'JSON',		
         success: function(data){			
@@ -137,7 +149,7 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
 
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/insertregid.php',
+        url: 'https://reedfrog.com/api/app/bookworm/insertregid.php',
         data: dataString,
 		dataType:'text',		
         success: function(data){
@@ -158,7 +170,7 @@ push.on('notification', function(data) {
 
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/checkalerts.php',
+        url: 'https://reedfrog.com/api/app/bookworm/checkalerts.php',
 		data: dataString,
 		dataType:'JSON',		
         success: function(data){			
@@ -238,7 +250,7 @@ window.Segment.track({
 
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/checkalerts.php',
+        url: 'https://reedfrog.com/api/app/bookworm/checkalerts.php',
 		data: dataString,
 		dataType:'JSON',		
         success: function(data){			
@@ -285,7 +297,7 @@ window.localStorage.setItem("firstRun", 1);
                                   $.mobile.loading( "show", {
   text: "Freeing up space",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
           location.reload(true);
@@ -307,7 +319,7 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
 
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/insertregid.php',
+        url: 'https://reedfrog.com/api/app/bookworm/insertregid.php',
         data: dataString,
 		dataType:'text',		
         success: function(data){
@@ -335,7 +347,7 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
                         $.mobile.loading( "show", {
   text: "Fetching " +dataValue,
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
 
@@ -345,14 +357,14 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
        
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/womens-fashion.php',
+        url: 'https://reedfrog.com/api/app/bookworm/book-selector.php',
         data: itemString,
 		dataType:'JSON',  
          beforeSend: function(){ 
              
          },
 		success: function(data){
-            $(location).attr('href', '#fashionitems');   
+            $(location).attr('href', '#bookitems');   
 				   if(data.results.length > 1) {                    
                     $(".heading").text(dataTitle);
                     $(".mainheading").text(dataTitle);
@@ -362,7 +374,7 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
                         var originalprice = parseFloat(data.results[i].original_price).toFixed(2);
                         var itemPrice = parseFloat(data.results[i].current_price).toFixed(2);
                         
-                        if(originalprice<itemPrice) {
+                        if(itemPrice<originalprice) {
                             var pricediv = "<p style='color: orangered; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
                         } else {
                             pricediv = "<p style='display: none; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
@@ -376,6 +388,29 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
                                   
                         
                     }
+                       
+                                 if(data.navigation.totalItems > 59) {
+                    
+                     var nextlink = data.navigation.nextPageUri;
+                     var prevlink = data.navigation.prevPageUri; 
+                    window.sessionStorage.setItem('nextpageUri', nextlink);
+                    window.sessionStorage.setItem('prevpageUri', prevlink);
+                          $( "#booksbackbutton" ).append('<a id="prevbooksBtn" class="ui-disabled" href="#" data-role="button"  data-icon="arrow-l" data-iconpos="left">Back</a>'); 
+                          $( "#booksnextbutton" ).append('<a id="nextbooksBtn"  href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
+                                         
+       
+                      }
+            
+            if(data.navigation.totalItems) {
+                
+                       var firstItem = data.navigation.firstItem;
+                        var lastItem = data.navigation.lastItem;
+                          var totalItems = data.navigation.totalItems;
+                       
+                   $( "#booksnavbar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " " + dataTitle); 
+                    
+       
+                      }
 				 
             }
             
@@ -392,7 +427,214 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
       	
 
         });
-    /*END LIST ITEM CLICK FUNCTION*/
+    /*END BOOKS LIST ITEM CLICK FUNCTION*/
+    
+    //START BOOKS BACK NAVIGATION FROM HERE ONWARDS FUNCTION FOR EASY VISIBILITY
+            $('#booksbackbutton').on('click', '#prevbooksBtn', function(event){
+                    $.mobile.loading( "show", {
+  text: "Loading previous set",
+  textVisible: true,
+  theme: "a"
+  
+});    
+
+                       event.preventDefault();
+                if ( sessionStorage.reloadAfterBooksNextClick ) {
+                sessionStorage.removeItem('reloadAfterBooksNextClick');
+                }
+        sessionStorage.reloadAfterBooksBackClick = true;
+        window.location.reload();
+    });
+    $( function () {
+        if ( sessionStorage.reloadAfterBooksBackClick ) {         
+          var value =  window.localStorage.getItem('dataValue');             
+        var queryString = window.localStorage.getItem('queryString'); 
+        var prevlink = (window.sessionStorage.getItem('prevpageUri')-1);
+            $('.banner').addClass('searchbanner');
+            $(".heading").text(value);
+            $(".mainheading").text(value);
+        
+     var searchString ="queryString="+queryString+"&page="+prevlink;    
+       
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/bookworm/book-selector.php',
+       data: searchString,
+		dataType:'JSON',  
+      success: function(data){           
+             $('#searchlistview').empty();
+            $('#navcontrols').empty();
+             if(data.results.length > 1) {             
+                  for (var i = 0; i < data.results.length; i++) {
+                                                
+                      var itemName = data.results[i].product_name;
+                        var originalprice = parseFloat(data.results[i].original_price).toFixed(2);
+                        var itemPrice = parseFloat(data.results[i].current_price).toFixed(2);
+                        
+                        if(originalprice<itemPrice) {
+                            var pricediv = "<p style='color: orangered; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        } else {
+                            pricediv = "<p style='display: none; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        }
+                        var imageUrl = data.results[i].image_url;
+                        var productUrl = data.results[i].product_url;
+                                               
+                      $( "#listviewers" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2>"+pricediv+"<p style='color: black; font-size: 14px; font-weight: 500;'>"+itemPrice+"</p></a></li>"); 
+                        $('#listviewers').listview('refresh').trigger('create');           
+                    }			 
+            }
+            
+                if(data.navigation.nextPageUri) {
+                    
+                    
+                   var nextlink = data.navigation.nextPageUri;
+                     var prevlink = data.navigation.prevPageUri; 
+                    var currentPage = data.navigation.catPage;
+                   
+                    window.sessionStorage.setItem('nextpageUri', nextlink);
+                    window.sessionStorage.setItem('prevpageUri', prevlink); 
+                    
+        $( "#booksbackbutton" ).append('<a id="prevbooksBtn" href="#"  data-role="button" data-icon="arrow-l" data-iconpos="left">Back</a>'); 
+        $( "#booksnextbutton" ).append('<a id="nextbooksBtn" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>');                 
+        $('#booksbackbutton').trigger('create');
+        $('#booksnextbutton').trigger('create');
+        if (currentPage === 0) { $('#prevbooksBtn').prop('disabled', true);$('#prevbooksBtn').addClass("ui-disabled");}                    
+                      }            
+            
+              if(data.navigation.totalItems) {                
+                       var firstItem = data.navigation.firstItem;
+                        var lastItem = data.navigation.lastItem;
+                          var totalItems = data.navigation.totalItems;
+                       
+                   $( "#booksnavbar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " " + value); 
+                    
+       
+                      }
+            
+                       
+             if(!data.results)
+            {
+				
+			  alert('no results returned');
+			
+               
+            }
+        }
+		
+    });
+     sessionStorage.reloadAfterBooksBackClick = false;
+      }
+    } 
+);
+  
+     
+                     //END BOOKS BACK NAVIGATION 
+    
+       //START BOOKS LIST NEXT NAVIGATION FROM HERE ONWARDS  FUNCTION FOR EASY VISIBILITY
+          $('#booksnextbutton').on('click', '#nextbooksBtn', function(event){ 
+                  $.mobile.loading( "show", {
+                  text: "Loading next set",
+                  textVisible: true,
+                  theme: "a"
+                  }); 
+                       event.preventDefault();
+                if ( sessionStorage.reloadAfterBooksBackClick ) {
+                sessionStorage.removeItem('reloadAfterBooksBackClick');
+                    
+                }
+                sessionStorage.reloadAfterBooksNextClick = true;
+                window.location.reload();
+            
+    } 
+);
+    $( function () {
+        if ( sessionStorage.reloadAfterBooksNextClick ) {            
+        var value =  window.localStorage.getItem('dataValue');             
+        var queryString = window.localStorage.getItem('queryString');                        
+        var nextlink = window.sessionStorage.getItem('nextpageUri');        
+                    $('.banner').addClass('searchbanner');
+                    $(".heading").text(value);
+                    $(".mainheading").text(value);
+       var searchString ="queryString="+queryString+"&page="+nextlink;       
+    $.ajax({        
+        type: "POST",crossDomain: true, cache: false,
+                 beforeSend: function(){
+    $('.ajax-loader').css("visibility", "visible");
+  },
+        url: 'https://reedfrog.com/api/app/bookworm/book-selector.php',
+        data: searchString,
+		dataType:'JSON',  
+     		success: function(data){           
+             $('#searchlistview').empty();
+            $('#navcontrols').empty();
+             if(data.results.length > 1) {                          
+				    for (var i = 0; i < data.results.length; i++) {                                   
+                      var itemName = data.results[i].product_name;
+                        var originalprice = parseFloat(data.results[i].original_price).toFixed(2);
+                        var itemPrice = parseFloat(data.results[i].current_price).toFixed(2);
+                        
+                        if(originalprice<itemPrice) {
+                            var pricediv = "<p style='color: orangered; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        } else {
+                            pricediv = "<p style='display: none; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
+                        }
+                        var imageUrl = data.results[i].image_url;
+                        var productUrl = data.results[i].product_url;
+                                               
+                      $( "#listviewers" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2>"+pricediv+"<p style='color: black; font-size: 14px; font-weight: 500;'>"+itemPrice+"</p></a></li>"); 
+                        $('#listviewers').listview('refresh').trigger('create');                             
+                        
+                    }
+				 
+            }
+            
+                if(data.navigation.nextPageUri) {
+                    
+                   var nextlink = data.navigation.nextPageUri;
+                     var prevlink = data.navigation.prevPageUri; 
+                    var currentPage = data.navigation.catPage;
+                    var totalPages = data.navigation.totalPages;
+                    window.sessionStorage.setItem('nextpageUri', nextlink);
+                    window.sessionStorage.setItem('prevpageUri', prevlink);    
+                  $( "#booksbackbutton" ).append('<a id="prevbooksBtn" href="#"  data-role="button" data-icon="arrow-l" data-iconpos="left">Back</a>'); 
+                  $( "#booksnextbutton" ).append('<a id="nextbooksBtn" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>');                 
+                    $('#booksbackbutton').trigger('create');
+                    $('#booksnextbutton').trigger('create');
+       if (currentPage === totalPages){$('#nextbooksBtn').prop('disabled', true);$('#nextbooksBtn').addClass("ui-disabled");}
+                      }
+            
+              if(data.navigation.totalItems) {
+                
+                       var firstItem = data.navigation.firstItem;
+                        var lastItem = data.navigation.lastItem;
+                          var totalItems = data.navigation.totalItems;
+                       
+                   $( "#booksnavbar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " " + value); 
+                    
+       
+                      }
+            
+                       
+             if(!data.results)
+            {
+				
+			  alert('no results returned');
+			
+               
+            }
+        }
+		
+    });
+     sessionStorage.reloadAfterBooksNextClick = false;
+      }
+    } 
+);
+  
+     
+                     //END BOOKS NEXT NAVIGATION FUNCTION
+    
+    
+    
     
     /*START MESSAGES LIST ITEM CLICK FUNCTION*/
     $('#messagelistviewer').on('click', 'li', function(){
@@ -403,14 +645,14 @@ var dataString="deviceid="+deviceid+"&regid="+regid+"&devicemodel="+devicemodel+
       $.mobile.loading( "show", {
   text: "Fetching Message",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
     var messageString ="messageid="+value;   
        
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/getmessage.php',
+        url: 'https://reedfrog.com/api/app/bookworm/getmessage.php',
         data: messageString,
 		dataType:'JSON',  
          beforeSend: function(){ 
@@ -465,21 +707,22 @@ sessionStorage.setItem('showdiscounts', onlyDiscounts);
 
 
        var value = $('#searchitems').val();   
+                 if ($('#searchitems').val() == '') {
+              $('.seatchbooksbytitle').empty();
+              $('.seatchbooksbytitle').append('Provide a search string');
+              $('.seatchbooksbytitle').addClass('searchvalidate');              
+              return false;
+    }
           var currentpos = $(this).data('href');
         window.sessionStorage.setItem('currentPage', currentpos);
        window.sessionStorage.setItem('searchString', value);
           
-          var eventMapObject = {};
-eventMapObject["Search String"] = "'" + value + "'";
-eventMapObject["Discounts"] = "'" + onlyDiscounts + "'";
-KochavaTracker.sendEventMapObject("User Search", eventMapObject);
-          
-          
+
           $('.form-controls').hide();
                         $.mobile.loading( "show", {
   text: "Finding " +value,
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
 
@@ -487,7 +730,7 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
        
     $.ajax({
         type: "GET",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/search-function.php',
+        url: 'https://reedfrog.com/api/app/bookworm/search-function.php',
         data: searchString,
 		dataType:'JSON',  
          beforeSend: function(){ 
@@ -499,7 +742,7 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
             $('.banner').addClass('searchbanner');
              $(".heading").text(newvalue);
             $(".mainheading").text(newvalue);
-              if(data.results.length > 1) {                    
+              if(data.results.length > 0) {                    
                    
                       for (var i = 0; i < data.results.length; i++) {	                        
                         
@@ -507,7 +750,7 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
                         var originalprice = parseFloat(data.results[i].original_price).toFixed(2);
                         var itemPrice = parseFloat(data.results[i].current_price).toFixed(2);
                         
-                        if(originalprice<itemPrice) {
+                        if(itemPrice<originalprice) {
                             var pricediv = "<p style='color: orangered; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
                         } else {
                             pricediv = "<p style='display: none; text-decoration: line-through; font-size: 14px;'>"+originalprice+"</p>";
@@ -529,8 +772,8 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
                      var prevlink = data.navigation.prevPageUri; 
                     window.sessionStorage.setItem('nextpageUri', nextlink);
                     window.sessionStorage.setItem('prevpageUri', prevlink);
-                          $( "#backbutton" ).append('<a id="prevBtn" href="#" data-role="button"  data-icon="arrow-l" data-iconpos="left">Back</a>'); 
-                          $( "#nextbutton" ).append('<a id="nextBtn" class="ui-btn-active" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
+                          $( "#backbutton" ).append('<a id="prevBtn" href="#" class="ui-disabled" data-role="button"  data-icon="arrow-l" data-iconpos="left">Back</a>'); 
+                          $( "#nextbutton" ).append('<a id="nextBtn" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
                           $('#prevBtn').prop('disabled', true);                 
        
                       }
@@ -541,7 +784,7 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
                         var lastItem = data.navigation.lastItem;
                           var totalItems = data.navigation.totalItems;
                        
-                   $( "#navibar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " " + value); 
+                   $( "#navibar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " for " + newvalue); 
                     
        
                       }
@@ -570,12 +813,12 @@ KochavaTracker.sendEventMapObject("User Search", eventMapObject);
     
    //END SEARCH BUTTON CLICK EVENT
     
-                        //START NEXT NAVIGATION FROM HERE ONWARDS  FUNCTION FOR EASY VISIBILITY
+     //START NEXT NAVIGATION FROM HERE ONWARDS  FUNCTION FOR EASY VISIBILITY
           $('#nextbutton').on('click', '#nextBtn', function(event){ 
                   $.mobile.loading( "show", {
                   text: "Loading next set",
                   textVisible: true,
-                  theme: "b"
+                  theme: "a"
                   }); 
                        event.preventDefault();
                 if ( sessionStorage.reloadAfterBackClick ) {
@@ -607,7 +850,7 @@ onlyDiscounts = sessionStorage.getItem('showdiscounts');
                  beforeSend: function(){
     $('.ajax-loader').css("visibility", "visible");
   },
-        url: 'https://reedfrog.com/api/app/search-function.php',
+        url: 'https://reedfrog.com/api/app/bookworm/search-function.php',
         data: searchString,
 		dataType:'JSON',  
      		success: function(data){
@@ -646,11 +889,11 @@ onlyDiscounts = sessionStorage.getItem('showdiscounts');
                     var totalPages = data.navigation.totalPages;
                     window.sessionStorage.setItem('nextpageUri', nextlink);
                     window.sessionStorage.setItem('prevpageUri', prevlink);    
-                          $( "#backbutton" ).append('<a id="prevBtn" href="#" class="ui-btn-active" data-role="button" data-icon="arrow-l" data-iconpos="left">Back</a>'); 
-                          $( "#nextbutton" ).append('<a id="nextBtn" class="ui-btn-active" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
+                          $( "#backbutton" ).append('<a id="prevBtn" href="#" data-role="button" data-icon="arrow-l" data-iconpos="left">Back</a>'); 
+                          $( "#nextbutton" ).append('<a id="nextBtn" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
                     $('#backbutton').trigger('create');
                     $('#nextbutton').trigger('create');
-       if (currentPage === totalPages){$('#nextBtn').prop('disabled', true);$('#nextBtn').removeClass("ui-btn-active");}
+       if (currentPage === totalPages){$('#nextBtn').prop('disabled', true);$('#nextBtn').addClass("ui-disabled");}
                       }
             
               if(data.navigation.totalItems) {
@@ -659,7 +902,7 @@ onlyDiscounts = sessionStorage.getItem('showdiscounts');
                         var lastItem = data.navigation.lastItem;
                           var totalItems = data.navigation.totalItems;
                        
-                   $( "#navibar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " " + value); 
+                   $( "#navibar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " for " + value); 
                     
        
                       }
@@ -688,7 +931,7 @@ onlyDiscounts = sessionStorage.getItem('showdiscounts');
                     $.mobile.loading( "show", {
   text: "Loading previous set",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });    
 
@@ -718,7 +961,7 @@ var searchString ="searchString="+value+"&page="+prevlink+"&discounts="+onlyDisc
        
     $.ajax({
         type: "GET",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/search-function.php',
+        url: 'https://reedfrog.com/api/app/bookworm/search-function.php',
         data: searchString,
 		dataType:'JSON',  
       success: function(data){           
@@ -754,11 +997,11 @@ var searchString ="searchString="+value+"&page="+prevlink+"&discounts="+onlyDisc
                     window.sessionStorage.setItem('nextpageUri', nextlink);
                     window.sessionStorage.setItem('prevpageUri', prevlink); 
                     
-                                 $( "#backbutton" ).append('<a id="prevBtn" class="ui-btn-active" href="#" data-role="button" data-icon="arrow-l" data-iconpos="left">Back</a>'); 
-                          $( "#nextbutton" ).append('<a id="nextBtn" class="ui-btn-active" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
+                                 $( "#backbutton" ).append('<a id="prevBtn" href="#" data-role="button" data-icon="arrow-l" data-iconpos="left">Back</a>'); 
+                          $( "#nextbutton" ).append('<a id="nextBtn" href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">Next</a>'); 
                     $('#backbutton').trigger('create');
                     $('#nextbutton').trigger('create');
-        if (currentPage === 0) { $('#prevBtn').prop('disabled', true);$('#prevBtn').removeClass("ui-btn-active");}
+        if (currentPage === 0) { $('#prevBtn').prop('disabled', true);$('#prevBtn').addClass("ui-disabled");}
                     
                       }
             
@@ -769,7 +1012,7 @@ var searchString ="searchString="+value+"&page="+prevlink+"&discounts="+onlyDisc
                         var lastItem = data.navigation.lastItem;
                           var totalItems = data.navigation.totalItems;
                        
-                   $( "#navibar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " " + value); 
+                   $( "#navibar" ).append("Showing " + firstItem + " to " + lastItem + " of " + totalItems + " for " + value); 
                     
        
                       }
@@ -794,6 +1037,202 @@ var searchString ="searchString="+value+"&page="+prevlink+"&discounts="+onlyDisc
                      //END NAVIGATION 
     
      
+    
+    
+    
+     //START SEARCH BOOK TITLE BUTTON CLICK EVENT
+      $(".searchBookTitles").on('click', function(event){
+          event.preventDefault();
+          
+       $(this).addClass("ui-btn-active ui-state-persist");
+   var value = $('#searchbooktitle').val();  
+          if ($('#searchbooktitle').val() == '') {
+              $('.searchbooktitle').empty();
+              $('.searchbooktitle').append('Type a title');
+              $('.secrimearchbooktitle').addClass('searchvalidate');              
+              return false;
+    }
+          var currentpos = $(this).data('href');
+        window.sessionStorage.setItem('currentPage', currentpos);
+       window.sessionStorage.setItem('searchString', value);
+          
+          $('.form-controls').hide();
+                        $.mobile.loading( "show", {
+  text: "Finding " +value,
+  textVisible: true,
+  theme: "a"
+  
+});
+
+             
+    $.ajax({
+        type: "GET",crossDomain: true, cache: false,
+        url: 'https://www.googleapis.com/books/v1/volumes?q=intitle:'+value+'&maxResults=40&key=AIzaSyAMFZg-K5UDcU5IFrn1KTLQl2g7QRFl5UQ',
+        dataType:'JSON',  
+         beforeSend: function(){ 
+             
+         },
+		success: function(data){
+            var newvalue = sessionStorage.getItem('searchString');
+             $(location).attr('href', '#booklistitems');
+            $('.banner').addClass('searchbanner');
+             $(".heading").text(newvalue);
+            $(".mainheading").text(newvalue);
+              if(data.totalItems > 1) {                    
+                   
+                      for (var i = 0; i < data.items.length; i++) {	                        
+                        
+                var itemName = data.items[i].volumeInfo.title;
+                          
+                          var imageUrl = "img/no-image.png";
+                          if (data.items[i].volumeInfo.imageLinks !== undefined) {
+                var imageUrl = data.items[i].volumeInfo.imageLinks.thumbnail;
+                          }
+                  var productUrl = data.items[i].volumeInfo.infoLink;
+                          var averageRating = data.items[i].volumeInfo.averageRating;
+                          var publishedDate = data.items[i].volumeInfo.publishedDate;
+                          var auThor = "Unknown Ahthor";
+                          if (data.items[i].volumeInfo.authors !== undefined) {
+                          var auThor = data.items[i].volumeInfo.authors[0];     
+                          }
+                        var itemPrice = "NOT FOR SALE";
+                          var currencyCode = " ";
+                          if (data.items[i].saleInfo.listPrice !== undefined) {
+                   var itemPrice = parseFloat(data.items[i].saleInfo.listPrice.amount).toFixed(2);
+                              var currencyCode = data.items[i].saleInfo.listPrice.currencyCode;
+                          }
+                          
+                      $( "#booklistview" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2><p style='color: black; font-size: 14px; font-weight: 500;'>"+currencyCode + ""+ " " + "" + itemPrice + "</p><p>Publishded: "+publishedDate+" </p><p>Author: "+auThor+" </p><p><span class='stars'>"+averageRating+"</span></p></a></li>");
+                        
+                          
+
+                        
+                    }
+                  
+            
+            
+          
+				 
+            }   
+            
+             if(data.totalItems == 0)
+            {
+            var value = $('#searchbooktitle').val(); 
+                $(".heading").text(value);
+                    $(".mainheading").text(value);
+             $( "#booklistview" ).append('<li id="no-results" style="margin:auto; text-align: center;">[No results found for '+value+']</li>');
+                                
+               
+            }
+            
+                
+            
+                }
+		
+    });
+      	
+ 
+        });
+    
+   //END BOOK TITLE SEARCH BUTTON CLICK EVENT
+    
+     //START SEARCH BOOK AUTHOR BUTTON CLICK EVENT
+      $(".searchBookAuthors").on('click', function(event){
+          event.preventDefault();
+          
+       $(this).addClass("ui-btn-active ui-state-persist");
+   var value = $('#searchbookAuthor').val();  
+        if ($('#searchbookAuthor').val() == '') {
+              $('.searchbookAuthor').empty();
+              $('.searchbookAuthor').append('Type an Author name');
+              $('.searchbookAuthor').addClass('searchvalidate');              
+              return false;
+    }
+          var currentpos = $(this).data('href');
+        window.sessionStorage.setItem('currentPage', currentpos);
+       window.sessionStorage.setItem('searchString', value);
+          
+          $('.form-controls').hide();
+                        $.mobile.loading( "show", {
+  text: "Finding " +value,
+  textVisible: true,
+  theme: "a"
+  
+});
+
+             
+    $.ajax({
+        type: "GET",crossDomain: true, cache: false,
+        url: 'https://www.googleapis.com/books/v1/volumes?q=inauthor:'+value+'&maxResults=40& key=AIzaSyAMFZg-K5UDcU5IFrn1KTLQl2g7QRFl5UQ',
+        dataType:'JSON',  
+         beforeSend: function(){ 
+             
+         },
+		success: function(data){
+            var newvalue = sessionStorage.getItem('searchString');
+             $(location).attr('href', '#booklistitems');
+            $('.banner').addClass('searchbanner');
+             $(".heading").text(newvalue);
+            $(".mainheading").text(newvalue);
+              if(data.totalItems > 1) {                    
+                   
+                      for (var i = 0; i < data.items.length; i++) {	                        
+                        
+                var itemName = data.items[i].volumeInfo.title;
+                      var imageUrl = "img/no-image.png";
+                          if (data.items[i].volumeInfo.imageLinks !== undefined) {
+                var imageUrl = data.items[i].volumeInfo.imageLinks.thumbnail;
+                          }
+                  var productUrl = data.items[i].volumeInfo.infoLink;
+                          var averageRating = data.items[i].volumeInfo.averageRating;
+                          var publishedDate = data.items[i].volumeInfo.publishedDate;
+                           var auThor = "Unknown Ahthor";
+                          if (data.items[i].volumeInfo.authors !== undefined) {
+                          var auThor = data.items[i].volumeInfo.authors[0];     
+                          }                   
+                        var itemPrice = "NOT FOR SALE";
+                           var currencyCode = " ";
+                          if (data.items[i].saleInfo.listPrice !== undefined) {
+                   var itemPrice = parseFloat(data.items[i].saleInfo.listPrice.amount).toFixed(2);
+                var currencyCode = data.items[i].saleInfo.listPrice.currencyCode;
+                          }
+                          
+                      $( "#booklistview" ).append("<li><a href=" + productUrl + " target='_blank'><img src=" +imageUrl+ "><h2>"+itemName+"</h2><p style='color: black; font-size: 14px; font-weight: 500;'>"+currencyCode + ""+ " " + "" + itemPrice + "</p><p>Publishded: "+publishedDate+" </p><p>Author: "+auThor+" </p><p><span class='stars'>"+averageRating+"</span></p></a></li>");
+                        
+                          
+
+                        
+                    }
+                  
+            
+            
+          
+				 
+            }   
+            
+             if(data.totalItems == 0)
+            {
+            var value = $('#searchbookAuthor').val(); 
+                $(".heading").text(value);
+                    $(".mainheading").text(value);
+             $( "#booklistview" ).append('<li id="no-results" style="margin:auto; text-align: center;">[No results found for '+value+']</li>');
+                                
+               
+            }
+            
+                
+            
+                }
+		
+    });
+      	
+ 
+        });
+    
+   //END BOOK AUTHOR SEARCH BUTTON CLICK EVENT
+    
+    
+                       
      
     
     $("#scrollup").on('click', function() { 
@@ -805,6 +1244,19 @@ var searchString ="searchString="+value+"&page="+prevlink+"&discounts="+onlyDisc
      $('html, body').animate({scrollTop: '+=360px'}, 800);
         $(this).removeClass('ui-btn-active');
      });
+    
+      $("#booksup").on('click', function() { 
+                  
+   $('html, body').stop().animate({ scrollTop : 0 }, 400);
+     });
+        $("#booksdown").on('click', function() { 
+                  
+     $('html, body').animate({scrollTop: '+=360px'}, 800);
+        $(this).removeClass('ui-btn-active');
+     });
+    
+    
+    
     
         $("#upscroll").on('click', function() { 
                   
@@ -820,33 +1272,29 @@ var searchString ="searchString="+value+"&page="+prevlink+"&discounts="+onlyDisc
     
  
     
-$("#mensclothing").bind("expand", function () {
-    var listHeight = $('#mensclothing li').length;
-    var scrollHeight = (listHeight * 40);
+$("#bookscollapse").bind("expand", function () {
+    var listHeight = $('#bookscollapse li').length;
+    var scrollHeight = (listHeight * 80);
         $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
-       });
-    
- $("#kidsclothing").bind("expand", function () {
-    var listHeight = $('#kidsclothing li').length;
-    var scrollHeight = (listHeight * 40);
-      $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
        });   
-   $("#menswedding").bind("expand", function () {
-    var listHeight = $('#menswedding li').length;
-    var scrollHeight = (listHeight * 40);
-      $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
-       });     
-      $("#womensfashion").bind("expand", function () {
-    var listHeight = $('#womensfashion li').length;
-    var scrollHeight = (listHeight * 40);
-      $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
+       
+    
+    
+    $("#youngadultcollection").bind("expand", function () {
+    var listHeight = $('#youngadultcollection li').length;
+    var scrollHeight = (listHeight * 80);
+        $('html, body').animate({scrollTop: '+='+scrollHeight+'px'}, 800);
        });  
     
-    
+    $(".advsearch").bind("click", function () {
+ var currentPage = $(this).data('href');
+        sessionStorage.setItem('currentPage', currentPage);
+       });  
+ 
  });
        
 
-$(document).delegate('#fashionitems', 'pageshow', function (){
+$(document).delegate('#bookitems', 'pageshow', function (){
     $('.banner').addClass('searchbanner');
         var typingTimer;                //timer identifier
 var doneTypingInterval = 1000;  //time in ms, 5 second for example
@@ -887,11 +1335,12 @@ $(this).delegate('input[data-type="search"]', 'keyup', function() {
           var currentPage = window.sessionStorage.getItem('currentPage');
           
           $.mobile.navigate(currentPage, { transition: 'pop' });
-          window.sessionStorage.removeItem('currentPage');
-                                  $.mobile.loading( "show", {
+          window.localStorage.clear();
+          window.sessionStorage.clear();
+       $.mobile.loading( "show", {
   text: "Freeing up space",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
           location.reload(true);
@@ -902,7 +1351,7 @@ $(this).delegate('input[data-type="search"]', 'keyup', function() {
 
 
 
-search
+
 
 $(document).delegate('#search', 'pageshow', function (){
     
@@ -925,6 +1374,48 @@ $input.on('keydown', function () {
 function doneTyping () {
  document.activeElement.blur();
  }
+    
+    }); 
+
+
+$(document).delegate('#advsearch', 'pageshow', function (){
+    
+    var typingTimer;                //timer identifier
+var doneTypingInterval = 1000;  //time in ms, 5 second for example
+var $input = $('#searchitems');
+
+//on keyup, start the countdown
+$input.on('keyup', function () {
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(doneTyping, doneTypingInterval);
+});
+
+//on keydown, clear the countdown 
+$input.on('keydown', function () {
+  clearTimeout(typingTimer);
+});
+
+//user is "finished typing," do something
+function doneTyping () {
+ document.activeElement.blur();
+ }
+    
+          $(document).on('click', '.backbtn', function(){
+          
+                    window.sessionStorage.removeItem('searchString');
+                       var currentPage = window.sessionStorage.getItem('currentPage');          
+          $.mobile.navigate(currentPage, { transition: 'slidedown' });
+          window.sessionStorage.removeItem('currentPage');
+                                  $.mobile.loading( "show", {
+  text: "Freeing up space",
+  textVisible: true,
+  theme: "a"
+  
+});
+          location.reload(true);
+          
+          
+});  
     
     }); 
 $(document).delegate('#searchlistitems', 'pageshow', function (){
@@ -986,7 +1477,7 @@ $(this).delegate('input[data-type="search"]', 'keyup', function() {
                                   $.mobile.loading( "show", {
   text: "Freeing up space",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
           location.reload(true);
@@ -1009,7 +1500,7 @@ $(this).delegate('input[data-type="search"]', 'keyup', function() {
                                   $.mobile.loading( "show", {
   text: "Freeing up space",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
           location.reload(true);
@@ -1042,7 +1533,7 @@ function doneTyping () {
 $.mobile.loading( "show", {
   text: "Loading messag list",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
     
@@ -1053,7 +1544,7 @@ $.mobile.loading( "show", {
 
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/getmessages.php',
+        url: 'https://reedfrog.com/api/app/bookworm/getmessages.php',
 		data: dataString,
 		dataType:'JSON',		
         success: function(data){
@@ -1096,7 +1587,7 @@ $.mobile.loading( "show", {
                                   $.mobile.loading( "show", {
   text: "Freeing up space",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
           location.reload(true);
@@ -1140,10 +1631,10 @@ function doneTyping () {
           var currentPage = 'index.html';          
           $.mobile.navigate(currentPage, { transition: 'pop' });
           window.sessionStorage.removeItem('currentPage');
-                                  $.mobile.loading( "show", {
+$.mobile.loading( "show", {
   text: "Freeing up space",
   textVisible: true,
-  theme: "b"
+  theme: "a"
   
 });
           location.reload(true);
@@ -1161,6 +1652,28 @@ function doneTyping () {
 
 }); 
 
+  $(document).delegate('#booklistitems', 'pageshow', function (){
+        $(function() {
+    $('span.stars').stars();
+});
+  $('#booklistview').listview('refresh').trigger('create'); 
+            $(document).on('click', '.backbutton', function(){ 
+                window.localStorage.clear();
+                  var currentPage = $(this).data('href');          
+          $(location).attr('href', currentPage);
+         $.mobile.loading( "show", {
+  text: "Freeing up space",
+  textVisible: true,
+  theme: "a"
+  
+});
+          location.reload(true);
+          
+          
+}); 
+      
+});
+
 $(document).delegate('#startscreen', 'pageshow', function (){
          /*START CHECK FOR NEW MESSAGES FUNCTION */
     var deviceuuid = localStorage.getItem('deviceuuid');
@@ -1170,7 +1683,7 @@ $(document).delegate('#startscreen', 'pageshow', function (){
 
     $.ajax({
         type: "POST",crossDomain: true, cache: false,
-        url: 'https://reedfrog.com/api/app/checkalerts.php',
+        url: 'https://reedfrog.com/api/app/bookworm/checkalerts.php',
 		data: dataString,
 		dataType:'JSON',		
         success: function(data){			
@@ -1200,5 +1713,280 @@ $(document).delegate('#startscreen', 'pageshow', function (){
     /*END CHECK FOR NEW MESSAGES FUNCTION */ 
     
     
+    });
+
+/*START DYNAMICALLY LOAD COUNT BUBBLES */
+
+$(document).delegate('#inspiration', 'pageshow', function (){
+       
+   var dataSource = $("ul").find('[data-source]');
+  
+   
+    dataSource.each(function(idx, li) {
+    var qs = $(li).data('source');
+   	var dataString="dataSource="+qs;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/bookworm/countbubbles.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+                $(li).text(messageCount);
+           		             
+            } else {
+                
+                 var messageCount = "0";
+                $(li).text(messageCount);
+            
+            }
+
+		
+                  }
+    });
+        
+});
+                
+
+
+    
     }); 
+
+$(document).delegate('#fiction', 'pageshow', function (){
+       
+   var dataSource = $("ul").find('[data-source]');
+  
+   
+    dataSource.each(function(idx, li) {
+    var qs = $(li).data('source');
+    var dataString="dataSource="+qs;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/bookworm/countbubbles.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+                $(li).text(messageCount);
+           		             
+            } else {
+                
+                 var messageCount = "0";
+                $(li).text(messageCount);
+            
+            }
+
+		
+                  }
+    });
+        
+});
+                
+
+
+    
+    }); 
+
+$(document).delegate('#children', 'pageshow', function (){
+       
+   var dataSource = $("ul").find('[data-source]');
+  
+   
+    dataSource.each(function(idx, li) {
+    var qs = $(li).data('source');
+   	var dataString="dataSource="+qs;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/bookworm/countbubbles.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+                $(li).text(messageCount);
+           		             
+            } else {
+                
+                 var messageCount = "0";
+                $(li).text(messageCount);
+            
+            }
+
+		
+                  }
+    });
+        
+});
+                
+
+
+    
+    }); 
+
+$(document).delegate('#romance', 'pageshow', function (){
+       
+   var dataSource = $("ul").find('[data-source]');
+  
+   
+    dataSource.each(function(idx, li) {
+    var qs = $(li).data('source');
+   	var dataString="dataSource="+qs;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/bookworm/countbubbles.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+                $(li).text(messageCount);
+           		             
+            } else {
+                
+                 var messageCount = "0";
+                $(li).text(messageCount);
+            
+            }
+
+		
+                  }
+    });
+        
+});
+                
+
+
+    
+    }); 
+
+$(document).delegate('#mystery', 'pageshow', function (){
+       
+   var dataSource = $("ul").find('[data-source]');
+  
+   
+    dataSource.each(function(idx, li) {
+    var qs = $(li).data('source');
+   	var dataString="dataSource="+qs;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/bookworm/countbubbles.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+                $(li).text(messageCount);
+           		             
+            } else {
+                
+                 var messageCount = "0";
+                $(li).text(messageCount);
+            
+            }
+
+		
+                  }
+    });
+        
+});
+                
+
+
+    
+    }); 
+
+$(document).delegate('#horror', 'pageshow', function (){
+       
+   var dataSource = $("ul").find('[data-source]');
+  
+   
+    dataSource.each(function(idx, li) {
+    var qs = $(li).data('source');
+   	var dataString="dataSource="+qs;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/bookworm/countbubbles.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+                $(li).text(messageCount);
+           		             
+            } else {
+                
+                 var messageCount = "0";
+                $(li).text(messageCount);
+            
+            }
+
+		
+                  }
+    });
+        
+});
+                
+
+
+    
+    }); 
+
+$(document).delegate('#cookbooks', 'pageshow', function (){
+       
+   var dataSource = $("ul").find('[data-source]');
+  
+   
+    dataSource.each(function(idx, li) {
+    var qs = $(li).data('source');
+   	var dataString="dataSource="+qs;
+
+    $.ajax({
+        type: "POST",crossDomain: true, cache: false,
+        url: 'https://reedfrog.com/api/app/bookworm/countbubbles.php',
+		data: dataString,
+		dataType:'JSON',		
+        success: function(data){			
+			     if(data.count > 0)				
+            { 
+                var messageCount = data.count;
+                $(li).text(messageCount);
+           		             
+            } else {
+                
+                 var messageCount = "0";
+                $(li).text(messageCount);
+            
+            }
+
+		
+                  }
+    });
+        
+});
+                
+
+
+    
+    }); 
+
+
+
+
+
+/*END DYNAMICALLY LOAD COUNT BUBBLES */
+
 

@@ -27,14 +27,15 @@ if (cdvHelpers.getConfigPreference('GradlePluginKotlinEnabled', 'false').toBoole
 buildscript {
     apply from: '../CordovaLib/cordova.gradle'
 
-    if (cdvHelpers.getConfigPreference('GradlePluginKotlinEnabled', 'false').toBoolean()) {
+    if(cdvHelpers.getConfigPreference('GradlePluginKotlinEnabled', 'false').toBoolean()) {
         String defaultGradlePluginKotlinVersion = kotlin_version
 
         /**
          * Fetches the user's defined Kotlin Version from config.xml.
-         * If the version is not set or invalid, it will default to the ${defaultGradlePluginKotlinVersion}*/
+         * If the version is not set or invalid, it will default to the ${defaultGradlePluginKotlinVersion}
+         */
         String gradlePluginKotlinVersion = cdvHelpers.getConfigPreference('GradlePluginKotlinVersion', defaultGradlePluginKotlinVersion)
-        if (!cdvHelpers.isVersionValid(gradlePluginKotlinVersion)) {
+        if(!cdvHelpers.isVersionValid(gradlePluginKotlinVersion)) {
             println("The defined Kotlin version (${gradlePluginKotlinVersion}) does not appear to be a valid version. Falling back to version: ${defaultGradlePluginKotlinVersion}.")
             gradlePluginKotlinVersion = defaultGradlePluginKotlinVersion
         }
@@ -52,20 +53,21 @@ buildscript {
     dependencies {
         apply from: '../CordovaLib/cordova.gradle'
 
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.android.tools.build:gradle:4.0.0'
 
         if (cdvHelpers.getConfigPreference('GradlePluginKotlinEnabled', 'false').toBoolean()) {
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         }
 
-        if (cdvHelpers.getConfigPreference('GradlePluginGoogleServicesEnabled', 'false').toBoolean()) {
+        if(cdvHelpers.getConfigPreference('GradlePluginGoogleServicesEnabled', 'false').toBoolean()) {
             String defaultGradlePluginGoogleServicesVersion = '4.2.0'
 
             /**
              * Fetches the user's defined Google Services Plugin Version from config.xml.
-             * If the version is not set or invalid, it will default to the ${defaultGradlePluginGoogleServicesVersion}*/
+             * If the version is not set or invalid, it will default to the ${defaultGradlePluginGoogleServicesVersion}
+             */
             String gradlePluginGoogleServicesVersion = cdvHelpers.getConfigPreference('GradlePluginGoogleServicesVersion', defaultGradlePluginGoogleServicesVersion)
-            if (!cdvHelpers.isVersionValid(gradlePluginGoogleServicesVersion)) {
+            if(!cdvHelpers.isVersionValid(gradlePluginGoogleServicesVersion)) {
                 println("The defined Google Services plugin version (${gradlePluginGoogleServicesVersion}) does not appear to be a valid version. Falling back to version: ${defaultGradlePluginGoogleServicesVersion}.")
                 gradlePluginGoogleServicesVersion = defaultGradlePluginGoogleServicesVersion
             }
@@ -145,10 +147,10 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
+apply from: "../com.kochava.sdk/shop-kochava.gradle"
 apply from: "../cordova-plugin-badge/shop-badge.gradle"
 apply from: "../cordova-support-google-services/shop-build.gradle"
 apply from: "../phonegap-plugin-multidex/shop-multidex.gradle"
-apply from: "../com.kochava.sdk/shop-kochava.gradle"
 apply from: "../segment-cordova-plugin/shop-build.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
@@ -164,9 +166,9 @@ if (hasBuildExtras2) {
 
 // Set property defaults after extension .gradle files.
 ext.cdvCompileSdkVersion = cdvCompileSdkVersion == null ? (
-        defaultCompileSdkVersion == null
-                ? privateHelpers.getProjectTarget()
-                : defaultCompileSdkVersion
+    defaultCompileSdkVersion == null
+        ? privateHelpers.getProjectTarget()
+        : defaultCompileSdkVersion
 ) : Integer.parseInt('' + cdvCompileSdkVersion);
 
 if (ext.cdvBuildToolsVersion == null) {
@@ -189,7 +191,7 @@ ext.cdvMinSdkVersion = cdvMinSdkVersion == null ? defaultMinSdkVersion : Integer
 if (cdvMaxSdkVersion != null) {
     ext.cdvMaxSdkVersion = Integer.parseInt('' + cdvMaxSdkVersion)
 }
-ext.cdvTargetSdkVersion = cdvTargetSdkVersion == null ? defaultTargetSdkVersion : Integer.parseInt('' + cdvTargetSdkVersion)
+ext.cdvTargetSdkVersion = cdvTargetSdkVersion == null ? defaultTargetSdkVersion  : Integer.parseInt('' + cdvTargetSdkVersion)
 
 ext.cdvVersionCode = cdvVersionCode == null ? null : Integer.parseInt('' + cdvVersionCode)
 
@@ -246,13 +248,13 @@ android {
             maxSdkVersion cdvMaxSdkVersion
         }
 
-        if (cdvTargetSdkVersion != null) {
+        if(cdvTargetSdkVersion != null) {
             targetSdkVersion cdvTargetSdkVersion
         }
     }
 
     lintOptions {
-        abortOnError false;
+      abortOnError false;
     }
 
     compileSdkVersion cdvCompileSdkVersion
@@ -269,31 +271,31 @@ android {
 
         productFlavors {
             armeabi {
-                versionCode defaultConfig.versionCode * 10 + 1
+                versionCode defaultConfig.versionCode*10 + 1
                 ndk {
                     abiFilters = ["armeabi"]
                 }
             }
             armv7 {
-                versionCode defaultConfig.versionCode * 10 + 2
+                versionCode defaultConfig.versionCode*10 + 2
                 ndk {
                     abiFilters = ["armeabi-v7a"]
                 }
             }
             arm64 {
-                versionCode defaultConfig.versionCode * 10 + 3
+                versionCode defaultConfig.versionCode*10 + 3
                 ndk {
                     abiFilters = ["arm64-v8a"]
                 }
             }
             x86 {
-                versionCode defaultConfig.versionCode * 10 + 4
+                versionCode defaultConfig.versionCode*10 + 4
                 ndk {
                     abiFilters = ["x86"]
                 }
             }
             x86_64 {
-                versionCode defaultConfig.versionCode * 10 + 5
+                versionCode defaultConfig.versionCode*10 + 5
                 ndk {
                     abiFilters = ["x86_64"]
                 }
@@ -302,7 +304,7 @@ android {
     } else if (Boolean.valueOf(cdvVersionCodeForceAbiDigit)) {
         // This provides compatibility to the default logic for versionCode before cordova-android 5.2.0
         defaultConfig {
-            versionCode defaultConfig.versionCode * 10
+            versionCode defaultConfig.versionCode*10
         }
     }
 
@@ -316,8 +318,7 @@ android {
             release {
                 // These must be set or Gradle will complain (even if they are overridden).
                 keyAlias = ""
-                keyPassword = "__unset"
-                // And these must be set to non-empty in order to have the signing step added to the task graph.
+                keyPassword = "__unset" // And these must be set to non-empty in order to have the signing step added to the task graph.
                 storeFile = null
                 storePassword = "__unset"
             }
@@ -355,16 +356,15 @@ dependencies {
 
     // SUB-PROJECT DEPENDENCIES START
     implementation(project(path: ":CordovaLib"))
+    implementation "com.android.installreferrer:installreferrer:1.0"
+    implementation "com.google.android.gms:play-services-base:10.0.1"
+    implementation "com.facebook.android:facebook-android-sdk:5.13.0"
     implementation "androidx.legacy:legacy-support-v13:1.0.0"
     implementation "me.leolin:ShortcutBadger:1.1.17@aar"
     implementation "com.google.firebase:firebase-messaging:17.0.+"
-    implementation "com.facebook.android:facebook-android-sdk:5.13.0"
-    implementation "com.android.installreferrer:installreferrer:1.0"
-    implementation "com.google.android.gms:play-services-base:10.0.1"
     implementation "com.segment.analytics.android:analytics:4.3.1"
     implementation "com.appboy:appboy-segment-integration:4.0.0"
     // SUB-PROJECT DEPENDENCIES END
-
 }
 
 def promptForReleaseKeyPassword() {
@@ -381,9 +381,9 @@ def promptForReleaseKeyPassword() {
 
 gradle.taskGraph.whenReady { taskGraph ->
     taskGraph.getAllTasks().each() { task ->
-        if (['validateReleaseSigning', 'validateSigningRelease', 'validateSigningArmv7Release', 'validateSigningX76Release'].contains(task.name)) {
-            promptForReleaseKeyPassword()
-        }
+      if(['validateReleaseSigning', 'validateSigningRelease', 'validateSigningArmv7Release', 'validateSigningX76Release'].contains(task.name)) {
+         promptForReleaseKeyPassword()
+      }
     }
 }
 

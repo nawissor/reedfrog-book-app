@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.bookworm.shop" version="1.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Reedfrog Books</name>
+    <name>Bookworm</name>
     <description>
        Explore books online from the world's leading book retailers. 
     </description>
@@ -14,7 +14,7 @@
     <preference name="Orientation" value="default" /> 
     <preference name="AndroidLaunchMode" value="singleInstance" />
            <plugin name="phonegap-plugin-push" source="npm" spec="~2.3.0">
-        <variable name="SENDER_ID" value="1002324375738" />
+        <variable name="SENDER_ID" value="325002767977" />
     </plugin>
  <feature name="Custom URL scheme">
     <param name="id" value="cordova-plugin-customurlscheme" />
@@ -111,8 +111,10 @@
         <icon density="xxxhdpi" src="www/res/icon/android/drawable-xxxhdpi-icon.png" />
       </platform>
     <access origin="https://reedfrog.com" subdomains="true" />
+     <access origin="https://www.googleapis.com" subdomains="true" />
+    <access origin="http://books.google.com" subdomains="true" />
     <access origin="https://covers.booktopia.com.au" subdomains="true" />
-    <access origin="https://booktopia.kh4ffx.net" subdomains="true" />    
+    <access origin="https://booktopia.kh4ffx.net" subdomains="true" />   
       <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />

@@ -7,59 +7,62 @@
     "files": {}
   },
   "installed_plugins": {
+    "com.kochava.sdk": {
+      "PACKAGE_NAME": "com.bookworm.shop"
+    },
+    "cordova-plugin-androidx": {
+      "PACKAGE_NAME": "com.bookworm.shop"
+    },
+    "cordova-plugin-androidx-adapter": {
+      "PACKAGE_NAME": "com.bookworm.shop"
+    },
     "cordova-plugin-app-version": {
-      "PACKAGE_NAME": "com.reedfrog.shop"
+      "PACKAGE_NAME": "com.bookworm.shop"
     },
     "cordova-plugin-badge": {
-      "PACKAGE_NAME": "com.reedfrog.shop"
-    },
-    "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.reedfrog.shop"
-    },
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "com.reedfrog.shop"
-    },
-    "phonegap-plugin-push": {
-      "ANDROID_SUPPORT_V13_VERSION": "27.+",
-      "FCM_VERSION": "17.0.+",
-      "PACKAGE_NAME": "com.reedfrog.shop"
+      "PACKAGE_NAME": "com.bookworm.shop"
     },
     "cordova-plugin-customurlscheme": {
       "URL_SCHEME": "reedfrog",
       "ANDROID_SCHEME": " ",
       "ANDROID_HOST": " ",
       "ANDROID_PATHPREFIX": "/",
-      "PACKAGE_NAME": "com.reedfrog.shop"
+      "PACKAGE_NAME": "com.bookworm.shop"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.bookworm.shop"
     },
     "cordova-plugin-facebook4": {
       "APP_ID": "225014412177551",
       "APP_NAME": "Reedfrog",
       "FACEBOOK_HYBRID_APP_EVENTS": "false",
       "FACEBOOK_ANDROID_SDK_VERSION": "5.13.0",
-      "PACKAGE_NAME": "com.reedfrog.shop"
-    },
-    "com.kochava.sdk": {
-      "PACKAGE_NAME": "com.reedfrog.shop"
+      "PACKAGE_NAME": "com.bookworm.shop"
     },
     "cordova-plugin-universal-link": {
-      "PACKAGE_NAME": "com.reedfrog.shop"
+      "PACKAGE_NAME": "com.bookworm.shop"
     },
-    "cordova-plugin-androidx": {
-      "PACKAGE_NAME": "com.reedfrog.shop"
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.bookworm.shop"
     },
-    "cordova-plugin-androidx-adapter": {
-      "PACKAGE_NAME": "com.reedfrog.shop"
+    "phonegap-plugin-push": {
+      "ANDROID_SUPPORT_V13_VERSION": "27.+",
+      "FCM_VERSION": "17.0.+",
+      "PACKAGE_NAME": "com.bookworm.shop"
     },
     "segment-cordova-plugin": {
-      "PACKAGE_NAME": "com.reedfrog.shop"
+      "PACKAGE_NAME": "com.bookworm.shop"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "com.bookworm.shop"
     }
   },
   "dependent_plugins": {
     "cordova-support-google-services": {
-      "PACKAGE_NAME": "com.reedfrog.shop"
+      "PACKAGE_NAME": "com.bookworm.shop"
     },
     "phonegap-plugin-multidex": {
-      "PACKAGE_NAME": "com.reedfrog.shop"
+      "PACKAGE_NAME": "com.bookworm.shop"
     }
   }
 }

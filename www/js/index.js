@@ -29,7 +29,9 @@ document.addEventListener("deviceready",onDeviceReady,false);
     document.addEventListener("resume", onResume, false);
 
 function onDeviceReady() {
-        window.Segment.startWithConfiguration("dzaIQFW0fydxAaEgbiL1EXXQW4RTK7dG", {
+    
+    StatusBar.backgroundColorByHexString("#008080");
+    window.Segment.startWithConfiguration("dzaIQFW0fydxAaEgbiL1EXXQW4RTK7dG", {
     trackApplicationLifecycleEvents: true,
     trackAttributionInformation: true,
 	flushInterval: 60,
