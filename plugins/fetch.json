@@ -111,14 +111,6 @@
     "is_top_level": true,
     "variables": {}
   },
-  "segment-cordova-plugin": {
-    "source": {
-      "type": "registry",
-      "id": "https://github.com/kohofinancial/segment-cordova-plugin.git"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "cordova-plugin-statusbar": {
     "source": {
       "type": "registry",

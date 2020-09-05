@@ -151,7 +151,6 @@ apply from: "../com.kochava.sdk/shop-kochava.gradle"
 apply from: "../cordova-plugin-badge/shop-badge.gradle"
 apply from: "../cordova-support-google-services/shop-build.gradle"
 apply from: "../phonegap-plugin-multidex/shop-multidex.gradle"
-apply from: "../segment-cordova-plugin/shop-build.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras1 = file('build-extras.gradle').exists()
@@ -362,8 +361,6 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v13:1.0.0"
     implementation "me.leolin:ShortcutBadger:1.1.17@aar"
     implementation "com.google.firebase:firebase-messaging:17.0.+"
-    implementation "com.segment.analytics.android:analytics:4.3.1"
-    implementation "com.appboy:appboy-segment-integration:4.0.0"
     // SUB-PROJECT DEPENDENCIES END
 }
 

@@ -50,9 +50,6 @@
       "FCM_VERSION": "17.0.+",
       "PACKAGE_NAME": "com.bookworm.shop"
     },
-    "segment-cordova-plugin": {
-      "PACKAGE_NAME": "com.bookworm.shop"
-    },
     "cordova-plugin-statusbar": {
       "PACKAGE_NAME": "com.bookworm.shop"
     }

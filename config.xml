@@ -24,23 +24,17 @@
     //START UNIVERSAL LINKS SETUP
 <universal-links>
  <host name="reedfrog.com" scheme="https">
-   <path url="/books/romance/" event="openRomanceBooksPage" />
-  <path url="/messageitems/" event="openMessageItemsPage" />
-   <path url="/women/womens-bags.php" event="openWomensBags" />
-     <path url="/women/womens-glasses.php" event="openWomensGlasses" />
-     <path url="/women/womens-accessories.php" event="openWomensHats" />
-      <path url="/women/womens-jewelry.php" event="openWomensJewelry" />
-     <path url="/women/womens-shoes.php" event="openWomensShoes" />
-      <path url="/women/womens-health.php" event="openWomensHealth" />
-     <path url="/women/womens-skincare.php" event="openWomensSkinCare" />
-     <path url="/women/womens-haircare.php" event="openWomensHairCare" />
-     <path url="/women/womens-activewear.php" event="openWomensActiveWear" />
-     <path url="/women/womens-blouses.php" event="openWomensBlouses" />
-    <path url="*" event="launchedAppFromLink" />
- </host>
+   <path url="/books/romance-books.php" event="openRomanceBooksPage" />
+     <path url="/books/mystery-books.php" event="openMysteryBooksPage" />
+     <path url="/books/children-books.php" event="openChildrensBooksPage" />
+     <path url="/books/inspirational-books.php" event="openInspirationalBooksPage" />
+     <path url="/books/fiction-books.php" event="openFicionBooksPage" />
+      <path url="/books/horror-books.php" event="openHorroBooksPage" />
+      <path url="/books/cook-books.php" event="openCookBooksPage" />
+   </host>
 </universal-links>
     //END UNIVERSAL LINKS SETUP
-            <platform name="android">
+        <platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
         <icon density="hdpi" src="www/res/icon/android/drawable-hdpi-icon.png" />

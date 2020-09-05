@@ -30,6 +30,44 @@ document.addEventListener("deviceready",onDeviceReady,false);
 
 function onDeviceReady() {
     
+      //*START UNIVERSAL LINKS CALLBACK EVENT HANDLERS*//
+     universalLinks.subscribe('openRomanceBooksPage', function (openRomanceBooksPageRequest) {
+        
+      $(location).attr('href', '#romance');         
+     $('div[class^="ui-loader"]').hide();
+  
+          });
+    universalLinks.subscribe('openMysteryBooksPage', function(openMysteryBooksPageRequest){
+          $(location).attr('href', '#mystery');   
+        $('div[class^="ui-loader"]').hide();
+                             });
+    
+     universalLinks.subscribe('openChildrensBooksPage', function(openChildrensBooksPageRequest){
+          $(location).attr('href', '#children');    
+        $('div[class^="ui-loader"]').hide();
+                             });
+    universalLinks.subscribe('openInspirationalBooksPage', function(openInspirationalBooksPageRequest){
+          $(location).attr('href', '#inspiration');    
+        $('div[class^="ui-loader"]').hide();
+                             });
+    
+      universalLinks.subscribe('openFicionBooksPage', function(openFicionBooksPageRequest){
+            $(location).attr('href', '#fiction');  
+        $('div[class^="ui-loader"]').hide();
+                             });
+    
+      universalLinks.subscribe('openHorroBooksPage', function(openHorroBooksPageRequest){
+         $(location).attr('href', '#horror');   
+        $('div[class^="ui-loader"]').hide();
+                             });
+    
+      universalLinks.subscribe('openCookBooksPage', function(openCookBooksPageRequest){
+        $(location).attr('href', '#cookbooks');  
+        $('div[class^="ui-loader"]').hide();
+                             });
+    
+    //*END UNIVERSAL LINKS CALLBACK EVENT HANDLERS*//
+    
     StatusBar.backgroundColorByHexString("#008080");
     window.Segment.startWithConfiguration("dzaIQFW0fydxAaEgbiL1EXXQW4RTK7dG", {
     trackApplicationLifecycleEvents: true,
