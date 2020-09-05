@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Bookworm</string>
-    <string name="launcher_name">@string/app_name</string>
-    <string name="activity_name">@string/launcher_name</string>
+    <string name="app_name" translatable="false">Bookworm</string>
+    <string name="launcher_name" translatable="false">@string/app_name</string>
+    <string name="activity_name" translatable="false">@string/launcher_name</string>
+    <string name="facebook_app_id" translatable="false">313926756382768</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb313926756382768</string>
 </resources>
