@@ -7,9 +7,6 @@
     "files": {}
   },
   "installed_plugins": {
-    "com.kochava.sdk": {
-      "PACKAGE_NAME": "com.bookworm.shop"
-    },
     "cordova-plugin-androidx": {
       "PACKAGE_NAME": "com.bookworm.shop"
     },

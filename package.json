@@ -44,7 +44,6 @@
                 "FACEBOOK_HYBRID_APP_EVENTS": "false",
                 "FACEBOOK_ANDROID_SDK_VERSION": "5.13.0"
             },
-            "com.kochava.sdk": {},
             "cordova-plugin-universal-link": {},
             "cordova-plugin-androidx": {},
             "cordova-plugin-androidx-adapter": {},

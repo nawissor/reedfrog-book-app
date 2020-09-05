@@ -79,14 +79,6 @@
       "APP_NAME": "Reedfrog"
     }
   },
-  "com.kochava.sdk": {
-    "source": {
-      "type": "registry",
-      "id": "https://github.com/agroptima/cordova-plugin-kochava.git"
-    },
-    "is_top_level": true,
-    "variables": {}
-  },
   "cordova-plugin-universal-link": {
     "source": {
       "type": "registry",

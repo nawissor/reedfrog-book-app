@@ -69,25 +69,11 @@ function onDeviceReady() {
     //*END UNIVERSAL LINKS CALLBACK EVENT HANDLERS*//
     
     StatusBar.backgroundColorByHexString("#008080");
-    window.Segment.startWithConfiguration("dzaIQFW0fydxAaEgbiL1EXXQW4RTK7dG", {
-    trackApplicationLifecycleEvents: true,
-    trackAttributionInformation: true,
-	flushInterval: 60,
-    trackInAppPurchases: true
-});
+
 		
-window.Segment.track({
-    event: 'Application Started',
-    properties: {
-        'path': 'home'
-    }
-});
+
     
-    
-    var configMapObject = {};
-configMapObject[KochavaTracker.PARAM_ANDROID_APP_GUID_STRING_KEY] = "kovalidator-android-alh6sx";
-KochavaTracker.configure(configMapObject);
-    
+
  facebookConnectPlugin.logEvent('Show Screen', {'name': 'Start Screen'}, parseFloat(1.00), function (data) {}, function (error) {});
         
           /*START CHECK FOR NEW MESSAGES FUNCTION */
@@ -248,38 +234,12 @@ push.on('error', function(e) {
 function onPause() {
     
     
-            window.Segment.startWithConfiguration("dzaIQFW0fydxAaEgbiL1EXXQW4RTK7dG", {
-    trackApplicationLifecycleEvents: true,
-    trackAttributionInformation: true,
-	flushInterval: 60,
-    trackInAppPurchases: true
-});
-		
-window.Segment.track({
-    event: 'Application Backgrounded',
-    properties: {
-        'path': 'home'
-    }
-});
 
 }
 
 function onResume() {
     
-                window.Segment.startWithConfiguration("dzaIQFW0fydxAaEgbiL1EXXQW4RTK7dG", {
-    trackApplicationLifecycleEvents: true,
-    trackAttributionInformation: true,
-	flushInterval: 60,
-    trackInAppPurchases: true
-});
-		
-window.Segment.track({
-    event: 'Application Brought Forward',
-    properties: {
-        'path': 'home'
-    }
-});
-    
+
       /*START CHECK FOR NEW MESSAGES FUNCTION */
     var deviceuuid = localStorage.getItem('deviceuuid');
 	if (deviceuuid) {
