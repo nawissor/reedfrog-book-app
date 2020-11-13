@@ -3,4 +3,6 @@
     <string name="fb_app_id" translatable="false">313926756382768</string>
     <string name="fb_app_name" translatable="false">Bookworm</string>
     <bool name="fb_hybrid_app_events">false</bool>
+    <string name="fb_app_id">225014412177551</string>
+    <string name="fb_app_name">Reedfrog</string>
 </resources>
